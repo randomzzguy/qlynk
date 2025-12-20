@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnHub.space - Next-Generation Microschool Operations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="manifest" href="assets/site.webmanifest">
+    <style>
+        * { 
+            font-family: 'Inter', sans-serif; 
+            scroll-behavior: smooth;
+        }
+        
+        :root {
+            --primary-orange: #f46530;
+            --primary-orange-hover: #c14f22;
+            --secondary-accent: #2a9d8f;
+            --main-bg: #d9d9d9;
+            --section-bg: #f2f2f2;
+            --dark-bg: #2a2e30;
+            --primary-text: #2a2e30;
+            --secondary-text: #474c4e;
+            --light-text: #d9d9d9;
+            --border-color: #b3b3b3;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #f8f9fa 100%);
+            color: #2a2e30;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Enhanced Visible Professional Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(244, 101, 48, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(42, 157, 143, 0.08) 0%, transparent 50%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(248, 249, 250, 0.8) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(90deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.8;
+        }
+        
+        /* Enhanced Paper Texture */
+        .paper-texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(0,0,0,0.08) 1px, transparent 0);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.9;
+        }
+        
+        /* Professional Floating Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Enhanced Visible Geometric Shapes */
+        .floating-shape {
+            position: absolute;
+            background: rgba(244, 101, 48, 0.08);
+            border: 1px solid rgba(244, 101, 48, 0.15);
+            animation: subtle-float 20s ease-in-out infinite;
+            box-shadow: 0 2px 8px rgba(244, 101, 48, 0.1);
+        }
+        
+        .floating-shape:nth-child(2n) {
+            background: rgba(42, 157, 143, 0.08);
+            border: 1px solid rgba(42, 157, 143, 0.15);
+            animation-delay: -7s;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(42, 157, 143, 0.1);
+        }
+        
+        .floating-shape:nth-child(3n) {
+            background: rgba(108, 117, 125, 0.08);
+            border: 1px solid rgba(108, 117, 125, 0.15);
+            animation-delay: -14s;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(108, 117, 125, 0.1);
+        }
+        
+        @keyframes subtle-float {
+            0%, 100% { 
+                transform: translateY(0px) translateX(0px);
+                opacity: 0.7;
+            }
+            50% { 
+                transform: translateY(-15px) translateX(10px);
+                opacity: 1;
+            }
+        }
+        
+        .neural-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(244, 101, 48, 0.4) 20%, 
+                rgba(42, 157, 143, 0.6) 50%, 
+                rgba(244, 101, 48, 0.4) 80%, 
+                transparent 100%);
+            transform-origin: left center;
+            animation: neural-flow 8s ease-in-out infinite;
+        }
+        
+        .neural-line:nth-child(2n) {
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(42, 157, 143, 0.4) 20%, 
+                rgba(102, 126, 234, 0.6) 50%, 
+                rgba(42, 157, 143, 0.4) 80%, 
+                transparent 100%);
+            animation-delay: -2s;
+        }
+        
+        .neural-line:nth-child(3n) {
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(102, 126, 234, 0.4) 20%, 
+                rgba(244, 101, 48, 0.6) 50%, 
+                rgba(102, 126, 234, 0.4) 80%, 
+                transparent 100%);
+            animation-delay: -4s;
+        }
+        
+        @keyframes neural-flow {
+            0%, 100% { 
+                opacity: 0.3;
+                transform: scaleX(0.8);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: scaleX(1.2);
+            }
+        }
+        
+        /* Neural Nodes */
+        .neural-node {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, rgba(244, 101, 48, 0.8), rgba(244, 101, 48, 0.2));
+            border-radius: 50%;
+            animation: neural-node-pulse 4s ease-in-out infinite;
+        }
+        
+        .neural-node:nth-child(2n) {
+            background: radial-gradient(circle, rgba(42, 157, 143, 0.8), rgba(42, 157, 143, 0.2));
+            animation-delay: -1s;
+        }
+        
+        .neural-node:nth-child(3n) {
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.8), rgba(102, 126, 234, 0.2));
+            animation-delay: -2s;
+        }
+        
+        @keyframes neural-node-pulse {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 0.6;
+            }
+            50% { 
+                transform: scale(1.5);
+                opacity: 1;
+            }
+        }
+        
+        /* Advanced Particle System */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 30s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100px) translateX(100px) rotate(360deg); opacity: 0; }
+        }
+        
+        /* Holographic Effects */
+        .holographic {
+            background: linear-gradient(45deg, 
+                rgba(255, 102, 0, 0.03) 0%,
+                rgba(255, 102, 0, 0.01) 25%,
+                rgba(0, 150, 255, 0.02) 50%,
+                rgba(255, 102, 0, 0.01) 75%,
+                rgba(255, 102, 0, 0.03) 100%);
+            background-size: 400% 400%;
+            animation: hologram 12s ease-in-out infinite;
+        }
+        
+        @keyframes hologram {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+        
+        .glass-strong {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
+        }
+        
+        /* Neural Network Animation */
+        .neural-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 20% 20%, var(--primary-orange) 1px, transparent 1px),
+                radial-gradient(circle at 80% 80%, var(--primary-orange) 1px, transparent 1px),
+                radial-gradient(circle at 40% 60%, var(--primary-orange) 1px, transparent 1px);
+            background-size: 100px 100px, 150px 150px, 200px 200px;
+            animation: neural-pulse 15s ease-in-out infinite;
+        }
+        
+        @keyframes neural-pulse {
+            0%, 100% { opacity: 0.1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.05); }
+        }
+        
+        /* Advanced Text Animations */
+        .text-glow {
+            color: var(--primary-orange);
+            font-weight: 700;
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid var(--primary-orange);
+            white-space: nowrap;
+            animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--primary-orange); }
+        }
+        
+        /* 3D Transform Effects */
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(10deg) rotateX(10deg) translateZ(20px);
+        }
+        
+        /* Subtle Border Effects */
+        .accent-border {
+            border: 2px solid var(--primary-orange);
+            box-shadow: 0 4px 12px rgba(255, 102, 0, 0.15);
+        }
+        
+        /* Quantum Loading Effect */
+        .quantum-loader {
+            width: 60px;
+            height: 60px;
+            border: 3px solid transparent;
+            border-top: 3px solid var(--primary-orange);
+            border-radius: 50%;
+            animation: quantum-spin 1s linear infinite;
+            position: relative;
+        }
+        
+        .quantum-loader::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border: 3px solid transparent;
+            border-bottom: 3px solid rgba(255, 102, 0, 0.5);
+            border-radius: 50%;
+            animation: quantum-spin 2s linear infinite reverse;
+        }
+        
+        @keyframes quantum-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Subtle Background Pattern */
+        .subtle-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.02;
+            background-image: 
+                radial-gradient(circle at 25% 25%, var(--primary-orange) 1px, transparent 1px),
+                radial-gradient(circle at 75% 75%, var(--primary-orange) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        /* Cyberpunk Button */
+        .cyber-button {
+            position: relative;
+            background: linear-gradient(45deg, transparent, rgba(255, 102, 0, 0.1), transparent);
+            border: 2px solid var(--primary-orange);
+            color: var(--primary-orange);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .cyber-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 102, 0, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .cyber-button:hover::before {
+            left: 100%;
+        }
+        
+        .cyber-button:hover {
+            background: var(--primary-orange);
+            color: black;
+            box-shadow: 0 0 30px rgba(255, 102, 0, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        /* Enhanced Data Stream Animation */
+        .data-stream {
+            position: absolute;
+            width: 3px;
+            height: 120px;
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                rgba(244, 101, 48, 0.8) 20%, 
+                rgba(244, 101, 48, 1) 50%, 
+                rgba(244, 101, 48, 0.8) 80%, 
+                transparent 100%);
+            animation: data-flow 4s linear infinite;
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(244, 101, 48, 0.5);
+        }
+        
+        .data-stream::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.9) 20%, 
+                rgba(255, 255, 255, 1) 50%, 
+                rgba(255, 255, 255, 0.9) 80%, 
+                transparent 100%);
+        }
+        
+        @keyframes data-flow {
+            0% { transform: translateY(-120px); opacity: 0; }
+            10% { opacity: 0.3; }
+            50% { opacity: 1; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(calc(100vh + 120px)); opacity: 0; }
+        }
+        
+        /* Colorful Feature Cards */
+        .feature-card-1 {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(79, 172, 254, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card-2 {
+            background: linear-gradient(135deg, rgba(255, 102, 0, 0.9) 0%, rgba(255, 142, 83, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(255, 102, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card-3 {
+            background: linear-gradient(135deg, rgba(118, 75, 162, 0.9) 0%, rgba(102, 126, 234, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(118, 75, 162, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card-1::before,
+        .feature-card-2::before,
+        .feature-card-3::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: card-rotate 8s linear infinite;
+            opacity: 0.7;
+        }
+        
+        @keyframes card-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Scroll Reveal Animations */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .reveal-up.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .reveal-scale.revealed {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* Pricing Cards */
+        .pricing-card-starter {
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.9) 0%, rgba(102, 126, 234, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(79, 172, 254, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card-pro {
+            background: linear-gradient(135deg, rgba(255, 102, 0, 0.9) 0%, rgba(255, 142, 83, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(255, 102, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card-enterprise {
+            background: linear-gradient(135deg, rgba(118, 75, 162, 0.9) 0%, rgba(102, 126, 234, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(118, 75, 162, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card-starter::before,
+        .pricing-card-pro::before,
+        .pricing-card-enterprise::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: card-rotate 10s linear infinite;
+            opacity: 0.5;
+        }
+        
+        /* Futuristic Form */
+        .cyber-input {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 102, 0, 0.3);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .cyber-input:focus {
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 20px rgba(255, 102, 0, 0.3);
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        /* Success Animation */
+        .success-pulse {
+            animation: success-pulse 0.6s ease-out;
+        }
+        
+        @keyframes success-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Floating Element Animations */
+        @keyframes float-vertical {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes float-horizontal {
+            0%, 100% { transform: translateX(0px); }
+            50% { transform: translateX(15px); }
+        }
+        
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .card-3d:hover {
+                transform: translateY(-10px);
+            }
+            
+            .neural-bg {
+                background-size: 50px 50px, 75px 75px, 100px 100px;
+            }
+            
+            .data-stream {
+                width: 2px;
+                height: 80px;
+            }
+            
+            /* Mobile Title Optimizations */
+            .mobile-title {
+                font-size: 2.5rem !important;
+                line-height: 1.2 !important;
+                color: #1a1a1a !important;
+                text-align: center !important;
+                margin-bottom: 2rem !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .mobile-title {
+                font-size: 2.25rem !important;
+                line-height: 1.3 !important;
+                margin-bottom: 1.5rem !important;
+                margin-top: 2rem !important;
+            }
+            
+            /* Ensure hero section has enough top padding on very narrow screens */
+            section.holographic {
+                padding-top: 6rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle System -->
+    <div class="particles-container" id="particles"></div>
+    
+    <!-- Subtle Background Pattern -->
+    <div class="subtle-pattern"></div>
+    
+    <!-- Paper Texture -->
+    <div class="paper-texture"></div>
+    
+    <!-- Professional Floating Elements -->
+    <div class="floating-elements">
+        <!-- Subtle Professional Shapes -->
+        <div class="floating-shape" style="top: 15%; left: 20%; width: 60px; height: 60px; border-radius: 8px;"></div>
+        <div class="floating-shape" style="top: 25%; left: 75%; width: 40px; height: 40px;"></div>
+        <div class="floating-shape" style="top: 45%; left: 10%; width: 50px; height: 50px; border-radius: 12px;"></div>
+        <div class="floating-shape" style="top: 65%; left: 85%; width: 35px; height: 35px;"></div>
+        <div class="floating-shape" style="top: 80%; left: 30%; width: 45px; height: 45px; border-radius: 6px;"></div>
+        
+        <!-- Neural Network Lines -->
+        <div class="neural-line" style="top: 20%; left: 15%; width: 200px; transform: rotate(15deg);"></div>
+        <div class="neural-line" style="top: 40%; left: 60%; width: 150px; transform: rotate(-25deg);"></div>
+        <div class="neural-line" style="top: 70%; left: 25%; width: 180px; transform: rotate(35deg);"></div>
+        <div class="neural-line" style="top: 85%; left: 70%; width: 120px; transform: rotate(-15deg);"></div>
+        
+        <!-- Neural Nodes -->
+        <div class="neural-node" style="top: 18%; left: 25%;"></div>
+        <div class="neural-node" style="top: 35%; left: 70%;"></div>
+        <div class="neural-node" style="top: 55%; left: 15%;"></div>
+        <div class="neural-node" style="top: 75%; left: 80%;"></div>
+        <div class="neural-node" style="top: 90%; left: 40%;"></div>
+        
+        <!-- Data Streams -->
+        <div class="data-stream" style="top: -120px; left: 10%; animation-delay: 0s;"></div>
+        <div class="data-stream" style="top: -120px; left: 30%; animation-delay: -1s;"></div>
+        <div class="data-stream" style="top: -120px; left: 50%; animation-delay: -2s;"></div>
+        <div class="data-stream" style="top: -120px; left: 70%; animation-delay: -3s;"></div>
+        <div class="data-stream" style="top: -120px; left: 90%; animation-delay: -1.5s;"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-strong">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg viewBox="0 0 400 120" class="w-36 h-12" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LearnHub.space logo">
+                            <g transform="translate(10,10)">
+                                <polygon points="60,0 70,40 100,40 75,60 85,100 60,75 35,100 45,60 20,40 50,40" fill="#f46530" opacity="0.98" />
+                                <text x="130" y="67" font-family="Inter, Roboto, sans-serif" font-weight="700" font-size="48" fill="#2a2e30">LearnHub.space</text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#features" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors duration-200">Features</a>
+                        <a href="#testimonials" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors duration-200">Testimonials</a>
+                        <a href="#pricing" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors duration-200">Pricing</a>
+                        <a href="#contact" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors duration-200">Contact</a>
+                        <a href="http://localhost:3002" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 mr-3">
+                            Login
+                        </a>
+                        <button class="cyber-button px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-300">
+                            Get Started
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="text-gray-700 hover:text-orange-500 focus:outline-none focus:text-orange-500" id="mobile-menu-button">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 glass-strong">
+                <a href="#features" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">Features</a>
+                <a href="#testimonials" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">Testimonials</a>
+                <a href="#pricing" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">Pricing</a>
+                <a href="#contact" class="text-gray-700 hover:text-orange-500 block px-3 py-2 text-base font-medium">Contact</a>
+                <a href="http://localhost:3002" class="bg-orange-500 hover:bg-orange-600 text-white block px-3 py-2 rounded-lg text-base font-medium mt-4 text-center">
+                    Login
+                </a>
+                <button class="cyber-button w-full mt-4 px-6 py-2 rounded-lg text-sm font-semibold">
+                    Get Started
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden holographic pt-20 sm:pt-16">
+        <div class="neural-bg"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="reveal-up">
+                <h1 class="mobile-title text-3xl sm:text-5xl md:text-7xl font-black text-gray-900 mb-6 leading-tight">
+                    Digitize Your<br>
+                    <span class="text-glow">Microschool Today</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl mx-auto leading-relaxed">
+                    Revolutionize your microschool with AI-powered management, seamless compliance tracking, and intuitive parent communication tools.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button class="cyber-button px-8 py-4 text-lg font-bold rounded-xl transition-all duration-300 transform hover:scale-105">
+                        Start Free Trial
+                    </button>
+                    <button class="glass px-8 py-4 text-lg font-semibold text-gray-700 rounded-xl transition-all duration-300 hover:bg-white/40">
+                        Watch Demo
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Floating Stats -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 reveal-scale">
+                <div class="glass-strong p-6 rounded-2xl card-3d">
+                    <div class="text-3xl font-bold text-orange-500 mb-2">500+</div>
+                    <div class="text-gray-600">Active Microschools</div>
+                </div>
+                <div class="glass-strong p-6 rounded-2xl card-3d">
+                    <div class="text-3xl font-bold text-orange-500 mb-2">15,000+</div>
+                    <div class="text-gray-600">Students Managed</div>
+                </div>
+                <div class="glass-strong p-6 rounded-2xl card-3d">
+                    <div class="text-3xl font-bold text-orange-500 mb-2">99.9%</div>
+                    <div class="text-gray-600">Uptime Guarantee</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-up">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                    Powerful Features for Modern <span class="text-glow">Education</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Everything you need to run a successful microschool, powered by cutting-edge technology and designed for educators.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1: AI-Powered Analytics -->
+                <div class="feature-card-1 p-8 rounded-3xl card-3d reveal-up text-white">
+                    <div class="text-4xl mb-6">🧠</div>
+                    <h3 class="text-2xl font-bold mb-4">AI-Powered Analytics</h3>
+                    <p class="text-white/90 mb-6">
+                        Advanced machine learning algorithms analyze student performance patterns, predict learning outcomes, and provide personalized recommendations for each student's educational journey.
+                    </p>
+                    <ul class="space-y-2 text-white/80">
+                        <li>• Predictive performance modeling</li>
+                        <li>• Personalized learning paths</li>
+                        <li>• Real-time progress tracking</li>
+                        <li>• Automated intervention alerts</li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 2: Seamless Compliance -->
+                <div class="feature-card-2 p-8 rounded-3xl card-3d reveal-up text-white">
+                    <div class="text-4xl mb-6">📋</div>
+                    <h3 class="text-2xl font-bold mb-4">Seamless Compliance</h3>
+                    <p class="text-white/90 mb-6">
+                        Automated compliance tracking ensures your microschool meets all state and federal requirements. Generate reports with one click and stay audit-ready at all times.
+                    </p>
+                    <ul class="space-y-2 text-white/80">
+                        <li>• Automated attendance tracking</li>
+                        <li>• State-compliant reporting</li>
+                        <li>• Digital record keeping</li>
+                        <li>• Audit trail management</li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 3: Parent Communication Hub -->
+                <div class="feature-card-3 p-8 rounded-3xl card-3d reveal-up text-white">
+                    <div class="text-4xl mb-6">💬</div>
+                    <h3 class="text-2xl font-bold mb-4">Parent Communication Hub</h3>
+                    <p class="text-white/90 mb-6">
+                        Keep parents engaged with real-time updates, progress reports, and seamless communication tools. Build stronger school-home partnerships effortlessly.
+                    </p>
+                    <ul class="space-y-2 text-white/80">
+                        <li>• Real-time notifications</li>
+                        <li>• Progress sharing portal</li>
+                        <li>• Secure messaging system</li>
+                        <li>• Event coordination tools</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Additional Features Grid -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass p-6 rounded-2xl card-3d reveal-scale">
+                    <div class="text-3xl mb-4">📚</div>
+                    <h4 class="text-lg font-semibold mb-2">Curriculum Management</h4>
+                    <p class="text-gray-600 text-sm">Organize and track curriculum across all subjects and grade levels.</p>
+                </div>
+                <div class="glass p-6 rounded-2xl card-3d reveal-scale">
+                    <div class="text-3xl mb-4">💰</div>
+                    <h4 class="text-lg font-semibold mb-2">Financial Tracking</h4>
+                    <p class="text-gray-600 text-sm">Comprehensive financial management and tuition tracking.</p>
+                </div>
+                <div class="glass p-6 rounded-2xl card-3d reveal-scale">
+                    <div class="text-3xl mb-4">📱</div>
+                    <h4 class="text-lg font-semibold mb-2">Mobile Access</h4>
+                    <p class="text-gray-600 text-sm">Full functionality on any device, anywhere, anytime.</p>
+                </div>
+                <div class="glass p-6 rounded-2xl card-3d reveal-scale">
+                    <div class="text-3xl mb-4">🔒</div>
+                    <h4 class="text-lg font-semibold mb-2">Enterprise Security</h4>
+                    <p class="text-gray-600 text-sm">Bank-level security with FERPA compliance built-in.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 relative holographic">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-up">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                    Trusted by <span class="text-glow">Educators</span> Worldwide
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    See how LearnHub.space is transforming microschool operations and empowering educators to focus on what matters most - teaching.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="glass-strong p-8 rounded-3xl card-3d reveal-up">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                            S
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-gray-900">Sarah Johnson</h4>
+                            <p class="text-gray-600 text-sm">Founder, Bright Minds Academy</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6">
+                        "LearnHub.space has completely transformed how we operate our microschool. The AI analytics help us identify struggling students early, and the compliance features save us hours every week."
+                    </p>
+                    <div class="flex text-orange-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="glass-strong p-8 rounded-3xl card-3d reveal-up">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                            M
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-gray-900">Michael Chen</h4>
+                            <p class="text-gray-600 text-sm">Director, Innovation Learning Hub</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6">
+                        "The parent communication features are incredible. Parents love getting real-time updates, and it's strengthened our school community significantly. Highly recommend!"
+                    </p>
+                    <div class="flex text-orange-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="glass-strong p-8 rounded-3xl card-3d reveal-up">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                            E
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-gray-900">Emily Rodriguez</h4>
+                            <p class="text-gray-600 text-sm">Principal, Future Leaders Academy</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6">
+                        "As someone who was skeptical about education technology, LearnHub.space won me over completely. It's intuitive, powerful, and actually makes our jobs easier."
+                    </p>
+                    <div class="flex text-orange-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats Section -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 reveal-scale">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-orange-500 mb-2">98%</div>
+                    <div class="text-gray-600">Customer Satisfaction</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-orange-500 mb-2">40hrs</div>
+                    <div class="text-gray-600">Time Saved Monthly</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-orange-500 mb-2">25%</div>
+                    <div class="text-gray-600">Improved Outcomes</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-orange-500 mb-2">24/7</div>
+                    <div class="text-gray-600">Support Available</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-up">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                    Simple, <span class="text-glow">Transparent</span> Pricing
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Choose the perfect plan for your microschool. All plans include our core features with no hidden fees.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Starter Plan -->
+                <div class="pricing-card-starter p-8 rounded-3xl card-3d reveal-up text-white relative">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold mb-4">Starter</h3>
+                        <div class="text-5xl font-black mb-2">$49</div>
+                        <div class="text-white/80">per month</div>
+                        <div class="text-sm text-white/70 mt-2">Up to 25 students</div>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-white mr-3"></i>
+                            <span>Basic attendance tracking</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-white mr-3"></i>
+                            <span>Parent communication portal</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-white mr-3"></i>
+                            <span>Basic reporting</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-white mr-3"></i>
+                            <span>Email support</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-white text-blue-600 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors duration-300">
+                        Start Free Trial
+                    </button>
+                </div>
+                
+                <!-- Pro Plan -->
+                <div class="pricing-card-pro p-8 rounded-3xl card-3d reveal-up text-white relative transform scale-105">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-white text-orange-600 px-6 py-2 rounded-full text-sm font-bold">
+                        Most Popular
+                    </div>
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold mb-4">Pro</h3>
+                        <div class="text-5xl font-black mb-2">$99</div>
+                        <div class="text-white/80">per month</div>
+                        <div class="text-sm text-white/70 mt-2">Up to 100 students</div>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-white mr-3"></i>
+                            <span>Everything in Starter</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-white mr-3"></i>
+                            <span>AI-powered analytics</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-white mr-3"></i>
+                            <span>Advanced compliance tools</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-white mr-3"></i>
+                            <span>Custom reporting</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-white mr-3"></i>
+                            <span>Priority support</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-white text-orange-600 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors duration-300">
+                        Start Free Trial
+                    </button>
+                </div>
+                
+                <!-- Enterprise Plan -->
+                <div class="pricing-card-enterprise p-8 rounded-3xl card-3d reveal-up text-white relative">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold mb-4">Enterprise</h3>
+                        <div class="text-5xl font-black mb-2">$199</div>
+                        <div class="text-white/80">per month</div>
+                        <div class="text-sm text-white/70 mt-2">Unlimited students</div>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-white mr-3"></i>
+                            <span>Everything in Pro</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-white mr-3"></i>
+                            <span>Multi-campus management</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-white mr-3"></i>
+                            <span>API access</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-white mr-3"></i>
+                            <span>Custom integrations</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-white mr-3"></i>
+                            <span>Dedicated support</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-white text-purple-600 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors duration-300">
+                        Contact Sales
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Money Back Guarantee -->
+            <div class="text-center mt-16 reveal-up">
+                <div class="glass-strong p-8 rounded-2xl inline-block">
+                    <div class="text-3xl mb-4">💯</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">30-Day Money-Back Guarantee</h3>
+                    <p class="text-gray-600">Try LearnHub.space risk-free. If you're not completely satisfied, we'll refund your money.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 relative holographic">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-up">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                    Ready to <span class="text-glow">Transform</span> Your Microschool?
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Join hundreds of educators who have revolutionized their microschool operations with LearnHub.space.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="glass-strong p-8 rounded-3xl reveal-up">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Get Started Today</h3>
+                    <form class="space-y-6" id="contact-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="first-name" class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                                <input type="text" id="first-name" name="first-name" required class="cyber-input w-full px-4 py-3 rounded-lg focus:outline-none">
+                            </div>
+                            <div>
+                                <label for="last-name" class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                                <input type="text" id="last-name" name="last-name" required class="cyber-input w-full px-4 py-3 rounded-lg focus:outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input type="email" id="email" name="email" required class="cyber-input w-full px-4 py-3 rounded-lg focus:outline-none">
+                        </div>
+                        <div>
+                            <label for="school-name" class="block text-sm font-medium text-gray-700 mb-2">School Name</label>
+                            <input type="text" id="school-name" name="school-name" required class="cyber-input w-full px-4 py-3 rounded-lg focus:outline-none">
+                        </div>
+                        <div>
+                            <label for="students" class="block text-sm font-medium text-gray-700 mb-2">Number of Students</label>
+                            <select id="students" name="students" required class="cyber-input w-full px-4 py-3 rounded-lg focus:outline-none">
+                                <option value="">Select range</option>
+                                <option value="1-25">1-25 students</option>
+                                <option value="26-50">26-50 students</option>
+                                <option value="51-100">51-100 students</option>
+                                <option value="100+">100+ students</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea id="message" name="message" rows="4" class="cyber-input w-full px-4 py-3 rounded-lg focus:outline-none" placeholder="Tell us about your microschool and how we can help..."></textarea>
+                        </div>
+                        <button type="submit" class="cyber-button w-full py-4 text-lg font-semibold rounded-xl transition-all duration-300">
+                            Start Your Free Trial
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Contact Information -->
+                <div class="space-y-8 reveal-up">
+                    <div class="glass-strong p-8 rounded-3xl">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white mr-4">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Email Us</h4>
+                                    <p class="text-gray-600">hello@learnhub.space</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white mr-4">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Call Us</h4>
+                                    <p class="text-gray-600">1-800-LEARNHUB</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white mr-4">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Support Hours</h4>
+                                    <p class="text-gray-600">24/7 Available</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ -->
+                    <div class="glass-strong p-8 rounded-3xl">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Quick Answers</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-2">How quickly can we get started?</h4>
+                                <p class="text-gray-600 text-sm">Most schools are up and running within 24 hours of signup.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-2">Do you offer training?</h4>
+                                <p class="text-gray-600 text-sm">Yes! We provide comprehensive onboarding and ongoing training.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-2">Is my data secure?</h4>
+                                <p class="text-gray-600 text-sm">Absolutely. We use bank-level encryption and are FERPA compliant.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="mb-6">
+                         <svg viewBox="0 0 400 120" class="w-48 h-16" xmlns="http://www.w3.org/2000/svg">
+                             <g transform="translate(10,10)">
+                                 <polygon points="60,0 70,40 100,40 75,60 85,100 60,75 35,100 45,60 20,40 50,40" fill="#f46530" opacity="0.98" />
+                                 <text x="130" y="67" font-family="Inter, Roboto, sans-serif" font-weight="700" font-size="48" fill="white">LearnHub.space</text>
+                             </g>
+                         </svg>
+                     </div>
+                     <p class="text-gray-300 mb-6 max-w-md">
+                         Empowering microschools with next-generation technology to create exceptional learning experiences for every student.
+                     </p>
+                     <div class="flex space-x-4">
+                         <a href="#" class="text-gray-400 hover:text-orange-500 transition-colors duration-200">
+                             <i class="fab fa-twitter text-xl"></i>
+                         </a>
+                         <a href="#" class="text-gray-400 hover:text-orange-500 transition-colors duration-200">
+                             <i class="fab fa-linkedin text-xl"></i>
+                         </a>
+                         <a href="#" class="text-gray-400 hover:text-orange-500 transition-colors duration-200">
+                             <i class="fab fa-facebook text-xl"></i>
+                         </a>
+                         <a href="#" class="text-gray-400 hover:text-orange-500 transition-colors duration-200">
+                             <i class="fab fa-instagram text-xl"></i>
+                         </a>
+                     </div>
+                 </div>
+                 
+                 <!-- Quick Links -->
+                 <div>
+                     <h3 class="text-lg font-semibold mb-6">Quick Links</h3>
+                     <ul class="space-y-3">
+                         <li><a href="#features" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Features</a></li>
+                         <li><a href="#pricing" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Pricing</a></li>
+                         <li><a href="#testimonials" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Testimonials</a></li>
+                         <li><a href="#contact" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Contact</a></li>
+                         <li><a href="#" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Blog</a></li>
+                         <li><a href="#" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Help Center</a></li>
+                     </ul>
+                 </div>
+                 
+                 <!-- Support -->
+                 <div>
+                     <h3 class="text-lg font-semibold mb-6">Support</h3>
+                     <ul class="space-y-3">
+                         <li><a href="#" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Documentation</a></li>
+                         <li><a href="#" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">API Reference</a></li>
+                         <li><a href="#" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Status Page</a></li>
+                         <li><a href="#" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Privacy Policy</a></li>
+                         <li><a href="#" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Terms of Service</a></li>
+                         <li><a href="#" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Security</a></li>
+                     </ul>
+                 </div>
+             </div>
+             
+             <!-- Bottom Footer -->
+             <div class="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                 <p class="text-gray-400 text-sm">
+                     © 2024 LearnHub.space. All rights reserved.
+                 </p>
+                 <div class="flex space-x-6 mt-4 md:mt-0">
+                     <a href="#" class="text-gray-400 hover:text-orange-500 text-sm transition-colors duration-200">Privacy</a>
+                     <a href="#" class="text-gray-400 hover:text-orange-500 text-sm transition-colors duration-200">Terms</a>
+                     <a href="#" class="text-gray-400 hover:text-orange-500 text-sm transition-colors duration-200">Cookies</a>
+                 </div>
+             </div>
+         </div>
+     </footer>
+
+     <!-- JavaScript -->
+     <script>
+         // Mobile menu toggle
+         document.getElementById('mobile-menu-button').addEventListener('click', function() {
+             const mobileMenu = document.getElementById('mobile-menu');
+             mobileMenu.classList.toggle('hidden');
+         });
+
+         // Smooth scrolling for navigation links
+         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+             anchor.addEventListener('click', function (e) {
+                 e.preventDefault();
+                 const target = document.querySelector(this.getAttribute('href'));
+                 if (target) {
+                     target.scrollIntoView({
+                         behavior: 'smooth',
+                         block: 'start'
+                     });
+                 }
+             });
+         });
+
+         // Scroll reveal animations
+         const observerOptions = {
+             threshold: 0.1,
+             rootMargin: '0px 0px -50px 0px'
+         };
+
+         const observer = new IntersectionObserver((entries) => {
+             entries.forEach(entry => {
+                 if (entry.isIntersecting) {
+                     entry.target.classList.add('revealed');
+                 }
+             });
+         }, observerOptions);
+
+         // Observe all reveal elements
+         document.querySelectorAll('.reveal-up, .reveal-scale').forEach(el => {
+             observer.observe(el);
+         });
+
+         // Particle system
+         function createParticles() {
+             const particlesContainer = document.getElementById('particles');
+             const particleCount = 50;
+
+             for (let i = 0; i < particleCount; i++) {
+                 const particle = document.createElement('div');
+                 particle.className = 'particle';
+                 particle.style.left = Math.random() * 100 + '%';
+                 particle.style.animationDelay = Math.random() * 30 + 's';
+                 particle.style.animationDuration = (Math.random() * 20 + 20) + 's';
+                 particlesContainer.appendChild(particle);
+             }
+         }
+
+         // Contact form handling
+         document.getElementById('contact-form').addEventListener('submit', function(e) {
+             e.preventDefault();
+             
+             // Get form data
+             const formData = new FormData(this);
+             const data = Object.fromEntries(formData);
+             
+             // Simulate form submission
+             const submitButton = this.querySelector('button[type="submit"]');
+             const originalText = submitButton.textContent;
+             
+             submitButton.textContent = 'Sending...';
+             submitButton.disabled = true;
+             
+             // Simulate API call
+             setTimeout(() => {
+                 submitButton.textContent = 'Message Sent!';
+                 submitButton.classList.add('success-pulse');
+                 
+                 // Reset form
+                 this.reset();
+                 
+                 setTimeout(() => {
+                     submitButton.textContent = originalText;
+                     submitButton.disabled = false;
+                     submitButton.classList.remove('success-pulse');
+                 }, 3000);
+             }, 2000);
+         });
+
+         // Initialize particles when page loads
+         document.addEventListener('DOMContentLoaded', function() {
+             createParticles();
+         });
+
+         // Add floating animation to elements
+         function addFloatingAnimation() {
+             const floatingElements = document.querySelectorAll('.card-3d');
+             floatingElements.forEach((element, index) => {
+                 element.style.animationDelay = (index * 0.2) + 's';
+                 if (index % 2 === 0) {
+                     element.style.animation = 'float-vertical 6s ease-in-out infinite';
+                 } else {
+                     element.style.animation = 'float-horizontal 8s ease-in-out infinite';
+                 }
+             });
+         }
+
+         // Initialize floating animations
+         setTimeout(addFloatingAnimation, 1000);
+
+         // Navbar background on scroll
+         window.addEventListener('scroll', function() {
+             const navbar = document.querySelector('nav');
+             if (window.scrollY > 50) {
+                 navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                 navbar.style.backdropFilter = 'blur(30px)';
+             } else {
+                 navbar.style.background = 'rgba(255, 255, 255, 0.35)';
+                 navbar.style.backdropFilter = 'blur(25px)';
+             }
+         });
+
+         // Add typing effect to hero text
+         function typeWriter(element, text, speed = 100) {
+             let i = 0;
+             element.innerHTML = '';
+             
+             function type() {
+                 if (i < text.length) {
+                     element.innerHTML += text.charAt(i);
+                     i++;
+                     setTimeout(type, speed);
+                 }
+             }
+             type();
+         }
+
+         // Initialize typing effect on page load
+         window.addEventListener('load', function() {
+             const heroTitle = document.querySelector('h1 .text-glow');
+             if (heroTitle) {
+                 const originalText = heroTitle.textContent;
+                 setTimeout(() => {
+                     typeWriter(heroTitle, originalText, 150);
+                 }, 1000);
+             }
+         });
+
+         // Add parallax effect to background elements
+         window.addEventListener('scroll', function() {
+             const scrolled = window.pageYOffset;
+             const parallaxElements = document.querySelectorAll('.neural-bg, .floating-elements');
+             
+             parallaxElements.forEach(element => {
+                 const speed = 0.5;
+                 element.style.transform = `translateY(${scrolled * speed}px)`;
+             });
+         });
+
+         // Add hover effects to feature cards
+         document.querySelectorAll('.feature-card-1, .feature-card-2, .feature-card-3').forEach(card => {
+             card.addEventListener('mouseenter', function() {
+                 this.style.transform = 'translateY(-10px) scale(1.02)';
+                 this.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.2)';
+             });
+             
+             card.addEventListener('mouseleave', function() {
+                 this.style.transform = 'translateY(0) scale(1)';
+                 this.style.boxShadow = '';
+             });
+         });
+
+         // Add click effects to buttons
+         document.querySelectorAll('.cyber-button').forEach(button => {
+             button.addEventListener('click', function(e) {
+                 const ripple = document.createElement('span');
+                 const rect = this.getBoundingClientRect();
+                 const size = Math.max(rect.width, rect.height);
+                 const x = e.clientX - rect.left - size / 2;
+                 const y = e.clientY - rect.top - size / 2;
+                 
+                 ripple.style.width = ripple.style.height = size + 'px';
+                 ripple.style.left = x + 'px';
+                 ripple.style.top = y + 'px';
+                 ripple.classList.add('ripple');
+                 
+                 this.appendChild(ripple);
+                 
+                 setTimeout(() => {
+                     ripple.remove();
+                 }, 600);
+             });
+         });
+
+         // Add CSS for ripple effect
+         const style = document.createElement('style');
+         style.textContent = `
+             .ripple {
+                 position: absolute;
+                 border-radius: 50%;
+                 background: rgba(255, 255, 255, 0.6);
+                 transform: scale(0);
+                 animation: ripple-animation 0.6s linear;
+                 pointer-events: none;
+             }
+             
+             @keyframes ripple-animation {
+                 to {
+                     transform: scale(4);
+                     opacity: 0;
+                 }
+             }
+         `;
+         document.head.appendChild(style);
+     </script>
+ </body>
+ </html>
