@@ -1,13 +1,7 @@
-import { NextResponse } from 'next/server';
-import { createClient } from '@/utils/supabase/middleware';
+import { updateSession } from '@/utils/supabase/middleware'
 
 export async function middleware(request) {
-  const { supabase, response } = createClient(request);
-
-  // Refresh session if expired - required for Server Components
-  await supabase.auth.getSession();
-
-  return response;
+  return await updateSession(request)
 }
 
 export const config = {
@@ -19,6 +13,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * Feel free to modify this pattern to include more paths.
      */
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    '/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)_next/static|_next/image|favicon.ico|.*\\..*$/',
   ],
-};
+}

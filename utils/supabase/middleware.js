@@ -1,13 +1,10 @@
-import { createServerClient } from '@supabase/ssr';
-import { NextResponse } from 'next/server';
+import { createServerClient } from '@supabase/ssr'
+import { NextResponse } from 'next/server'
 
-export const createClient = (request) => {
-  // Create an unmodified response
-  let response = NextResponse.next({
-    request: {
-      headers: request.headers,
-    },
-  });
+export async function updateSession(request) {
+  let supabaseResponse = NextResponse.next({
+    request,
+  })
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -15,39 +12,27 @@ export const createClient = (request) => {
     {
       cookies: {
         get(name) {
-          return request.cookies.get(name)?.value;
+          return request.cookies.get(name)?.value
         },
         set(name, value, options) {
-          // If the cookie is updated, update the cookies for the request and response
-          request.cookies.set({
+          supabaseResponse.cookies.set({
             name,
             value,
             ...options,
-          });
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            },
-          });
-          response.cookies.set({
-            name,
-            value,
-            ...options,
-          });
+          })
         },
         remove(name, options) {
-          // If the cookie is removed, update the cookies for the request and response
-          request.cookies.delete(name, options);
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            },
-          });
-          response.cookies.delete(name, options);
+          supabaseResponse.cookies.set({
+            name,
+            value: '',
+            ...options,
+          })
         },
       },
     }
-  );
+  )
 
-  return { supabase, response };
-};
+  const { data: { user } } = await supabase.auth.getUser()
+
+  return supabaseResponse
+}
