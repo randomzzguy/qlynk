@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
 import {  
@@ -14,7 +15,8 @@ export const dynamic = 'force-dynamic';
 
 export default async function PublicPage({ params }) {
   const { username } = params;
-  const supabase = createClient();
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
 
   // Fetch page data from Supabase
   const { data: page, error } = await supabase
