@@ -254,9 +254,9 @@ function SignupForm() {
         {/* Terms */}
         <p className="text-center text-sm text-beige mt-6">
           By signing up, you agree to our{' '}
-          <Link href="#" className="text-cream hover:underline">Terms of Service</Link>
+          <Link href="/terms" className="text-cream hover:underline">Terms of Service</Link>
           {' '}and{' '}
-          <Link href="#" className="text-cream hover:underline">Privacy Policy</Link>
+          <Link href="/privacy" className="text-cream hover:underline">Privacy Policy</Link>
         </p>
       </div>
     </div>
