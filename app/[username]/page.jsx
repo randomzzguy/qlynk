@@ -1,4 +1,4 @@
-import { getPageByUsername } from '@/lib/supabase';
+import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
 import {  
   ProfessionalTemplate,  
@@ -14,9 +14,14 @@ export const dynamic = 'force-dynamic';
 
 export default async function PublicPage({ params }) {
   const { username } = params;
+  const supabase = createClient();
 
   // Fetch page data from Supabase
-  const { data: page, error } = await getPageByUsername(username);
+  const { data: page, error } = await supabase
+    .from('pages')
+    .select('*')
+    .eq('username', username)
+    .single();
 
   if (error || !page) {
     notFound(); // Show 404 page
