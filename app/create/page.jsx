@@ -16,7 +16,7 @@ import {
   AuroraTemplate,
   BrutalistTemplate
 } from '@/components/Templates';
-import { getCurrentUser } from '@/lib/supabase';
+import { createClient } from '@/utils/supabase/client';
 // Background elements are now unified with the home page CSS (globals.css)
 
 const SOCIAL_PLATFORMS = [
@@ -85,7 +85,8 @@ export default function CreatePage() {
   // Check if user is logged in on mount
   useEffect(() => {
     const checkAuth = async () => {
-      const user = await getCurrentUser();
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         // Not logged in, redirect to signup
         router.push('/auth/signup');
