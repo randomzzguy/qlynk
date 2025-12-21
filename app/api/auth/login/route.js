@@ -4,17 +4,21 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
-  const { email, password } = await request.json();
+  try {
+    const { email, password } = await request.json();
 
-  const supabase = createRouteHandlerClient({ cookies });
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+    const supabase = createRouteHandlerClient({ cookies });
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 401 });
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 401 });
+    }
+
+    return NextResponse.json({ message: 'Login successful' });
+  } catch (error) {
+    return NextResponse.json({ error: 'An unexpected error occurred.' }, { status: 500 });
   }
-
-  return NextResponse.json({ message: 'Login successful' });
 }
