@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { signIn } from '@/lib/supabase';
+import { createClient } from '@/utils/supabase/client';
 import { LogIn, Eye, EyeOff } from 'lucide-react';
 import QlynkBackground from '@/components/QlynkBackground';
 
@@ -37,24 +37,13 @@ export default function LoginPage() {
     setLoading(true);
     setError('');
 
-    try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+    const supabase = createClient();
+    const { error } = await supabase.auth.signInWithPassword(formData);
 
-      const result = await response.json();
-
-      if (result.error) {
-        setError(result.error);
-      } else {
-        router.push('/');
-      }
-    } catch (error) {
-      setError('An unexpected error occurred. Please try again.');
+    if (error) {
+      setError(error.message);
+    } else {
+      router.push('/dashboard');
     }
 
     setLoading(false);

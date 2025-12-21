@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { supabase, checkUsernameAvailable, signUp } from '@/lib/supabase';
+import { createClient } from '@/utils/supabase/client';
 import { Sparkles, Eye, EyeOff } from 'lucide-react';
 import { Suspense } from 'react';
 import QlynkBackground from '@/components/QlynkBackground';
@@ -80,25 +80,22 @@ function SignupForm() {
     setLoading(true);
     setError('');
 
-    try {
-      const response = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+    const supabase = createClient();
+    const { error } = await supabase.auth.signUp({
+      email: formData.email,
+      password: formData.password,
+      options: {
+        data: {
+          username: formData.username,
         },
-        body: JSON.stringify({ ...formData, hcaptchaToken }),
-      });
+      },
+    });
 
-      const result = await response.json();
-
-      if (result.error) {
-        setError(result.error);
-      } else {
-        // On successful signup, redirect to login page with a success message
-        router.push('/auth/login?message=Signup successful! Please log in.');
-      }
-    } catch (error) {
-      setError('An unexpected error occurred. Please try again.');
+    if (error) {
+      setError(error.message);
+    } else {
+      // On successful signup, redirect to login page with a success message
+      router.push('/auth/login?message=Signup successful! Please check your email to verify your account.');
     }
 
     setLoading(false);
