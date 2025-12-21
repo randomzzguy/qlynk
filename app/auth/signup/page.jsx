@@ -80,21 +80,25 @@ function SignupForm() {
     setLoading(true);
     setError('');
 
-    const response = await fetch('/api/auth/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...formData, hcaptchaToken }),
-    });
+    try {
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...formData, hcaptchaToken }),
+      });
 
-    const result = await response.json();
+      const result = await response.json();
 
-    if (result.error) {
-      setError(result.error);
-    } else {
-      // On successful signup, redirect to login page with a success message
-      router.push('/auth/login?message=Signup successful! Please log in.');
+      if (result.error) {
+        setError(result.error);
+      } else {
+        // On successful signup, redirect to login page with a success message
+        router.push('/auth/login?message=Signup successful! Please log in.');
+      }
+    } catch (error) {
+      setError('An unexpected error occurred. Please try again.');
     }
 
     setLoading(false);
