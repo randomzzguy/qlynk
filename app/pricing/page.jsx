@@ -48,17 +48,17 @@ const PricingPage = () => {
     <div className="min-h-screen relative overflow-hidden">
       
 
-      <nav className="bg-white/85 border-b border-beige/30 sticky top-0 z-50 backdrop-blur-lg">
+      <nav className="bg-card/80 border-b border-border sticky top-0 z-50 backdrop-blur-lg">
         <div className="max-w-7xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
               <div className="relative">
-                <Image width={125} height={50} src="/assets/logo.svg" alt="qlynk logo" priority />
+                <Image width={140} height={40} src="/assets/logoWhite.svg" alt="qlynk logo" priority />
               </div>
             </Link>
             <Link 
               href="/auth/login"
-              className="text-charcoal hover:text-dark-grey font-semibold transition-colors"
+              className="text-cream hover:text-bright-orange font-semibold transition-colors"
             >
               Sign In
             </Link>
@@ -72,10 +72,10 @@ const PricingPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-5xl lg:text-6xl font-black text-cream mb-6">
-            Choose Your <span className="text-orange">Plan</span>
+          <h1 className="text-5xl lg:text-6xl font-black text-foreground mb-6">
+            Choose Your <span className="text-bright-orange">Plan</span>
           </h1>
-          <p className="text-xl text-cream/80 max-w-2xl mx-auto mb-12">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-12">
             Start free, then upgrade when you're ready to unlock premium themes and advanced features
           </p>
         </motion.div>
@@ -89,16 +89,16 @@ const PricingPage = () => {
             transition={{ delay: 0.2 }}
           >
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-cream mb-2">Free</h3>
-              <div className="text-4xl font-black text-cream mb-2">$0</div>
-              <p className="text-cream/80">Forever</p>
+              <h3 className="text-2xl font-bold text-foreground mb-2">Free</h3>
+              <div className="text-4xl font-black text-foreground mb-2">$0</div>
+              <p className="text-muted-foreground">Forever</p>
             </div>
             
             <ul className="space-y-4 mb-8">
               {freeFeatures.map((feature, index) => (
                 <li key={index} className="flex items-center gap-3">
-                  <Check className="text-orange" size={20} />
-                  <span className="text-cream">{feature}</span>
+                  <Check className="text-bright-orange" size={20} />
+                  <span className="text-muted-foreground">{feature}</span>
                 </li>
               ))}
             </ul>
@@ -128,18 +128,18 @@ const PricingPage = () => {
             
             <div className="text-center mb-8">
               <div className="flex items-center justify-center gap-2 mb-2">
-                <Crown className="text-orange" size={24} />
-                <h3 className="text-2xl font-bold text-cream">Pro</h3>
+                <Crown className="text-bright-orange" size={24} />
+                <h3 className="text-2xl font-bold text-foreground">Pro</h3>
               </div>
-              <div className="text-4xl font-black text-cream mb-2">$9</div>
-              <p className="text-cream/80">per month</p>
+              <div className="text-4xl font-black text-foreground mb-2">$9</div>
+              <p className="text-muted-foreground">per month</p>
             </div>
             
             <ul className="space-y-4 mb-8">
               {proFeatures.map((feature, index) => (
                 <li key={index} className="flex items-center gap-3">
-                  <Check className="text-orange" size={20} />
-                  <span className="text-cream">
+                  <Check className="text-bright-orange" size={20} />
+                  <span className="text-muted-foreground">
                     {feature}
                   </span>
                 </li>
@@ -162,8 +162,8 @@ const PricingPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
         >
-          <h2 className="text-3xl font-black text-cream mb-8 text-center">
-            Premium <span className="text-orange">Themes</span>
+          <h2 className="text-3xl font-black text-foreground mb-8 text-center">
+            Premium <span className="text-bright-orange">Themes</span>
           </h2>
           
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
@@ -178,9 +178,9 @@ const PricingPage = () => {
               >
                 <div className="flex items-center gap-3 mb-3">
                   {theme.icon}
-                  <h3 className="font-bold text-cream">{theme.name}</h3>
+                  <h3 className="font-bold text-foreground">{theme.name}</h3>
                 </div>
-                <p className="text-cream/80 text-sm">{theme.description}</p>
+                <p className="text-muted-foreground text-sm">{theme.description}</p>
               </motion.div>
             ))}
           </div>
@@ -193,12 +193,12 @@ const PricingPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1 }}
         >
-          <h2 className="text-3xl font-black text-cream mb-8 text-center">Frequently Asked Questions</h2>
+          <h2 className="text-3xl font-black text-foreground mb-8 text-center">Frequently Asked Questions</h2>
           
           <div className="space-y-6">
             <div className="semi-translucent-card rounded-xl p-6">
-              <h3 className="font-bold text-cream mb-2">Can I switch plans later?</h3>
-              <p className="text-cream/80">Yes! You can upgrade to Pro at any time. Downgrades take effect at the end of your billing cycle.</p>
+              <h3 className="font-bold text-foreground mb-2">Can I switch plans later?</h3>
+              <p className="text-muted-foreground">Yes! You can upgrade to Pro at any time. Downgrades take effect at the end of your billing cycle.</p>
             </div>
             
             <div className="semi-translucent-card rounded-xl p-6">
@@ -230,10 +230,10 @@ const PricingPage = () => {
         </motion.div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-200 bg-gray-50 mt-20 relative z-10">
+        {/* Footer */}
+      <footer className="border-t border-border bg-card mt-20 relative z-10">
         <div className="max-w-7xl mx-auto px-6 py-10 text-center">
-          <p className="text-panel-grey">© 2025 qlynk. Your presence, in a blink.</p>
+          <p className="text-muted-foreground">© 2025 qlynk. Your presence, in a blink.</p>
         </div>
       </footer>
     </div>

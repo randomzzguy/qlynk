@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { ArrowRight, Zap, Palette, Shield, BarChart3, Sparkles } from 'lucide-react';
 
 export default function HomePage() {
@@ -65,7 +66,7 @@ export default function HomePage() {
   }, [text, isDeleting, loopNum, words]);
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] text-[#2a2e30] overflow-hidden relative">
+    <div className="min-h-screen overflow-hidden relative">
       {/* Enhanced Professional Background Effects */}
       <div className="fixed inset-0 pointer-events-none z-0">
         {/* Particle System */}
@@ -141,18 +142,20 @@ export default function HomePage() {
       </div>
 
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-lg border-b border-gray-200/50">
+      <nav className="fixed top-0 w-full z-50 bg-card/80 backdrop-blur-lg border-b border-border/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <div className="text-2xl font-bold text-[#f46530]">qlynk</div>
+              <a href="/" className="flex items-center">
+                <Image src="/assets/logoWhite.svg" alt="qlynk logo" width={140} height={40} priority />
+              </a>
             </div>
             
             <div className="hidden md:flex items-center space-x-4">
-              <a href="/auth/login" className="text-[#2a2e30] hover:text-[#f46530] px-4 py-2 text-sm font-semibold transition-colors">
+              <a href="/auth/login" className="text-cream hover:text-bright-orange px-4 py-2 text-sm font-semibold transition-colors">
                 Log in
               </a>
-              <a href="/auth/signup" className="bg-[#f46530] hover:bg-[#c14f22] text-white px-6 py-2.5 rounded-lg font-bold transition-all">
+              <a href="/auth/signup" className="semi-translucent-button text-cream px-6 py-2.5 rounded-lg font-bold transition-all">
                 Get Started
               </a>
             </div>
@@ -183,16 +186,16 @@ export default function HomePage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center relative z-10 pt-16">
+      <section className="min-h-screen flex items-center justify-center relative z-10 pt-16 text-foreground">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 mb-8 px-4 py-2.5 bg-[#f46530]/10 border border-[#f46530]/20 text-[#f46530] rounded-full text-sm font-semibold">
+          <div className="inline-flex items-center gap-2 mb-8 px-4 py-2.5 bg-primary/10 border border-border text-bright-orange rounded-full text-sm font-semibold">
             <Sparkles size={16} className="text-[#f46530]" />
             Your presence, in a blink
           </div>
           
           {/* Main Headline */}
-          <h1 className="text-5xl md:text-7xl font-black mb-6 leading-[1.1] tracking-tight text-[#2a2e30]">
+          <h1 className="text-5xl md:text-7xl font-black mb-6 leading-[1.1] tracking-tight">
             Built for{' '}
             <span className="text-[#f46530]">
               {text}
@@ -201,7 +204,7 @@ export default function HomePage() {
           </h1>
           
           {/* Subheadline */}
-          <p className="text-xl md:text-2xl text-[#474c4e] mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl mb-10 max-w-2xl mx-auto leading-relaxed text-muted-foreground">
             Create a stunning personal webpage in minutes. No coding, no design skills needed. 
             Just answer a few questions and let <span className="font-bold text-[#f46530]">qlynk</span> do the magic.
           </p>
@@ -210,14 +213,15 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
             <a 
               href="/create"
-              className="group inline-flex items-center justify-center gap-2 bg-[#f46530] text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#c14f22] transition-all hover:shadow-lg hover:shadow-[#f46530]/30 hover:-translate-y-0.5"
+              className="group inline-flex items-center justify-center gap-2 semi-translucent-button text-cream px-8 py-4 rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-orange/30 hover:-translate-y-0.5"
+              style={{ '--tw-bg-opacity': 1 }}
             >
               Start Building Free
               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </a>
             <a 
               href="#how-it-works"
-              className="inline-flex items-center justify-center bg-white border-2 border-gray-200 text-[#2a2e30] px-8 py-4 rounded-lg font-bold text-lg hover:border-gray-300 hover:bg-gray-50 transition-all hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center bg-card/80 border-2 border-border text-foreground px-8 py-4 rounded-lg font-bold text-lg hover:border-border hover:bg-card/90 transition-all hover:-translate-y-0.5"
             >
               See How It Works
             </a>
@@ -225,17 +229,17 @@ export default function HomePage() {
 
           {/* Stats Cards */}
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-gray-200 hover:shadow-lg transition-all">
-              <div className="text-3xl font-bold mb-2 text-[#f46530]">500+</div>
-              <div className="text-[#474c4e]">Active Users</div>
+            <div className="bg-card/80 backdrop-blur-sm p-6 rounded-2xl border border-border hover:shadow-lg transition-all">
+              <div className="text-3xl font-bold mb-2 text-bright-orange">500+</div>
+              <div className="text-muted-foreground">Active Users</div>
             </div>
-            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-gray-200 hover:shadow-lg transition-all">
-              <div className="text-3xl font-bold mb-2 text-[#f46530]">15K+</div>
-              <div className="text-[#474c4e]">Pages Created</div>
+            <div className="bg-card/80 backdrop-blur-sm p-6 rounded-2xl border border-border hover:shadow-lg transition-all">
+              <div className="text-3xl font-bold mb-2 text-bright-orange">15K+</div>
+              <div className="text-muted-foreground">Pages Created</div>
             </div>
-            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-gray-200 hover:shadow-lg transition-all">
-              <div className="text-3xl font-bold mb-2 text-[#f46530]">99.9%</div>
-              <div className="text-[#474c4e]">Uptime</div>
+            <div className="bg-card/80 backdrop-blur-sm p-6 rounded-2xl border border-border hover:shadow-lg transition-all">
+              <div className="text-3xl font-bold mb-2 text-bright-orange">99.9%</div>
+              <div className="text-muted-foreground">Uptime</div>
             </div>
           </div>
         </div>
@@ -247,7 +251,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 relative z-10 bg-[#f2f2f2]">
+      <section className="py-20 relative z-10 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-white rounded-xl p-8 hover:shadow-lg hover:shadow-[#f46530]/20 hover:scale-105 hover:border-[#f46530] transition-all duration-300 group border border-gray-200">
@@ -338,7 +342,7 @@ export default function HomePage() {
       {/* Final CTA Section */}
       <section className="py-20 relative z-10 bg-[#f2f2f2]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-16 text-center shadow-2xl relative overflow-hidden border border-gray-200">
+            <div className="bg-card/80 backdrop-blur-sm rounded-2xl p-16 text-center shadow-2xl relative overflow-hidden border border-border">
             {/* Accent glow */}
             <div className="absolute -top-20 -left-20 w-40 h-40 bg-[#f46530]/30 rounded-full blur-3xl"></div>
             <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-[#f46530]/30 rounded-full blur-3xl"></div>
@@ -364,10 +368,12 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 bg-[#2a2e30] text-white relative z-10">
+      <footer className="py-12 bg-card text-foreground relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-2xl font-bold text-[#f46530]">qlynk</div>
+            <div>
+              <Image src="/assets/logoWhite.svg" alt="qlynk logo" width={140} height={36} priority />
+            </div>
             <div className="text-gray-400 text-sm">
               © 2025 qlynk. Your presence, in a blink.
             </div>

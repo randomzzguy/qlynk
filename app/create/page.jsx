@@ -100,10 +100,10 @@ export default function CreatePage() {
   // Show loading while checking auth
   if (checkingAuth) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-bright-orange border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-panel-grey font-semibold">Loading...</p>
+          <p className="text-muted-foreground font-semibold">Loading...</p>
         </div>
       </div>
     );
@@ -722,11 +722,11 @@ const ThemeSelector = ({ selectedTheme, onThemeSelect, userIsPremium }) => {
       
 
       {/* Header */}
-      <div className="bg-white/85 border-b border-beige/30 sticky top-0 z-40 backdrop-blur-lg">
+      <div className="bg-card/80 border-b border-border sticky top-0 z-40 backdrop-blur-lg">
         <div className="max-w-7xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3 group">
-              <Image width={125} height={50} src="/assets/logo.svg" alt="qlynk logo" priority />
+              <Image width={125} height={50} src="/assets/logoWhite.svg" alt="qlynk logo" priority />
             </Link>
             <div className="flex items-center gap-4">
               <div className="hidden md:block text-sm font-bold text-charcoal">

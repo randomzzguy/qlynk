@@ -84,17 +84,17 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-bright-orange border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-panel-grey font-semibold">Loading your dashboard...</p>
+          <p className="text-muted-foreground font-semibold">Loading your dashboard...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex bg-gray-50">
+    <div className="min-h-screen flex bg-background">
       <DashboardSidebar onSignOut={handleSignOut} />
       <main className="flex-1">
         <div className="max-w-7xl mx-auto px-6 py-12">
@@ -113,7 +113,7 @@ export default function DashboardPage() {
             /* User has a page */
             <div className="space-y-6">
               {/* Page Card */}
-              <div className="bg-white rounded-2xl shadow-lg border-2 border-gray-100 p-8">
+                <div className="bg-card/80 rounded-2xl shadow-lg border-2 border-border p-8">
                 <div className="flex items-start justify-between mb-6">
                   <div>
                     <h2 className="text-2xl font-black text-charcoal mb-2">Your Qlynk Page</h2>
@@ -181,25 +181,25 @@ export default function DashboardPage() {
 
               {/* Stats */}
               <div className="grid md:grid-cols-3 gap-6">
-                <div className="bg-white rounded-xl shadow-md border border-gray-200 p-6">
+                <div className="bg-card/80 rounded-xl shadow-md border border-border p-6">
                   <div className="text-4xl font-black text-bright-orange mb-2">
                     {page.page_views || 0}
                   </div>
-                  <div className="text-panel-grey font-semibold">Total Page Views</div>
+                  <div className="text-muted-foreground font-semibold">Total Page Views</div>
                 </div>
 
-                <div className="bg-white rounded-xl shadow-md border border-gray-200 p-6">
+                <div className="bg-card/80 rounded-xl shadow-md border border-border p-6">
                   <div className="text-4xl font-black text-cyan-blue mb-2">
                     {page.social_links?.length || 0}
                   </div>
-                  <div className="text-panel-grey font-semibold">Social Links</div>
+                  <div className="text-muted-foreground font-semibold">Social Links</div>
                 </div>
 
-                <div className="bg-white rounded-xl shadow-md border border-gray-200 p-6">
+                <div className="bg-card/80 rounded-xl shadow-md border border-border p-6">
                   <div className="text-4xl font-black text-green mb-2">
                     {page.custom_links?.length || 0}
                   </div>
-                  <div className="text-panel-grey font-semibold">Custom Links</div>
+                  <div className="text-muted-foreground font-semibold">Custom Links</div>
                 </div>
               </div>
 

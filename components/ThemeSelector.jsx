@@ -86,24 +86,24 @@ const ThemeSelector = ({ selectedTheme, onThemeChange, isPremium = false }) => {
     <>
       <div className="space-y-6">
         <div className="text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">Choose Your Theme</h3>
-          <p className="text-gray-600">Select a design that matches your style</p>
+          <h3 className="text-2xl font-bold text-foreground mb-2">Choose Your Theme</h3>
+          <p className="text-muted-foreground">Select a design that matches your style</p>
         </div>
 
         {/* Premium indicator */}
         {!isPremium && (
           <motion.div 
-            className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl p-4 border border-purple-200 cursor-pointer"
+            className="rounded-xl p-4 border border-border cursor-pointer bg-card/80"
             onClick={() => setShowPremiumModal(true)}
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <Crown className="text-purple-600" size={24} />
+                <Crown className="text-bright-orange" size={24} />
                 <div>
-                  <h4 className="font-bold text-purple-900">Upgrade to Pro</h4>
-                  <p className="text-purple-700 text-sm">Unlock 3 premium themes with advanced animations</p>
+                  <h4 className="font-bold text-foreground">Upgrade to Pro</h4>
+                  <p className="text-muted-foreground text-sm">Unlock 3 premium themes with advanced animations</p>
                 </div>
               </div>
               <PremiumBadge />
@@ -118,15 +118,15 @@ const ThemeSelector = ({ selectedTheme, onThemeChange, isPremium = false }) => {
               key={key}
               className={`relative rounded-xl p-4 border-2 cursor-pointer transition-all ${
                 selectedTheme === key
-                  ? 'border-orange-500 shadow-lg'
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? 'border-bright-orange shadow-lg bg-card/80'
+                  : 'border-border hover:border-border bg-card/70'
               } ${theme.isPremium && !isPremium ? 'opacity-75' : ''}`}
               onClick={() => handleThemeClick(key)}
               whileHover={{ scale: theme.isPremium && !isPremium ? 1 : 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               {/* Preview */}
-              <div className={`h-24 rounded-lg mb-3 ${theme.preview} relative overflow-hidden`}>
+              <div className={`h-24 rounded-lg mb-3 ${theme.preview} relative overflow-hidden border border-border`}> 
                 {theme.isPremium && !isPremium && (
                   <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
                     <Lock className="text-white" size={24} />
@@ -142,10 +142,10 @@ const ThemeSelector = ({ selectedTheme, onThemeChange, isPremium = false }) => {
               {/* Theme info */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <h4 className="font-bold text-gray-900">{theme.name}</h4>
+                  <h4 className="font-bold text-foreground">{theme.name}</h4>
                   {theme.isPremium && <PremiumBadge />}
                 </div>
-                <p className="text-gray-600 text-sm">{theme.description}</p>
+                <p className="text-muted-foreground text-sm">{theme.description}</p>
                 
                 {/* Premium features */}
                 {theme.isPremium && theme.features && (
