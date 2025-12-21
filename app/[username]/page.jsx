@@ -13,8 +13,8 @@ import {
 export const dynamic = 'force-dynamic';
 
 export default async function PublicPage({ params }) {
-  const { username } = params;
-  const supabase = createClient();
+  const { username } = await params;
+  const supabase = await createClient();
 
   // Fetch page data from Supabase
   const { data: page, error } = await supabase
