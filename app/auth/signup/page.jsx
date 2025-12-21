@@ -80,46 +80,24 @@ function SignupForm() {
     setLoading(true);
     setError('');
 
-    try {
-      const available = await checkUsernameAvailable(formData.username);
-      if (!available) {
-        setError('Username already taken');
-        setLoading(false);
-        return;
-      }
-      
-      const { email, password, username } = Object.fromEntries(formData);
+    const response = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...formData, hcaptchaToken }),
+    });
 
-      if (!hcaptchaToken) {
-        setErrorMessage('Please complete the hCaptcha verification.');
-        setLoading(false);
-        return;
-      }
+    const result = await response.json();
 
-      const response = await fetch('/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password, username, hcaptchaToken }),
-      });
-
-      const result = await response.json();
-
-      if (result.error) {
-        setErrorMessage(result.error);
-      } else {
-        setSuccessMessage(result.message);
-        router.push('/auth/login');
-      }
-
-      setLoading(false);
-      setNeedsVerification(true);
-      setLoading(false);
-    } catch (err) {
-      setError('An unexpected error occurred. Please try again.');
-      setLoading(false);
+    if (result.error) {
+      setError(result.error);
+    } else {
+      // On successful signup, redirect to login page with a success message
+      router.push('/auth/login?message=Signup successful! Please log in.');
     }
+
+    setLoading(false);
   };
 
   return (
