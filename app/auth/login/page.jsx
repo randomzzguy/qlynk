@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { signIn, supabase } from '@/lib/supabase';
+import { signIn } from '@/lib/supabase';
 import { LogIn, Eye, EyeOff } from 'lucide-react';
 import QlynkBackground from '@/components/QlynkBackground';
 
@@ -17,7 +17,6 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [linkSent, setLinkSent] = useState(false);
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -55,31 +54,6 @@ export default function LoginPage() {
     }
   };
 
-  const handleMagicLink = async () => {
-    if (!formData.email) {
-      setError('Please enter your email');
-      return;
-    }
-    setLoading(true);
-    setError('');
-    try {
-      const { error } = await supabase.auth.signInWithOtp({
-        email: formData.email,
-        options: { emailRedirectTo: `${window.location.origin}/dashboard` }
-      });
-      if (error) {
-        setError(error.message);
-        setLoading(false);
-        return;
-      }
-      setLinkSent(true);
-      setLoading(false);
-    } catch (err) {
-      setError('An unexpected error occurred. Please try again.');
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="min-h-screen relative overflow-hidden flex items-center justify-center py-12 px-6">
       <QlynkBackground />
@@ -88,7 +62,7 @@ export default function LoginPage() {
         {/* Logo */}
         <Link href="/" className="flex items-center justify-center mb-8 group">
           <Image
-            src="/assets/logo.svg"
+            src="/logoWhite.svg"
             alt="qlynk logo"
             width={125}
             height={50}
@@ -107,11 +81,6 @@ export default function LoginPage() {
           {error && (
             <div className="mb-6 p-4 bg-red-50 border-2 border-red-200 rounded-xl text-red-700 text-sm">
               {error}
-            </div>
-          )}
-          {linkSent && (
-            <div className="mb-6 p-4 bg-green/10 border-2 border-green/20 rounded-xl text-green text-sm">
-              Magic link sent. Check your email.
             </div>
           )}
 
@@ -186,35 +155,16 @@ export default function LoginPage() {
                 </>
               )}
             </button>
-
-            <div className="mt-4 text-center">
-              <button
-                type="button"
-                onClick={handleMagicLink}
-                disabled={loading}
-                className="text-orange font-semibold hover:underline"
-              >
-                Send magic link instead
-              </button>
-            </div>
           </form>
 
-          {/* Divider */}
-          <div className="mt-8 text-center">
+          <div className="mt-6 text-center">
             <p className="text-beige">
-              Don&apos;t have an account?{' '}
-              <Link href="/auth/signup" className="text-orange font-bold hover:underline">
+              Don't have an account?{' '}
+              <Link href="/auth/signup" className="font-bold text-orange hover:underline">
                 Sign up
               </Link>
             </p>
           </div>
-        </div>
-
-        {/* Back to home */}
-        <div className="text-center mt-6">
-          <Link href="/" className="text-beige hover:text-cream transition-colors text-sm">
-            ← Back to home
-          </Link>
         </div>
       </div>
     </div>

@@ -1,25 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { supabase, checkUsernameAvailable } from '@/lib/supabase';
+import { supabase, checkUsernameAvailable, signUp } from '@/lib/supabase';
 import { Sparkles, Eye, EyeOff } from 'lucide-react';
 import { Suspense } from 'react';
 import QlynkBackground from '@/components/QlynkBackground';
+import HCaptcha from '@hcaptcha/react-hcaptcha';
 
 function SignupForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
     username: searchParams.get('username') || '',
-    email: searchParams.get('email') || ''
+    email: searchParams.get('email') || '',
+    password: ''
   });
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [needsVerification, setNeedsVerification] = useState(false);
+  const [hcaptchaToken, setHcaptchaToken] = useState(null);
+  const captchaRef = useRef(null);
+
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -30,7 +36,7 @@ function SignupForm() {
   };
 
   const validateForm = () => {
-    if (!formData.username || !formData.email) {
+    if (!formData.username || !formData.email || !formData.password) {
       setError('All fields are required');
       return false;
     }
@@ -52,6 +58,17 @@ function SignupForm() {
       return false;
     }
 
+    // Password validation
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters long');
+      return false;
+    }
+
+    if (!hcaptchaToken) {
+      setError('Please verify you are human.');
+      return false;
+    }
+
     return true;
   };
 
@@ -70,14 +87,9 @@ function SignupForm() {
         setLoading(false);
         return;
       }
-      localStorage.setItem('qlynk_pending_username', formData.username);
-      const { error } = await supabase.auth.signInWithOtp({
-        email: formData.email,
-        options: {
-          emailRedirectTo: `${window.location.origin}/create`,
-          shouldCreateUser: true
-        }
-      });
+      
+      const { error } = await signUp(formData.email, formData.password, formData.username, hcaptchaToken);
+
       if (error) {
         setError(error.message);
         setLoading(false);
@@ -99,7 +111,7 @@ function SignupForm() {
         {/* Logo */}
         <Link href="/" className="flex items-center justify-center mb-8 group">
           <Image
-            src="/assets/logo.svg"
+            src="/logoWhite.svg"
             alt="qlynk logo"
             width={125}
             height={50}
@@ -139,7 +151,7 @@ function SignupForm() {
                 disabled={loading}
               />
               <p className="text-xs text-white mt-1.5 ml-1">
-                Your page will be at: qlynk.site/{formData.username || 'username'}
+                Your page will be at: qlynk.link/{formData.username || 'username'}
               </p>
             </div>
 
@@ -160,7 +172,37 @@ function SignupForm() {
               />
             </div>
 
-            
+            {/* Password */}
+            <div>
+                <label htmlFor="password" className="block font-bold text-cream mb-2">
+                  Password
+                </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="••••••••"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all pr-12"
+                  disabled={loading}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-panel-grey hover:text-charcoal transition-colors"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+            </div>
+
+            <HCaptcha
+                sitekey="50b2fe65-b00b-4b9e-ad66-42595e6b38d2"
+                onVerify={setHcaptchaToken}
+                ref={captchaRef}
+            />
 
             {/* Submit Button */}
             <button
@@ -188,19 +230,13 @@ function SignupForm() {
           ) : (
             <div className="space-y-5 text-center">
               <h2 className="text-2xl font-black text-cream">Check Your Email</h2>
-              <p className="text-beige">We sent a magic link to {formData.email}. Open it to sign in and continue.</p>
+              <p className="text-beige">We sent a verification link to {formData.email}. Open it to sign in and continue.</p>
               <div className="flex items-center justify-center gap-4">
                 <button
                   onClick={() => router.push('/auth/login')}
                   className="semi-translucent-button text-cream px-6 py-3 rounded-xl font-bold"
                 >
                   Log In
-                </button>
-                <button
-                  onClick={() => setNeedsVerification(false)}
-                  className="semi-translucent-button-secondary text-cream px-6 py-3 rounded-xl font-bold"
-                >
-                  Back
                 </button>
               </div>
             </div>
@@ -221,7 +257,7 @@ function SignupForm() {
         <p className="text-center text-sm text-beige mt-6">
           By signing up, you agree to our{' '}
           <Link href="#" className="text-cream hover:underline">Terms of Service</Link>
-          {' '}and{' '}
+          {' '}}and{' '}
           <Link href="#" className="text-cream hover:underline">Privacy Policy</Link>
         </p>
       </div>
