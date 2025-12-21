@@ -88,13 +88,32 @@ function SignupForm() {
         return;
       }
       
-      const { error } = await signUp(formData.email, formData.password, formData.username, hcaptchaToken);
+      const { email, password, username } = Object.fromEntries(formData);
 
-      if (error) {
-        setError(error.message);
+      if (!hcaptchaToken) {
+        setErrorMessage('Please complete the hCaptcha verification.');
         setLoading(false);
         return;
       }
+
+      const response = await fetch('/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password, username, hcaptchaToken }),
+      });
+
+      const result = await response.json();
+
+      if (result.error) {
+        setErrorMessage(result.error);
+      } else {
+        setSuccessMessage(result.message);
+        router.push('/auth/login');
+      }
+
+      setLoading(false);
       setNeedsVerification(true);
       setLoading(false);
     } catch (err) {

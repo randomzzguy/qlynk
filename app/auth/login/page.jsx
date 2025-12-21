@@ -52,6 +52,23 @@ export default function LoginPage() {
       setError('An unexpected error occurred. Please try again.');
       setLoading(false);
     }
+    const response = await fetch('/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const result = await response.json();
+
+    if (result.error) {
+      setErrorMessage(result.error);
+    } else {
+      router.push('/');
+    }
+
+    setLoading(false);
   };
 
   return (
