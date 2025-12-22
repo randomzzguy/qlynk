@@ -163,7 +163,7 @@ const handleSubmit = async (e) => {
                 value={formData.username}
                 onChange={handleChange}
                 placeholder="your-username"
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all"
+                className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all"
                 disabled={loading}
               />
               <p className="text-xs text-white mt-1.5 ml-1">
@@ -183,7 +183,7 @@ const handleSubmit = async (e) => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="your@email.com"
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all"
+                className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all"
                 disabled={loading}
               />
             </div>
@@ -201,7 +201,7 @@ const handleSubmit = async (e) => {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all pr-12"
+                  className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all pr-12"
                   disabled={loading}
                 />
                 <button

@@ -92,7 +92,7 @@ export default function LoginPage() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="your@email.com"
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all"
+                className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all"
                 disabled={loading}
               />
             </div>
@@ -115,7 +115,7 @@ export default function LoginPage() {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all pr-12"
+                  className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all pr-12"
                   disabled={loading}
                 />
                 <button
