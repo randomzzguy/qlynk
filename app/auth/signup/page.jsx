@@ -72,34 +72,52 @@ function SignupForm() {
     return true;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (!validateForm()) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!validateForm()) return;
 
-    setLoading(true);
-    setError('');
+  setLoading(true);
+  setError('');
 
-    const supabase = createClient();
-    const { error } = await supabase.auth.signUp({
-      email: formData.email,
-      password: formData.password,
-      options: {
-        data: {
-          username: formData.username,
-        },
-      },
+  // VERIFY hCaptcha token on the server before creating account
+  try {
+    const verifyRes = await fetch('/api/hcaptcha/verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: hcaptchaToken }),
     });
-
-    if (error) {
-      setError(error.message);
-    } else {
-      // On successful signup, redirect to login page with a success message
-      router.push('/auth/login?message=Signup successful! Please check your email to verify your account.');
+    const verifyData = await verifyRes.json();
+    if (!verifyRes.ok || !verifyData.success) {
+      setError(verifyData.error || 'hCaptcha verification failed');
+      if (captchaRef?.current?.reset) captchaRef.current.reset();
+      setLoading(false);
+      return;
     }
-
+  } catch (err) {
+    setError('Unable to verify hCaptcha. Please try again.');
+    if (captchaRef?.current?.reset) captchaRef.current.reset();
     setLoading(false);
-  };
+    return;
+  }
+
+  // Proceed with signup once verification succeeds
+  const supabase = createClient();
+  const { error } = await supabase.auth.signUp({
+    email: formData.email,
+    password: formData.password,
+    options: {
+      data: { username: formData.username },
+    },
+  });
+
+  if (error) {
+    setError(error.message);
+  } else {
+    router.push('/auth/login?message=Signup successful! Please check your email to verify your account.');
+  }
+
+  setLoading(false);
+};
 
   return (
     <div className="min-h-screen relative overflow-hidden flex items-center justify-center py-12 px-6">
@@ -196,11 +214,11 @@ function SignupForm() {
               </div>
             </div>
 
-            <HCaptcha
-                sitekey="50b2fe65-b00b-4b9e-ad66-42595e6b38d2"
-                onVerify={setHcaptchaToken}
-                ref={captchaRef}
-            />
+              <HCaptcha
+            sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
+            onVerify={setHcaptchaToken}
+            ref={captchaRef}
+          />
 
             {/* Submit Button */}
             <button
