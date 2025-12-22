@@ -26,6 +26,13 @@ function SignupForm() {
   const [hcaptchaToken, setHcaptchaToken] = useState(null);
   const captchaRef = useRef(null);
 
+  const onHCaptchaChange = (token) => {
+    setHcaptchaToken(token);
+    if (token) {
+      setError(''); // Clear the error message when the user solves the captcha
+    }
+  };
+
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -216,7 +223,7 @@ const handleSubmit = async (e) => {
 
               <HCaptcha
             sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
-            onVerify={setHcaptchaToken}
+            onVerify={onHCaptchaChange}
             ref={captchaRef}
           />
 
