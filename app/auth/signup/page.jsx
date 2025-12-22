@@ -86,44 +86,30 @@ const handleSubmit = async (e) => {
   setLoading(true);
   setError('');
 
-  // VERIFY hCaptcha token on the server before creating account
   try {
-    const verifyRes = await fetch('/api/hcaptcha/verify', {
+    const response = await fetch('/api/auth/signup', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: hcaptchaToken }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...formData, hcaptchaToken }),
     });
-    const verifyData = await verifyRes.json();
-    if (!verifyRes.ok || !verifyData.success) {
-      setError(verifyData.error || 'hCaptcha verification failed');
-      if (captchaRef?.current?.reset) captchaRef.current.reset();
-      setLoading(false);
-      return;
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Something went wrong');
     }
-  } catch (err) {
-    setError('Unable to verify hCaptcha. Please try again.');
-    if (captchaRef?.current?.reset) captchaRef.current.reset();
-    setLoading(false);
-    return;
-  }
 
-  // Proceed with signup once verification succeeds
-  const supabase = createClient();
-  const { error } = await supabase.auth.signUp({
-    email: formData.email,
-    password: formData.password,
-    options: {
-      data: { username: formData.username },
-    },
-  });
-
-  if (error) {
-    setError(error.message);
-  } else {
     router.push('/auth/login?message=Signup successful! Please check your email to verify your account.');
+  } catch (error) {
+    setError(error.message);
+    if (captchaRef.current) {
+      captchaRef.current.resetCaptcha();
+    }
+  } finally {
+    setLoading(false);
   }
-
-  setLoading(false);
 };
 
   return (
