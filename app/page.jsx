@@ -1,41 +1,375 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Zap, Palette, Shield, BarChart3, Sparkles } from 'lucide-react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import QlynkBackground from '@/components/QlynkBackground';
 
-export default function HomePage() {
+// ====== Animated Components ======
+const AnimatedNumber = ({ value, className = "" }) => {
+  const [displayValue, setDisplayValue] = useState(0);
+  
+  useEffect(() => {
+    const targetValue = parseInt(value.replace(/\D/g,'')) || 0;
+    const duration = 2000;
+    const startTime = performance.now();
+    
+    const animate = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const current = Math.floor(easeOutQuart * targetValue);
+      
+      setDisplayValue(current);
+      if (progress < 1) requestAnimationFrame(animate);
+    };
+    
+    requestAnimationFrame(animate);
+  }, [value]);
+  
+  return (
+    <span className={className}>
+      {displayValue.toLocaleString()}{value.includes('%') ? '%' : value.replace(/\d+/g, '')}
+    </span>
+  );
+};
+
+const GlowingOrb = ({ top, left, size = 300, color = 'orange', delay = 0 }) => (
+  <motion.div
+    className="absolute rounded-full opacity-20 blur-3xl pointer-events-none z-0"
+    style={{
+      top,
+      left,
+      width: size,
+      height: size,
+      background: color === 'orange' 
+        ? `radial-gradient(circle, #f46530, transparent 70%)`
+        : 'radial-gradient(circle, #2AB59E, transparent 70%)',
+    }}
+    animate={{
+      scale: [1, 1.2, 1],
+      opacity: [0.2, 0.4, 0.2],
+    }}
+    transition={{
+      duration: 6,
+      repeat: Infinity,
+      delay,
+      ease: "easeInOut",
+    }}
+  />
+);
+
+// ====== Slot Machine Hero Component ======
+const SlotMachineHero = () => {
+  const names = ['Alex', 'Maya', 'Jordan', 'Riley', 'Sam', 'Taylor', 'Casey', 'Morgan'];
+  const styles = ['🎨', '💎', '🌟', '⚡', '🔥', '✨', '🎯', '🚀'];
+  const professions = ['Designer', 'Developer', 'Artist', 'Writer', 'Founder', 'Creator', 'Musician', 'Coach'];
+  
+  const [reel1Index, setReel1Index] = useState(0);
+  const [reel2Index, setReel2Index] = useState(0);
+  const [reel3Index, setReel3Index] = useState(0);
+  const [counter, setCounter] = useState(10247);
+  const [isSpinning, setIsSpinning] = useState(false);
+  
+  const spinTimeoutRef = useRef(null);
+
+  const spin = () => {
+    if (isSpinning) return;
+    
+    setIsSpinning(true);
+    
+    // Update counter with animation
+    setCounter(prev => prev + 1);
+    
+    // Generate new random indices
+    const newIdx1 = Math.floor(Math.random() * names.length);
+    const newIdx2 = Math.floor(Math.random() * styles.length);
+    const newIdx3 = Math.floor(Math.random() * professions.length);
+    
+    // Animate reels with staggered timing
+    setTimeout(() => setReel1Index(newIdx1), 100);
+    setTimeout(() => setReel2Index(newIdx2), 600);
+    setTimeout(() => setReel3Index(newIdx3), 1100);
+    
+    // Reset spinning state after animation
+    if (spinTimeoutRef.current) clearTimeout(spinTimeoutRef.current);
+    spinTimeoutRef.current = setTimeout(() => setIsSpinning(false), 2000);
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (spinTimeoutRef.current) clearTimeout(spinTimeoutRef.current);
+    };
+  }, []);
+
+  return (
+    <div className="w-full py-16">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        {/* Header */}
+        <div className="text-center space-y-6">
+          <motion.div 
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-full border-2 border-[#f46530] bg-gray-800/50"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <motion.span 
+              className="text-xl"
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              ✨
+            </motion.span>
+            <span className="text-sm font-bold tracking-wide text-[#f46530]">
+              YOUR PRESENCE, IN A BLINK
+            </span>
+          </motion.div>
+          
+          <motion.h1 
+            className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight text-white"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            Spin to see what <span className="bg-gradient-to-r from-[#f46530] to-[#c14f22] bg-clip-text text-transparent">you could build</span>
+          </motion.h1>
+          
+          <motion.p 
+            className="text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed text-gray-300"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            Every spin is a real portfolio you could create in minutes. No two are the same. Find your inspiration.
+          </motion.p>
+        </div>
+
+        {/* Slot Machine */}
+        <motion.div 
+          className="max-w-4xl mx-auto p-8 rounded-3xl bg-gray-800/50 relative overflow-hidden"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
+          {/* Glow effect on hover */}
+          <motion.div 
+            className="absolute inset-0 rounded-3xl bg-[#f46530]/20 opacity-0"
+            whileHover={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          />
+          
+          <div className="grid grid-cols-3 gap-6 mb-8 relative z-10">
+            {/* Name Reel */}
+            <div className="space-y-3">
+              <div className="text-center text-sm font-bold text-gray-400">
+                NAME
+              </div>
+              <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
+                <motion.div 
+                  className="text-4xl font-bold text-white"
+                  key={`name-${reel1Index}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {names[reel1Index]}
+                </motion.div>
+              </div>
+            </div>
+            
+            {/* Style Reel */}
+            <div className="space-y-3">
+              <div className="text-center text-sm font-bold text-gray-400">
+                STYLE
+              </div>
+              <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
+                <motion.div 
+                  className="text-5xl"
+                  key={`style-${reel2Index}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {styles[reel2Index]}
+                </motion.div>
+              </div>
+            </div>
+            
+            {/* Profession Reel */}
+            <div className="space-y-3">
+              <div className="text-center text-sm font-bold text-gray-400">
+                FOR
+              </div>
+              <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
+                <motion.div 
+                  className="text-2xl font-bold text-white"
+                  key={`prof-${reel3Index}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {professions[reel3Index]}
+                </motion.div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="text-center space-y-6 relative z-10">
+            <motion.button
+              className="px-12 py-5 rounded-xl text-xl font-black bg-[#f46530] text-white shadow-lg shadow-[#f46530]/30 relative overflow-hidden"
+              onClick={spin}
+              disabled={isSpinning}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+            >
+              <span className="relative z-10">🎰 SPIN THE WHEEL</span>
+            </motion.button>
+            <div className="text-sm text-gray-400">
+              Click to see another combination
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Live Counter */}
+        <motion.div 
+          className="text-center space-y-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1 }}
+        >
+          <div className="inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-gray-800/50">
+            <div className="relative">
+              <motion.div 
+                className="absolute inset-0 rounded-full bg-[#f46530]"
+                animate={{ 
+                  scale: [0.8, 1.2, 0.8],
+                  opacity: [1, 0.5, 0]
+                }}
+                transition={{ 
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeOut"
+                }}
+              />
+              <div className="w-4 h-4 rounded-full relative z-10 bg-[#f46530]"></div>
+            </div>
+            <div>
+              <motion.div 
+                className="text-4xl font-black text-[#f46530]"
+                key={counter}
+                initial={{ scale: 1.2 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                {counter.toLocaleString()}
+              </motion.div>
+              <div className="text-sm text-gray-400">
+                portfolios created today
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div 
+          className="text-center space-y-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1.2 }}
+        >
+          <motion.a
+            href="/create"
+            className="px-12 py-6 rounded-xl text-xl font-bold bg-[#f46530] text-white shadow-lg shadow-[#f46530]/30 inline-block"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Start Building Yours Free
+          </motion.a>
+          <div className="flex items-center justify-center gap-6 text-sm flex-wrap text-gray-400">
+            <div className="flex items-center gap-2">
+              <span className="text-lg text-[#f46530]">✓</span>
+              <span>No credit card</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-lg text-[#f46530]">✓</span>
+              <span>3 min setup</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-lg text-[#f46530]">✓</span>
+              <span>Free forever</span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Example Cards */}
+        <motion.div 
+          className="grid sm:grid-cols-3 gap-6 pt-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1.4 }}
+        >
+          <motion.div 
+            className="p-6 rounded-2xl border border-gray-700 bg-gray-800/50 hover:border-[#f46530] transition-all duration-300"
+            whileHover={{ y: -5 }}
+          >
+            <div className="text-3xl mb-3">🎨</div>
+            <div className="font-bold mb-2 text-white">Creative Portfolio</div>
+            <div className="text-sm text-gray-400">Perfect for designers & artists</div>
+          </motion.div>
+          
+          <motion.div 
+            className="p-6 rounded-2xl border border-gray-700 bg-gray-800/50 hover:border-[#f46530] transition-all duration-300"
+            whileHover={{ y: -5 }}
+          >
+            <div className="text-3xl mb-3">💼</div>
+            <div className="font-bold mb-2 text-white">Professional Resume</div>
+            <div className="text-sm text-gray-400">Ideal for job seekers</div>
+          </motion.div>
+          
+          <motion.div 
+            className="p-6 rounded-2xl border border-gray-700 bg-gray-800/50 hover:border-[#f46530] transition-all duration-300"
+            whileHover={{ y: -5 }}
+          >
+            <div className="text-3xl mb-3">🚀</div>
+            <div className="font-bold mb-2 text-white">Startup Landing</div>
+            <div className="text-sm text-gray-400">Great for entrepreneurs</div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+// ====== Main App ======
+export default function App() {
   const [text, setText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const containerRef = useRef(null);
+  
   const words = ['Professionals', 'Creators', 'Freelancers', 'Products', 'Businesses', 'Everyone'];
+  
+  // Scroll-linked animations
+  const { scrollYProgress } = useScroll();
+  const y1 = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+  const y2 = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const scaleBg = useTransform(scrollYProgress, [0, 0.5], [1, 1.1]);
 
-  useEffect(() => {
-    // Create particle system
-    const createParticles = () => {
-      const particlesContainer = document.getElementById('particles');
-      if (!particlesContainer) return;
-      
-      const particleCount = 50;
-      
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 30 + 's';
-        particle.style.animationDuration = (Math.random() * 20 + 20) + 's';
-        particlesContainer.appendChild(particle);
-      }
-    };
-
-    createParticles();
-  }, []);
-
+  // Typing effect
   useEffect(() => {
     const TYPE_SPEED = 90;
     const DELETE_SPEED = 45;
-    const PAUSE_BEFORE_DELETE = 1200;
+    const PAUSE_BEFORE_DELETE = 700;
     const PAUSE_BEFORE_TYPE = 300;
 
     const i = loopNum % words.length;
@@ -55,413 +389,252 @@ export default function HomePage() {
     }
 
     const timer = setTimeout(() => {
-      setText(
-        isDeleting
-          ? fullText.substring(0, text.length - 1)
-          : fullText.substring(0, text.length + 1)
+      setText(isDeleting
+        ? fullText.substring(0, text.length - 1)
+        : fullText.substring(0, text.length + 1)
       );
     }, isDeleting ? DELETE_SPEED : TYPE_SPEED);
 
     return () => clearTimeout(timer);
   }, [text, isDeleting, loopNum, words]);
 
+  // Stats & Content
+  const stats = [
+    { value: "500+", label: "Active Users" },
+    { value: "15K+", label: "Pages Created" },
+    { value: "99.9%", label: "Uptime" }
+  ];
+
+  const features = [
+    { icon: Zap, title: "Lightning Fast", desc: "Create your page in under 2 minutes. No technical knowledge required." },
+    { icon: Palette, title: "Beautiful Themes", desc: "Choose from 5 professionally designed templates that look amazing." },
+    { icon: Shield, title: "100% Free", desc: "No hidden costs. Your page stays online forever, completely free." },
+    { icon: BarChart3, title: "Track Analytics", desc: "See how many people visit your page and engage with your content." }
+  ];
+
+  const steps = [
+    { num: "1", title: "Answer Questions", desc: "Tell us about yourself in a simple guided form. Takes just 2 minutes." },
+    { num: "2", title: "Pick a Theme", desc: "Choose from 5 beautiful designs. See your page update in real-time." },
+    { num: "3", title: "Go Live", desc: "Your page is instantly live at qlynk.page/yourname. Share it everywhere!" }
+  ];
+
   return (
-    <div className="min-h-screen overflow-hidden relative">
-      {/* Enhanced Professional Background Effects */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        {/* Particle System */}
-        <div className="particles-container" id="particles"></div>
-        
-        {/* Data Streams */}
-        <div className="data-stream" style={{ top: '-120px', left: '10%', animationDelay: '0s' }} />
-        <div className="data-stream" style={{ top: '-120px', left: '30%', animationDelay: '-1s' }} />
-        <div className="data-stream" style={{ top: '-120px', left: '50%', animationDelay: '-2s' }} />
-        <div className="data-stream" style={{ top: '-120px', left: '70%', animationDelay: '-3s' }} />
-        <div className="data-stream" style={{ top: '-120px', left: '90%', animationDelay: '-1.5s' }} />
-        
-        {/* Radial gradients */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: `
-              radial-gradient(circle at 20% 20%, rgba(244, 101, 48, 0.12) 0%, transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(42, 157, 143, 0.08) 0%, transparent 50%),
-              linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(248, 249, 250, 0.8) 100%)
-            `
-          }}
-        />
-        
-        {/* Grid pattern */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              linear-gradient(90deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
-              linear-gradient(0deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px)
-            `,
-            backgroundSize: '40px 40px',
-            opacity: 0.8
-          }}
-        />
+    <div 
+      ref={containerRef}
+      className="relative min-h-screen overflow-x-hidden"
+    >
+      {/* Apply the QlynkBackground component */}
+      <QlynkBackground />
 
-        {/* Paper texture */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(0,0,0,0.08) 1px, transparent 0)`,
-            backgroundSize: '20px 20px',
-            opacity: 0.9
-          }}
-        />
-
-        {/* Floating Elements */}
-        <div className="absolute inset-0">
-          <div 
-            className="absolute top-20 left-10 w-16 h-16 bg-orange-500/10 rounded-lg transform rotate-45"
-            style={{ animation: 'float 6s ease-in-out infinite' }}
-          />
-          <div 
-            className="absolute top-1/3 right-20 w-12 h-12 bg-teal-500/10 rounded-full"
-            style={{ animation: 'float 8s ease-in-out infinite reverse' }}
-          />
-          <div 
-            className="absolute bottom-32 left-1/4 w-20 h-20 bg-orange-500/5 border-2 border-orange-500/20 rounded-lg transform -rotate-12"
-            style={{ animation: 'float 10s ease-in-out infinite' }}
-          />
-          <div 
-            className="absolute bottom-20 right-1/3 w-8 h-24 bg-teal-500/10 rounded-full transform rotate-45"
-            style={{ animation: 'float 7s ease-in-out infinite reverse' }}
-          />
-          
-          {/* Neural network nodes */}
-          <div className="absolute top-1/4 left-1/5 w-2 h-2 bg-orange-500/30 rounded-full" style={{ animation: 'pulse 3s infinite' }} />
-          <div className="absolute top-1/2 left-1/3 w-1 h-1 bg-teal-500/40 rounded-full" style={{ animation: 'pulse 4s infinite' }} />
-          <div className="absolute top-3/4 right-1/4 w-2 h-2 bg-orange-500/25 rounded-full" style={{ animation: 'pulse 5s infinite' }} />
-          <div className="absolute top-1/5 right-1/5 w-1 h-1 bg-teal-500/35 rounded-full" style={{ animation: 'pulse 3.5s infinite' }} />
-        </div>
-      </div>
+      {/* Animated Floating Orbs */}
+      <GlowingOrb top="15%" left="5%" size={400} color="orange" delay={0} />
+      <GlowingOrb top="75%" left="85%" size={500} color="teal" delay={1} />
+      <GlowingOrb top="40%" left="70%" size={300} color="orange" delay={2} />
 
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-card/80 backdrop-blur-lg border-b border-border/50">
+      <motion.nav 
+        className="fixed top-0 w-full z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-700"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <a href="/" className="flex items-center">
-                <Image src="/assets/logoWhite.svg" alt="qlynk logo" width={140} height={40} priority />
-              </a>
+              <Link href="/" className="flex items-center justify-center h-16 group">
+                <Image
+                  src="/logoWhite.svg"
+                  alt="qlynk logo"
+                  width={125}
+                  height={50}
+                  priority
+                  className="group-hover:scale-105 transition-transform"
+                />
+              </Link>
             </div>
             
-            <div className="hidden md:flex items-center space-x-4">
-              <a href="/auth/login" className="text-cream hover:text-bright-orange px-4 py-2 text-sm font-semibold transition-colors">
-                Log in
-              </a>
-              <a href="/auth/signup" className="semi-translucent-button text-cream px-6 py-2.5 rounded-lg font-bold transition-all">
-                Get Started
-              </a>
-            </div>
-
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-[#2a2e30] hover:text-[#f46530] p-2"
+            <div className="hidden md:flex items-center space-x-6">
+              <Link href="/auth/login" className="text-gray-300 hover:text-[#f46530] font-medium transition-colors">Log in</Link>
+              <motion.a 
+                href="/auth/signup"
+                className="bg-[#f46530] hover:bg-[#c14f22] text-white px-6 py-2.5 rounded-lg font-bold shadow-sm hover:shadow-md transition-all"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
               >
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {isMenuOpen && (
-          <div className="md:hidden bg-white/90 backdrop-blur-lg border-t border-gray-200/50">
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              <a href="/auth/login" className="text-[#2a2e30] hover:text-[#f46530] block px-3 py-2 text-base font-medium">Log in</a>
-              <a href="/auth/signup" className="bg-[#f46530] hover:bg-[#c14f22] text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors w-full block text-center mt-4">
                 Get Started
-              </a>
+              </motion.a>
             </div>
-          </div>
-        )}
-      </nav>
 
-      {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center relative z-10 pt-16 text-foreground">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 mb-8 px-4 py-2.5 bg-primary/10 border border-border text-bright-orange rounded-full text-sm font-semibold">
-            <Sparkles size={16} className="text-[#f46530]" />
-            Your presence, in a blink
-          </div>
-          
-          {/* Main Headline */}
-          <h1 className="text-5xl md:text-7xl font-black mb-6 leading-[1.1] tracking-tight">
-            Built for{' '}
-            <span className="text-[#f46530]">
-              {text}
-              <span className="animate-blink">|</span>
-            </span>
-          </h1>
-          
-          {/* Subheadline */}
-          <p className="text-xl md:text-2xl mb-10 max-w-2xl mx-auto leading-relaxed text-muted-foreground">
-            Create a stunning personal webpage in minutes. No coding, no design skills needed. 
-            Just answer a few questions and let <span className="font-bold text-[#f46530]">qlynk</span> do the magic.
-          </p>
-          
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
-            <a 
-              href="/create"
-              className="group inline-flex items-center justify-center gap-2 semi-translucent-button text-cream px-8 py-4 rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-orange/30 hover:-translate-y-0.5"
-              style={{ '--tw-bg-opacity': 1 }}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden text-gray-300 hover:text-[#f46530] p-2"
             >
-              Start Building Free
-              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-            </a>
-            <a 
-              href="#how-it-works"
-              className="inline-flex items-center justify-center bg-card/80 border-2 border-border text-foreground px-8 py-4 rounded-lg font-bold text-lg hover:border-border hover:bg-card/90 transition-all hover:-translate-y-0.5"
-            >
-              See How It Works
-            </a>
-          </div>
-
-          {/* Stats Cards */}
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="bg-card/80 backdrop-blur-sm p-6 rounded-2xl border border-border hover:shadow-lg transition-all">
-              <div className="text-3xl font-bold mb-2 text-bright-orange">500+</div>
-              <div className="text-muted-foreground">Active Users</div>
-            </div>
-            <div className="bg-card/80 backdrop-blur-sm p-6 rounded-2xl border border-border hover:shadow-lg transition-all">
-              <div className="text-3xl font-bold mb-2 text-bright-orange">15K+</div>
-              <div className="text-muted-foreground">Pages Created</div>
-            </div>
-            <div className="bg-card/80 backdrop-blur-sm p-6 rounded-2xl border border-border hover:shadow-lg transition-all">
-              <div className="text-3xl font-bold mb-2 text-bright-orange">99.9%</div>
-              <div className="text-muted-foreground">Uptime</div>
-            </div>
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
           </div>
         </div>
 
-        {/* Floating elements */}
-        <div className="absolute top-1/4 left-10 w-20 h-20 bg-orange-500/10 rounded-full blur-xl animate-pulse" />
-        <div className="absolute top-1/3 right-10 w-32 h-32 bg-teal-500/10 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute bottom-1/4 left-1/4 w-16 h-16 bg-orange-500/15 rounded-full blur-lg animate-pulse" style={{ animationDelay: '2s' }} />
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div 
+              className="md:hidden bg-gray-800 border-t border-gray-700"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="px-4 py-3 space-y-2">
+                <Link href="/auth/login" className="block px-3 py-2 text-gray-300">Log in</Link>
+                <Link 
+                  href="/auth/signup" 
+                  className="block bg-[#f46530] text-white text-center px-4 py-2.5 rounded-lg font-medium mt-1"
+                >
+                  Get Started
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+
+      {/* Hero Section - Slot Machine Version */}
+      <section className="min-h-screen pt-24 pb-20 relative z-10 flex items-center">
+        <SlotMachineHero />
       </section>
 
       {/* Features Section */}
-      <section className="py-20 relative z-10 bg-transparent">
+      <section className="py-24 bg-gray-900/50 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="text-center mb-20"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Powerful. Simple. Free.</h2>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">Everything you need to build your digital home.</p>
+          </motion.div>
+          
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-white rounded-xl p-8 hover:shadow-lg hover:shadow-[#f46530]/20 hover:scale-105 hover:border-[#f46530] transition-all duration-300 group border border-gray-200">
-              <div className="w-12 h-12 bg-[#f46530]/10 rounded-lg flex items-center justify-center mb-5 group-hover:shadow-lg group-hover:shadow-[#f46530]/50 group-hover:scale-110 transition-all duration-300">
-                <Zap className="text-[#f46530]" size={24} />
-              </div>
-              <h3 className="text-xl font-bold text-[#2a2e30] mb-2 group-hover:text-[#f46530] transition-colors duration-300">Lightning Fast</h3>
-              <p className="text-[#474c4e] leading-relaxed group-hover:text-[#2a2e30] transition-colors">
-                Create your page in under 2 minutes. No technical knowledge required.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-xl p-8 hover:shadow-lg hover:shadow-[#f46530]/20 hover:scale-105 hover:border-[#f46530] transition-all duration-300 group border border-gray-200">
-              <div className="w-12 h-12 bg-[#f46530]/10 rounded-lg flex items-center justify-center mb-5 group-hover:shadow-lg group-hover:shadow-[#f46530]/50 group-hover:scale-110 transition-all duration-300">
-                <Palette className="text-[#f46530]" size={24} />
-              </div>
-              <h3 className="text-xl font-bold text-[#2a2e30] mb-2 group-hover:text-[#f46530] transition-colors duration-300">Beautiful Themes</h3>
-              <p className="text-[#474c4e] leading-relaxed group-hover:text-[#2a2e30] transition-colors">
-                Choose from 5 professionally designed templates that look amazing.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-xl p-8 hover:shadow-lg hover:shadow-[#f46530]/20 hover:scale-105 hover:border-[#f46530] transition-all duration-300 group border border-gray-200">
-              <div className="w-12 h-12 bg-[#f46530]/10 rounded-lg flex items-center justify-center mb-5 group-hover:shadow-lg group-hover:shadow-[#f46530]/50 group-hover:scale-110 transition-all duration-300">
-                <Shield className="text-[#f46530]" size={24} />
-              </div>
-              <h3 className="text-xl font-bold text-[#2a2e30] mb-2 group-hover:text-[#f46530] transition-colors duration-300">100% Free</h3>
-              <p className="text-[#474c4e] leading-relaxed group-hover:text-[#2a2e30] transition-colors">
-                No hidden costs. Your page stays online forever, completely free.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-xl p-8 hover:shadow-lg hover:shadow-[#f46530]/20 hover:scale-105 hover:border-[#f46530] transition-all duration-300 group border border-gray-200">
-              <div className="w-12 h-12 bg-[#f46530]/10 rounded-lg flex items-center justify-center mb-5 group-hover:shadow-lg group-hover:shadow-[#f46530]/50 group-hover:scale-110 transition-all duration-300">
-                <BarChart3 className="text-[#f46530]" size={24} />
-              </div>
-              <h3 className="text-xl font-bold text-[#2a2e30] mb-2 group-hover:text-[#f46530] transition-colors duration-300">Track Analytics</h3>
-              <p className="text-[#474c4e] leading-relaxed group-hover:text-[#2a2e30] transition-colors">
-                See how many people visit your page and engage with your content.
-              </p>
-            </div>
+            {features.map((feature, i) => (
+              <motion.div
+                key={i}
+                className="group bg-gray-800/50 rounded-2xl p-8 border border-gray-700 hover:border-[#f46530]/50 hover:shadow-lg transition-all duration-300"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <div className="w-14 h-14 rounded-xl bg-[#f46530]/10 flex items-center justify-center mb-6 text-[#f46530] group-hover:bg-[#f46530]/20 group-hover:text-[#f46530] transition-colors">
+                  <feature.icon size={28} />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-[#f46530] transition-colors">{feature.title}</h3>
+                <p className="text-gray-400 leading-relaxed">{feature.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section id="how-it-works" className="py-20 relative z-10">
+      {/* How It Works */}
+      <section id="how-it-works" className="py-24 relative z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-[#2a2e30] mb-4 tracking-tight">How It Works</h2>
-            <p className="text-xl text-[#474c4e]">Three simple steps to your new online presence</p>
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">How It Works</h2>
+            <p className="text-xl text-gray-400">Three simple steps to your new online presence</p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-12">
-            <div className="text-center group">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-[#f46530] rounded-xl text-white text-2xl font-black mx-auto mb-6 shadow-lg shadow-[#f46530]/30 group-hover:scale-110 transition-transform">
-                1
-              </div>
-              <h3 className="text-2xl font-bold text-[#2a2e30] mb-3">Answer Questions</h3>
-              <p className="text-[#474c4e] leading-relaxed">
-                Tell us about yourself in a simple guided form. Takes just 2 minutes.
-              </p>
-            </div>
-
-            <div className="text-center group">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-[#f46530] rounded-xl text-white text-2xl font-black mx-auto mb-6 shadow-lg shadow-[#f46530]/30 group-hover:scale-110 transition-transform">
-                2
-              </div>
-              <h3 className="text-2xl font-bold text-[#2a2e30] mb-3">Pick a Theme</h3>
-              <p className="text-[#474c4e] leading-relaxed">
-                Choose from 5 beautiful designs. See your page update in real-time.
-              </p>
-            </div>
-
-            <div className="text-center group">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-[#f46530] rounded-xl text-white text-2xl font-black mx-auto mb-6 shadow-lg shadow-[#f46530]/30 group-hover:scale-110 transition-transform">
-                3
-              </div>
-              <h3 className="text-2xl font-bold text-[#2a2e30] mb-3">Go Live</h3>
-              <p className="text-[#474c4e] leading-relaxed">
-                Your page is instantly live at qlynk.page/yourname. Share it everywhere!
-              </p>
+          <div className="relative">
+            {/* Connecting line */}
+            <div className="hidden md:block absolute top-1/2 left-1/4 right-1/4 h-1 bg-gray-700 -translate-y-1/2 z-0"></div>
+            
+            <div className="grid md:grid-cols-3 gap-12 relative z-10">
+              {steps.map((step, i) => (
+                <motion.div
+                  key={i}
+                  className="text-center group"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.2 }}
+                >
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-[#f46530] text-white text-2xl font-black rounded-2xl mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform">
+                    {step.num}
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-4">{step.title}</h3>
+                  <p className="text-gray-400 leading-relaxed max-w-xs mx-auto">{step.desc}</p>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Final CTA Section */}
-      <section className="py-20 relative z-10 bg-[#f2f2f2]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-card/80 backdrop-blur-sm rounded-2xl p-16 text-center shadow-2xl relative overflow-hidden border border-border">
-            {/* Accent glow */}
-            <div className="absolute -top-20 -left-20 w-40 h-40 bg-[#f46530]/30 rounded-full blur-3xl"></div>
-            <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-[#f46530]/30 rounded-full blur-3xl"></div>
-            
-            <div className="relative z-10">
-              <h2 className="text-4xl md:text-5xl font-black text-[#2a2e30] mb-6">Ready to Stand Out?</h2>
-              <p className="text-xl text-[#474c4e] mb-10 max-w-2xl mx-auto">
-                Join thousands of professionals, creators, and businesses who trust qlynk for their online presence.
-              </p>
-              <a 
-                href="/auth/signup"
-                className="inline-flex items-center gap-3 bg-[#f46530] text-white px-10 py-5 rounded-lg font-bold text-xl hover:bg-[#c14f22] transition-all hover:shadow-2xl hover:shadow-[#f46530]/30 hover:scale-105"
-              >
-                Create Your Page Now
-                <ArrowRight size={24} />
-              </a>
-              <p className="text-[#474c4e] text-sm mt-6">
-                Free forever • No credit card • 2 minute setup
-              </p>
-            </div>
-          </div>
+      {/* Final CTA */}
+      <section className="py-24 bg-gradient-to-r from-[#f46530] to-[#c14f22] relative z-10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.h2 
+            className="text-4xl md:text-5xl font-black text-white mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Ready to Stand Out?
+          </motion.h2>
+          <motion.p 
+            className="text-xl text-[#ffecd9] mb-10 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            Join thousands of professionals, creators, and businesses who trust qlynk for their online presence.
+          </motion.p>
+          
+          <motion.div 
+            className="flex flex-col sm:flex-row justify-center gap-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+          >
+            <Link 
+              href="/auth/signup"
+              className="inline-flex items-center justify-center gap-2 bg-white text-[#f46530] px-10 py-5 rounded-xl font-bold text-xl shadow-lg hover:bg-gray-100 transition-all"
+            >
+              Create Your Page Now
+              <ArrowRight size={24} />
+            </Link>
+          </motion.div>
+          
+          <p className="text-[#ffecd9]/80 text-sm mt-8">
+            Free forever • No credit card • 2 minute setup
+          </p>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 bg-card text-foreground relative z-10">
+      <footer className="py-12 bg-gray-900 text-gray-400 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div>
-              <Image src="/assets/logoWhite.svg" alt="qlynk logo" width={140} height={36} priority />
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex items-center">
+              <Link href="/" className="flex items-center justify-center mb-8 group">
+                <Image
+                  src="/logoWhite.svg"
+                  alt="qlynk logo"
+                  width={125}
+                  height={50}
+                  priority
+                  className="group-hover:scale-105 transition-transform"
+                />
+              </Link>
             </div>
-            <div className="text-gray-400 text-sm">
-              © 2025 qlynk. Your presence, in a blink.
-            </div>
+            <p className="mt-4 md:mt-0">© {new Date().getFullYear()} qlynk. Your presence, in a blink.</p>
           </div>
         </div>
       </footer>
-
-      {/* CSS Animations */}
-      <style jsx>{`
-        .animate-blink { animation: blink 1s step-end infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        
-        .particles-container {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
-          z-index: 1;
-        }
-        
-        .particle {
-          position: absolute;
-          width: 1px;
-          height: 1px;
-          background: #f46530;
-          border-radius: 50%;
-          opacity: 0.3;
-          animation: particleFloat 30s infinite linear;
-        }
-        
-        .data-stream {
-          position: absolute;
-          width: 3px;
-          height: 120px;
-          background: linear-gradient(to bottom, 
-            transparent 0%, 
-            rgba(244, 101, 48, 0.8) 20%, 
-            rgba(244, 101, 48, 1) 50%, 
-            rgba(244, 101, 48, 0.8) 80%, 
-            transparent 100%);
-          animation: data-flow 4s linear infinite;
-          border-radius: 2px;
-          box-shadow: 0 0 10px rgba(244, 101, 48, 0.5);
-        }
-        
-        .data-stream::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 1px;
-          height: 100%;
-          background: linear-gradient(to bottom, 
-            transparent 0%, 
-            rgba(255, 255, 255, 0.9) 20%, 
-            rgba(255, 255, 255, 1) 50%, 
-            rgba(255, 255, 255, 0.9) 80%, 
-            transparent 100%);
-        }
-        
-        @keyframes particleFloat {
-          0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
-          10% { opacity: 0.6; }
-          90% { opacity: 0.6; }
-          100% { transform: translateY(-100px) translateX(100px) rotate(360deg); opacity: 0; }
-        }
-        
-        @keyframes data-flow {
-          0% { transform: translateY(-120px); opacity: 0; }
-          10% { opacity: 0.3; }
-          50% { opacity: 1; }
-          90% { opacity: 0.3; }
-          100% { transform: translateY(calc(100vh + 120px)); opacity: 0; }
-        }
-        
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(5deg); }
-        }
-        
-        @keyframes pulse {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 0.8; }
-        }
-      `}</style>
     </div>
   );
 }
