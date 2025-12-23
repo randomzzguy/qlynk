@@ -1,12 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 import { LogIn, Eye, EyeOff } from 'lucide-react';
 import QlynkBackground from '@/components/QlynkBackground';
+import HCaptcha from '@hcaptcha/react-hcaptcha';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -17,6 +18,15 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [hcaptchaToken, setHcaptchaToken] = useState(null);
+  const captchaRef = useRef(null);
+
+  const onHCaptchaChange = (token) => {
+    setHcaptchaToken(token);
+    if (token) {
+      setError('');
+    }
+  };
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -28,25 +38,52 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.email || !formData.password) {
       setError('Please fill in all fields');
+      return;
+    }
+
+    const isLocalhost = typeof window !== 'undefined' &&
+      (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
+    console.log('[Login] Attempting login. isLocalhost:', isLocalhost, 'hcaptchaToken:', hcaptchaToken);
+
+    if (!hcaptchaToken && !isLocalhost) {
+      setError('Please verify you are human.');
       return;
     }
 
     setLoading(true);
     setError('');
 
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword(formData);
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          hcaptchaToken: isLocalhost ? 'local-bypass' : hcaptchaToken,
+        }),
+      });
 
-    if (error) {
-      setError(error.message);
-    } else {
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Login failed');
+      }
+
       router.push('/dashboard');
+    } catch (error) {
+      setError(error.message);
+      if (captchaRef.current) {
+        captchaRef.current.resetCaptcha();
+      }
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
@@ -128,15 +165,23 @@ export default function LoginPage() {
               </div>
             </div>
 
+            {/* hCaptcha */}
+            {process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY && (
+              <HCaptcha
+                sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
+                onVerify={onHCaptchaChange}
+                ref={captchaRef}
+              />
+            )}
+
             {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 ${
-                loading
-                  ? 'semi-translucent-button text-cream opacity-75 cursor-wait'
-                  : 'semi-translucent-button text-cream hover:shadow-xl hover:shadow-orange/40'
-              }`}
+              className={`w-full py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 ${loading
+                ? 'semi-translucent-button text-cream opacity-75 cursor-wait'
+                : 'semi-translucent-button text-cream hover:shadow-xl hover:shadow-orange/40'
+                }`}
             >
               {loading ? (
                 <>
