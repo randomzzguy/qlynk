@@ -1,12 +1,12 @@
 import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
-import {  
-  ProfessionalTemplate,  
-  CreativeTemplate,  
-  MinimalistTemplate,  
-  DarkTemplate,  
-  VibrantTemplate, 
-  socialIcons 
+import {
+  ProfessionalTemplate,
+  CreativeTemplate,
+  MinimalistTemplate,
+  DarkTemplate,
+  VibrantTemplate,
+  socialIcons
 } from '@/components/Templates';
 
 // This tells Next.js to generate pages dynamically
@@ -16,14 +16,24 @@ export default async function PublicPage({ params }) {
   const { username } = await params;
   const supabase = await createClient();
 
-  // Fetch page data from Supabase
-  const { data: page, error } = await supabase
-    .from('pages')
-    .select('*')
+  // Fetch page data from Supabase by joining with profiles
+  const { data: profile, error: profileError } = await supabase
+    .from('profiles')
+    .select('id')
     .eq('username', username)
     .single();
 
-  if (error || !page) {
+  if (profileError || !profile) {
+    notFound();
+  }
+
+  const { data: page, error: pageError } = await supabase
+    .from('pages')
+    .select('*, social_links(*), custom_links(*)')
+    .eq('user_id', profile.id)
+    .single();
+
+  if (pageError || !page) {
     notFound(); // Show 404 page
   }
 

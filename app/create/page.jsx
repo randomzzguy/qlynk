@@ -6,11 +6,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, ArrowLeft, Check, Plus, Trash2, Linkedin, Instagram, Twitter, Github, Facebook, Youtube, Sparkles, Briefcase, User, ShoppingBag, Palette } from 'lucide-react';
-import { 
-  ProfessionalTemplate, 
-  CreativeTemplate, 
-  MinimalistTemplate, 
-  DarkTemplate, 
+import {
+  ProfessionalTemplate,
+  CreativeTemplate,
+  MinimalistTemplate,
+  DarkTemplate,
   VibrantTemplate,
   MonoPressTemplate,
   AuroraTemplate,
@@ -67,7 +67,7 @@ export default function CreatePage() {
   const [showPreview, setShowPreview] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
-  
+
   const [formData, setFormData] = useState({
     name: '',
     profession: '',
@@ -110,33 +110,33 @@ export default function CreatePage() {
   }
 
   const templates = {
-    professional: { 
-      name: 'Professional', 
-      component: ProfessionalTemplate, 
+    professional: {
+      name: 'Professional',
+      component: ProfessionalTemplate,
       desc: 'Corporate & clean',
       color: 'from-blue-500 to-blue-600'
     },
-    creative: { 
-      name: 'Creative', 
-      component: CreativeTemplate, 
+    creative: {
+      name: 'Creative',
+      component: CreativeTemplate,
       desc: 'Vibrant & asymmetric',
       color: 'from-purple-500 to-pink-500'
     },
-    minimalist: { 
-      name: 'Minimalist', 
-      component: MinimalistTemplate, 
+    minimalist: {
+      name: 'Minimalist',
+      component: MinimalistTemplate,
       desc: 'Simple & elegant',
       color: 'from-gray-500 to-gray-600'
     },
-    dark: { 
-      name: 'Dark', 
-      component: DarkTemplate, 
+    dark: {
+      name: 'Dark',
+      component: DarkTemplate,
       desc: 'Modern & sleek',
       color: 'from-gray-800 to-gray-900'
     },
-    vibrant: { 
-      name: 'Vibrant', 
-      component: VibrantTemplate, 
+    vibrant: {
+      name: 'Vibrant',
+      component: VibrantTemplate,
       desc: 'Bold & energetic',
       color: 'from-violet-500 to-fuchsia-500'
     },
@@ -209,17 +209,13 @@ export default function CreatePage() {
 
   const handlePublish = async () => {
     setIsPublishing(true);
-    
+
     try {
       // Import the createPage function
       const { createPage } = await import('@/lib/supabase');
-      
+
       // Save page to Supabase
-      const { data, error } = await createPage({
-        ...formData,
-        theme: selectedTemplate,
-        preferredUsername: typeof window !== 'undefined' ? (localStorage.getItem('qlynk_pending_username') || undefined) : undefined
-      });
+      const { data, error } = await createPage({ ...formData, theme: selectedTemplate });
 
       if (error) {
         toast.error('Error creating page: ' + error.message);
@@ -228,10 +224,10 @@ export default function CreatePage() {
       }
 
       // Success! Show message and redirect to dashboard
-      toast.success('🎉 Page created successfully! Your page is live at qlynk.site/' + data.username);
-      
+      toast.success('🎉 Page created successfully! Your page is live!');
+
       // Redirect to dashboard
-      window.location.href = '/dashboard';
+      router.push('/dashboard');
     } catch (error) {
       console.error('Error publishing page:', error);
       toast.error('An error occurred while publishing your page. Please try again.');
@@ -240,7 +236,7 @@ export default function CreatePage() {
   };
 
   const isStepValid = () => {
-    switch(step) {
+    switch (step) {
       case 0: return useCase;
       case 1: return selectedTemplate;
       case 2: return formData.name.trim() && formData.profession.trim();
@@ -253,7 +249,7 @@ export default function CreatePage() {
 
   // Get tailored labels based on use case
   const getLabels = () => {
-    switch(useCase) {
+    switch (useCase) {
       case 'portfolio':
         return {
           profession: 'Your Role/Specialty',
@@ -305,41 +301,40 @@ export default function CreatePage() {
   const labels = getLabels();
   const CurrentTemplate = templates[selectedTemplate].component;
 
-const ThemeSelector = ({ selectedTheme, onThemeSelect, userIsPremium }) => {
-    const themes = Object.entries(templates).map(([key, value]) => ({...value, key}));
+  const ThemeSelector = ({ selectedTheme, onThemeSelect, userIsPremium }) => {
+    const themes = Object.entries(templates).map(([key, value]) => ({ ...value, key }));
 
     return (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-            {themes.map((theme) => {
-                const isSelected = selectedTheme === theme.key;
-                return (
-                    <div 
-                        key={theme.key} 
-                        className={`relative rounded-2xl overflow-hidden border-4 transition-all cursor-pointer ${
-                            isSelected ? 'border-bright-orange scale-105' : 'border-transparent hover:border-gray-300'
-                        }`}
-                        onClick={() => onThemeSelect(theme.key)}
-                    >
-                        <div className={`w-full h-40 bg-gradient-to-br ${theme.color}`}></div>
-                        <div className="p-4 bg-white">
-                            <h3 className="font-black text-charcoal">{theme.name}</h3>
-                            <p className="text-sm text-panel-grey">{theme.desc}</p>
-                        </div>
-                        {isSelected && (
-                            <div className="absolute top-3 right-3 bg-bright-orange text-white rounded-full p-1.5">
-                                <Check size={18} />
-                            </div>
-                        )}
-                    </div>
-                );
-            })}
-        </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+        {themes.map((theme) => {
+          const isSelected = selectedTheme === theme.key;
+          return (
+            <div
+              key={theme.key}
+              className={`relative rounded-2xl overflow-hidden border-4 transition-all cursor-pointer ${isSelected ? 'border-bright-orange scale-105' : 'border-transparent hover:border-gray-300'
+                }`}
+              onClick={() => onThemeSelect(theme.key)}
+            >
+              <div className={`w-full h-40 bg-gradient-to-br ${theme.color}`}></div>
+              <div className="p-4 bg-white">
+                <h3 className="font-black text-charcoal">{theme.name}</h3>
+                <p className="text-sm text-panel-grey">{theme.desc}</p>
+              </div>
+              {isSelected && (
+                <div className="absolute top-3 right-3 bg-bright-orange text-white rounded-full p-1.5">
+                  <Check size={18} />
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
     );
-};
+  };
 
 
   const renderStep = () => {
-    switch(step) {
+    switch (step) {
       case 0:
         return (
           <div className="animate-fadeIn">
@@ -352,11 +347,10 @@ const ThemeSelector = ({ selectedTheme, onThemeSelect, userIsPremium }) => {
                   <button
                     key={item.id}
                     onClick={() => { setUseCase(item.id); setStep(1); }}
-                    className={`group relative p-8 rounded-2xl border-2 transition-all text-left overflow-hidden bg-white/85 hover:bg-white flex flex-col items-start justify-start min-h-[200px] ${
-                      useCase === item.id
-                        ? 'border-bright-orange bg-bright-orange/5 shadow-xl shadow-bright-orange/10 scale-105'
-                        : 'border-gray-200 hover:border-gray-300 hover:shadow-lg hover:-translate-y-1'
-                    }`}
+                    className={`group relative p-8 rounded-2xl border-2 transition-all text-left overflow-hidden bg-white/85 hover:bg-white flex flex-col items-start justify-start min-h-[200px] ${useCase === item.id
+                      ? 'border-bright-orange bg-bright-orange/5 shadow-xl shadow-bright-orange/10 scale-105'
+                      : 'border-gray-200 hover:border-gray-300 hover:shadow-lg hover:-translate-y-1'
+                      }`}
                   >
                     <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${item.color} opacity-10 rounded-bl-full transition-all group-hover:scale-150`}></div>
                     <Icon size={40} className={`mb-4 ${useCase === item.id ? 'text-bright-orange' : 'text-charcoal'}`} />
@@ -457,11 +451,11 @@ const ThemeSelector = ({ selectedTheme, onThemeSelect, userIsPremium }) => {
                   value={formData.bio}
                   onChange={(e) => updateFormData('bio', e.target.value)}
                   placeholder={
-                    useCase === 'product' 
+                    useCase === 'product'
                       ? 'Describe your product, its features, and benefits...'
                       : useCase === 'business'
-                      ? 'Tell visitors about your company, services, and what makes you unique...'
-                      : 'Tell visitors about yourself, your experience, what you do...'
+                        ? 'Tell visitors about your company, services, and what makes you unique...'
+                        : 'Tell visitors about yourself, your experience, what you do...'
                   }
                   rows={5}
                   className="w-full px-5 py-4 border-2 border-gray-200 rounded-xl bg-white focus:border-bright-orange focus:outline-none transition-all text-lg group-hover:border-gray-300 resize-none"
@@ -537,7 +531,7 @@ const ThemeSelector = ({ selectedTheme, onThemeSelect, userIsPremium }) => {
           <div className="animate-fadeIn">
             <h2 className="text-4xl font-black text-cream mb-3">Social Links</h2>
             <p className="text-cream/90 mb-10 text-lg">Connect your social profiles (optional)</p>
-            
+
             <div className="space-y-4 mb-8">
               {formData.socialLinks.map((link, index) => {
                 const platform = SOCIAL_PLATFORMS.find(p => p.id === link.platform);
@@ -595,12 +589,12 @@ const ThemeSelector = ({ selectedTheme, onThemeSelect, userIsPremium }) => {
             <h2 className="text-4xl font-black text-cream mb-3">Custom Links</h2>
             <p className="text-cream/90 mb-10 text-lg">
               {useCase === 'portfolio' ? 'Add links to your projects and work' :
-               useCase === 'business' ? 'Add links to services, testimonials, etc.' :
-               useCase === 'freelance' ? 'Add links to your services and rates' :
-               useCase === 'product' ? 'Add links to product pages, demos, etc.' :
-               'Add links to your work, portfolio, blog, etc.'}
+                useCase === 'business' ? 'Add links to services, testimonials, etc.' :
+                  useCase === 'freelance' ? 'Add links to your services and rates' :
+                    useCase === 'product' ? 'Add links to product pages, demos, etc.' :
+                      'Add links to your work, portfolio, blog, etc.'}
             </p>
-            
+
             <div className="space-y-4 mb-8">
               {formData.links.map((link, index) => (
                 <div key={index} className="border-2 border-gray-200 rounded-2xl p-6 hover:border-bright-orange/50 transition-all hover:shadow-lg animate-slideIn">
@@ -620,8 +614,8 @@ const ThemeSelector = ({ selectedTheme, onThemeSelect, userIsPremium }) => {
                       onChange={(e) => updateCustomLink(index, 'title', e.target.value)}
                       placeholder={
                         useCase === 'portfolio' ? 'e.g. View Project' :
-                        useCase === 'product' ? 'e.g. Buy Now' :
-                        'e.g. View Portfolio'
+                          useCase === 'product' ? 'e.g. Buy Now' :
+                            'e.g. View Portfolio'
                       }
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-white focus:border-bright-orange focus:outline-none transition-all"
                     />
@@ -664,7 +658,7 @@ const ThemeSelector = ({ selectedTheme, onThemeSelect, userIsPremium }) => {
               <h2 className="text-5xl font-black text-green mb-4">🎉 You&apos;re All Set!</h2>
               <p className="text-panel-grey text-xl">Your qlynk page is ready. Review it on the right →</p>
             </div>
-            
+
             <div className="bg-bright-orange/5 border-2 border-bright-orange/20 rounded-2xl p-8 mb-8 hover:shadow-xl transition-all">
               <h3 className="font-black text-charcoal mb-4 text-2xl flex items-center gap-2">
                 <Sparkles className="text-bright-orange" size={24} />
@@ -719,7 +713,7 @@ const ThemeSelector = ({ selectedTheme, onThemeSelect, userIsPremium }) => {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      
+
 
       {/* Header */}
       <div className="bg-card/80 border-b border-border sticky top-0 z-40 backdrop-blur-lg">
@@ -742,7 +736,7 @@ const ThemeSelector = ({ selectedTheme, onThemeSelect, userIsPremium }) => {
           </div>
           {/* Progress Bar */}
           <div className="mt-5 w-full bg-beige/40 rounded-full h-3 overflow-hidden">
-            <div 
+            <div
               className="bg-orange h-3 rounded-full transition-all duration-500"
               style={{ width: `${progress}%` }}
             />
@@ -768,16 +762,15 @@ const ThemeSelector = ({ selectedTheme, onThemeSelect, userIsPremium }) => {
                     Back
                   </button>
                 )}
-                
+
                 {step < totalSteps - 1 ? (
                   <button
                     onClick={() => isStepValid() && setStep(step + 1)}
                     disabled={!isStepValid()}
-                    className={`flex items-center gap-2 px-8 py-4 rounded-xl font-bold transition-all ml-auto text-lg ${
-                      isStepValid()
-                        ? 'semi-translucent-button text-cream hover:translate-x-1'
-                        : 'bg-beige/40 text-charcoal/40 cursor-not-allowed'
-                    }`}
+                    className={`flex items-center gap-2 px-8 py-4 rounded-xl font-bold transition-all ml-auto text-lg ${isStepValid()
+                      ? 'semi-translucent-button text-cream hover:translate-x-1'
+                      : 'bg-beige/40 text-charcoal/40 cursor-not-allowed'
+                      }`}
                   >
                     Continue
                     <ArrowRight size={22} />
@@ -786,11 +779,10 @@ const ThemeSelector = ({ selectedTheme, onThemeSelect, userIsPremium }) => {
                   <button
                     onClick={handlePublish}
                     disabled={isPublishing}
-                    className={`flex items-center gap-2 px-10 py-4 rounded-xl font-black transition-all ml-auto text-lg ${
-                      isPublishing
-                        ? 'semi-translucent-button text-cream opacity-75 cursor-wait'
-                        : 'semi-translucent-button text-cream hover:scale-105'
-                    }`}
+                    className={`flex items-center gap-2 px-10 py-4 rounded-xl font-black transition-all ml-auto text-lg ${isPublishing
+                      ? 'semi-translucent-button text-cream opacity-75 cursor-wait'
+                      : 'semi-translucent-button text-cream hover:scale-105'
+                      }`}
                   >
                     {isPublishing ? (
                       <>

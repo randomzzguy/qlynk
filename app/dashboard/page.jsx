@@ -37,7 +37,7 @@ export default function DashboardPage() {
         // Try to load user's page
         const { data: userPage } = await getUserPage();
         setPage(userPage);
-        
+
         setLoading(false);
       } catch (error) {
         console.error('Error loading dashboard:', error);
@@ -69,7 +69,7 @@ export default function DashboardPage() {
       // Try to load user's page
       const { data: userPage } = await getUserPage();
       setPage(userPage);
-      
+
       setLoading(false);
     } catch (error) {
       console.error('Error loading dashboard:', error);
@@ -113,27 +113,26 @@ export default function DashboardPage() {
             /* User has a page */
             <div className="space-y-6">
               {/* Page Card */}
-                <div className="bg-card/80 rounded-2xl shadow-lg border-2 border-border p-8">
+              <div className="bg-card/80 rounded-2xl shadow-lg border-2 border-border p-8">
                 <div className="flex items-start justify-between mb-6">
                   <div>
                     <h2 className="text-2xl font-black text-charcoal mb-2">Your Qlynk Page</h2>
                     <p className="text-panel-grey">
                       Live at:{' '}
-                      <a 
-                        href={`/${page.username}`}
+                      <a
+                        href={`/${profile.username}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-bright-orange hover:underline font-semibold"
                       >
-                        qlynk.site/{page.username}
+                        qlynk.site/{profile.username}
                       </a>
                     </p>
                   </div>
-                  <div className={`px-4 py-2 rounded-lg font-bold ${
-                    page.is_published 
-                      ? 'bg-green/10 text-green' 
+                  <div className={`px-4 py-2 rounded-lg font-bold ${page.is_published
+                      ? 'bg-green/10 text-green'
                       : 'bg-amber/10 text-amber'
-                  }`}>
+                    }`}>
                     {page.is_published ? '✓ Published' : 'Draft'}
                   </div>
                 </div>
@@ -141,7 +140,7 @@ export default function DashboardPage() {
                 {/* Quick Actions */}
                 <div className="grid md:grid-cols-3 gap-4">
                   <Link
-                    href={`/${page.username}`}
+                    href={`/${profile.username}`}
                     target="_blank"
                     className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-xl hover:border-bright-orange hover:bg-bright-orange/5 transition-all group"
                   >
@@ -209,8 +208,8 @@ export default function DashboardPage() {
                 <div className="bg-gray-100 rounded-xl p-6 text-center">
                   <div className="max-w-md mx-auto">
                     {page.profile_image && (
-                      <img 
-                        src={page.profile_image} 
+                      <img
+                        src={page.profile_image}
                         alt={page.name}
                         className="w-20 h-20 rounded-full mx-auto mb-4 object-cover border-4 border-white shadow-lg"
                       />
