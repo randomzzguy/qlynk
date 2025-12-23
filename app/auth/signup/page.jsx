@@ -71,7 +71,10 @@ function SignupForm() {
       return false;
     }
 
-    if (!hcaptchaToken) {
+    const isLocalhost = typeof window !== 'undefined' &&
+      (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
+    if (!hcaptchaToken && !isLocalhost) {
       setError('Please verify you are human.');
       return false;
     }
@@ -82,11 +85,10 @@ function SignupForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Allow bypass for local development if site key is missing or explicitly on localhost
     const isLocalhost = typeof window !== 'undefined' &&
       (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
-    const bypassCaptcha = isLocalhost && !process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY;
+    const bypassCaptcha = isLocalhost; // Force bypass on local development
 
     if (!validateForm() && !bypassCaptcha) return;
 
@@ -118,6 +120,9 @@ function SignupForm() {
       setLoading(false);
     }
   };
+
+  const isLocalhost = typeof window !== 'undefined' &&
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
   return (
     <div className="min-h-screen relative overflow-hidden flex items-center justify-center py-12 px-6">

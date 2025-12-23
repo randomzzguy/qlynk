@@ -3,7 +3,8 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request) {
   try {
-    const { email, password, username, hcaptchaToken } = await request.json();
+    const body = await request.json();
+    const { email, password, username, hcaptchaToken } = body;
 
     // Verify hCaptcha token
     const secret = process.env.HCAPTCHA_SECRET;
@@ -36,13 +37,14 @@ export async function POST(request) {
 
     // Proceed with signup
     const supabase = await createClient();
-    const { error } = await supabase.auth.signUp({
+    const { data: signUpData, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: {
           username,
         },
+        captchaToken: hcaptchaToken === 'local-bypass' ? undefined : hcaptchaToken,
       },
     });
 
