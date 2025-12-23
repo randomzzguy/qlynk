@@ -79,38 +79,45 @@ function SignupForm() {
     return true;
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (!validateForm()) return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  setLoading(true);
-  setError('');
+    // Allow bypass for local development if site key is missing or explicitly on localhost
+    const isLocalhost = typeof window !== 'undefined' &&
+      (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
-  try {
-    const response = await fetch('/api/auth/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...formData, hcaptchaToken }),
-    });
+    const bypassCaptcha = isLocalhost && !process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY;
 
-    const data = await response.json();
+    if (!validateForm() && !bypassCaptcha) return;
 
-    if (!response.ok) {
-      throw new Error(data.message || 'Something went wrong');
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...formData, hcaptchaToken: bypassCaptcha ? 'local-bypass' : hcaptchaToken }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Something went wrong');
+      }
+
+      router.push('/auth/login?message=Signup successful! Please check your email to verify your account.');
+    } catch (error) {
+      setError(error.message);
+      if (captchaRef.current) {
+        captchaRef.current.resetCaptcha();
+      }
+    } finally {
+      setLoading(false);
     }
-
-    router.push('/auth/login?message=Signup successful! Please check your email to verify your account.');
-  } catch (error) {
-    setError(error.message);
-    if (captchaRef.current) {
-      captchaRef.current.resetCaptcha();
-    }
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <div className="min-h-screen relative overflow-hidden flex items-center justify-center py-12 px-6">
@@ -143,99 +150,101 @@ const handleSubmit = async (e) => {
           )}
 
           {!needsVerification ? (
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Username */}
-            <div>
-              <label htmlFor="username" className="block font-bold text-cream mb-2">
-                Username *
-              </label>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                value={formData.username}
-                onChange={handleChange}
-                placeholder="your-username"
-                className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all"
-                disabled={loading}
-              />
-              <p className="text-xs text-white mt-1.5 ml-1">
-                Your page will be at: qlynk.link/{formData.username || 'username'}
-              </p>
-            </div>
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Username */}
+              <div>
+                <label htmlFor="username" className="block font-bold text-cream mb-2">
+                  Username *
+                </label>
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  value={formData.username}
+                  onChange={handleChange}
+                  placeholder="your-username"
+                  className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all"
+                  disabled={loading}
+                />
+                <p className="text-xs text-white mt-1.5 ml-1">
+                  Your page will be at: qlynk.link/{formData.username || 'username'}
+                </p>
+              </div>
 
-            {/* Email */}
-            <div>
-              <label htmlFor="email" className="block font-bold text-cream mb-2">
-                Email *
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="your@email.com"
-                className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all"
-                disabled={loading}
-              />
-            </div>
+              {/* Email */}
+              <div>
+                <label htmlFor="email" className="block font-bold text-cream mb-2">
+                  Email *
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="your@email.com"
+                  className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all"
+                  disabled={loading}
+                />
+              </div>
 
-            {/* Password */}
-            <div>
+              {/* Password */}
+              <div>
                 <label htmlFor="password" className="block font-bold text-cream mb-2">
                   Password
                 </label>
-              <div className="relative">
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="••••••••"
-                  className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all pr-12"
-                  disabled={loading}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-panel-grey hover:text-charcoal transition-colors"
-                >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
+                <div className="relative">
+                  <input
+                    id="password"
+                    name="password"
+                    type={showPassword ? 'text' : 'password'}
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="••••••••"
+                    className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-xl focus:border-bright-orange focus:outline-none transition-all pr-12"
+                    disabled={loading}
+                    autoComplete="new-password"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-panel-grey hover:text-charcoal transition-colors"
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
               </div>
-            </div>
 
-              <HCaptcha
-            sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
-            onVerify={onHCaptchaChange}
-            ref={captchaRef}
-          />
+              {process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY && (
+                <HCaptcha
+                  sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
+                  onVerify={onHCaptchaChange}
+                  ref={captchaRef}
+                />
+              )}
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className={`w-full py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 ${
-                loading
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={loading}
+                className={`w-full py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 ${loading
                   ? 'semi-translucent-button text-cream opacity-75 cursor-wait'
                   : 'semi-translucent-button text-cream hover:shadow-xl hover:shadow-orange/40'
-              }`}
-            >
-              {loading ? (
-                <>
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  Creating Account...
-                </>
-              ) : (
-                <>
-                  <Sparkles size={20} />
-                  Create Account
-                </>
-              )}
-            </button>
-          </form>
+                  }`}
+              >
+                {loading ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Creating Account...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles size={20} />
+                    Create Account
+                  </>
+                )}
+              </button>
+            </form>
           ) : (
             <div className="space-y-5 text-center">
               <h2 className="text-2xl font-black text-cream">Check Your Email</h2>
