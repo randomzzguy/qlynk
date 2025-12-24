@@ -113,7 +113,7 @@ const SlotMachineHero = () => {
 
   return (
     <div className="w-full py-16">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Header */}
         <div className="text-center space-y-6">
           <motion.div
@@ -153,97 +153,217 @@ const SlotMachineHero = () => {
           </motion.p>
         </div>
 
-        {/* Slot Machine */}
-        <motion.div
-          className="max-w-4xl mx-auto p-8 rounded-3xl bg-gray-800/50 relative overflow-hidden"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-        >
-          {/* Glow effect on hover */}
+        {/* Main Content: Slot Machine + Live Preview */}
+        <div className="grid lg:grid-cols-2 gap-8 items-start">
+          {/* Left: Slot Machine */}
           <motion.div
-            className="absolute inset-0 rounded-3xl bg-[#f46530]/20 opacity-0"
-            whileHover={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          />
+            className="p-8 rounded-3xl bg-gray-800/50 relative overflow-hidden"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+          >
+            {/* Glow effect on hover */}
+            <motion.div
+              className="absolute inset-0 rounded-3xl bg-[#f46530]/20 opacity-0"
+              whileHover={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            />
 
-          <div className="grid grid-cols-3 gap-6 mb-8 relative z-10">
-            {/* Name Reel */}
-            <div className="space-y-3">
-              <div className="text-center text-sm font-bold text-gray-400">
-                NAME
+            <div className="grid grid-cols-3 gap-6 mb-8 relative z-10">
+              {/* Name Reel */}
+              <div className="space-y-3">
+                <div className="text-center text-sm font-bold text-gray-400">
+                  NAME
+                </div>
+                <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
+                  <motion.div
+                    className="text-4xl font-bold text-white"
+                    key={`name-${reel1Index}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {names[reel1Index]}
+                  </motion.div>
+                </div>
               </div>
-              <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
-                <motion.div
-                  className="text-4xl font-bold text-white"
-                  key={`name-${reel1Index}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {names[reel1Index]}
-                </motion.div>
+
+              {/* Style Reel */}
+              <div className="space-y-3">
+                <div className="text-center text-sm font-bold text-gray-400">
+                  STYLE
+                </div>
+                <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
+                  <motion.div
+                    className="text-5xl"
+                    key={`style-${reel2Index}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {styles[reel2Index]}
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Profession Reel */}
+              <div className="space-y-3">
+                <div className="text-center text-sm font-bold text-gray-400">
+                  FOR
+                </div>
+                <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
+                  <motion.div
+                    className="text-2xl font-bold text-white"
+                    key={`prof-${reel3Index}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {professions[reel3Index]}
+                  </motion.div>
+                </div>
               </div>
             </div>
 
-            {/* Style Reel */}
-            <div className="space-y-3">
-              <div className="text-center text-sm font-bold text-gray-400">
-                STYLE
+            <div className="text-center space-y-6 relative z-10">
+              <motion.button
+                className="px-12 py-5 rounded-xl text-xl font-black bg-[#f46530] text-white shadow-lg shadow-[#f46530]/30 relative overflow-hidden"
+                onClick={spin}
+                disabled={isSpinning}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.8 }}
+              >
+                <span className="relative z-10">🎰 SPIN THE WHEEL</span>
+              </motion.button>
+              <div className="text-sm text-gray-400">
+                Click to see another combination
               </div>
-              <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
-                <motion.div
-                  className="text-5xl"
-                  key={`style-${reel2Index}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {styles[reel2Index]}
-                </motion.div>
+            </div>
+          </motion.div>
+
+          {/* Right: Live Preview */}
+          <motion.div
+            className="lg:sticky lg:top-24"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
+          >
+            <div className="mb-4 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#f46530]/10 border border-[#f46530]/20 text-[#f46530] font-bold text-sm">
+                <Sparkles size={16} />
+                LIVE PREVIEW
               </div>
             </div>
 
-            {/* Profession Reel */}
-            <div className="space-y-3">
-              <div className="text-center text-sm font-bold text-gray-400">
-                FOR
-              </div>
-              <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
-                <motion.div
-                  className="text-2xl font-bold text-white"
-                  key={`prof-${reel3Index}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {professions[reel3Index]}
-                </motion.div>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center space-y-6 relative z-10">
-            <motion.button
-              className="px-12 py-5 rounded-xl text-xl font-black bg-[#f46530] text-white shadow-lg shadow-[#f46530]/30 relative overflow-hidden"
-              onClick={spin}
-              disabled={isSpinning}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
+            <motion.div
+              className="rounded-3xl bg-white shadow-2xl overflow-hidden border-4 border-gray-700"
+              key={`preview-${reel1Index}-${reel2Index}-${reel3Index}`}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
             >
-              <span className="relative z-10">🎰 SPIN THE WHEEL</span>
-            </motion.button>
-            <div className="text-sm text-gray-400">
-              Click to see another combination
-            </div>
-          </div>
-        </motion.div>
+              {/* Mock Browser Header */}
+              <div className="bg-gray-800 px-4 py-3 flex items-center gap-2 border-b-2 border-gray-700">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                </div>
+                <div className="flex-1 mx-4 bg-gray-700 rounded px-3 py-1 text-xs text-gray-400 font-mono">
+                  qlynk.site/{names[reel1Index].toLowerCase()}
+                </div>
+              </div>
+
+              {/* Mock Webpage Content */}
+              <div className="p-8 bg-gradient-to-br from-gray-50 to-gray-100 min-h-[500px]">
+                {/* Profile Section */}
+                <motion.div
+                  className="text-center mb-8"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#f46530] to-[#c14f22] flex items-center justify-center text-4xl shadow-lg">
+                    {styles[reel2Index]}
+                  </div>
+                  <h1 className="text-3xl font-black text-gray-900 mb-2">
+                    {names[reel1Index]}
+                  </h1>
+                  <p className="text-lg text-gray-600 font-semibold">
+                    {professions[reel3Index]}
+                  </p>
+                  <p className="text-sm text-gray-500 mt-2 max-w-md mx-auto">
+                    Passionate {professions[reel3Index].toLowerCase()} creating amazing experiences
+                  </p>
+                </motion.div>
+
+                {/* CTA Button */}
+                <motion.div
+                  className="text-center mb-8"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <button className="px-8 py-3 bg-[#f46530] text-white rounded-lg font-bold shadow-md hover:bg-[#c14f22] transition-colors">
+                    Get In Touch
+                  </button>
+                </motion.div>
+
+                {/* Social Links */}
+                <motion.div
+                  className="flex justify-center gap-4 mb-8"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                >
+                  {['LinkedIn', 'Twitter', 'GitHub'].map((platform, i) => (
+                    <div
+                      key={i}
+                      className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-300 transition-colors cursor-pointer"
+                    >
+                      <span className="text-xs font-bold">{platform[0]}</span>
+                    </div>
+                  ))}
+                </motion.div>
+
+                {/* Sample Links */}
+                <motion.div
+                  className="space-y-3 max-w-md mx-auto"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  {['Portfolio', 'Blog', 'Contact'].map((link, i) => (
+                    <div
+                      key={i}
+                      className="p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:border-[#f46530] transition-colors cursor-pointer"
+                    >
+                      <div className="font-bold text-gray-900">{link}</div>
+                      <div className="text-xs text-gray-500 mt-1">
+                        Check out my {link.toLowerCase()}
+                      </div>
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
+            </motion.div>
+
+            <motion.p
+              className="text-center text-sm text-gray-400 mt-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+            >
+              This could be your page in 2 minutes ✨
+            </motion.p>
+          </motion.div>
+        </div>
 
         {/* Live Counter */}
         <motion.div
