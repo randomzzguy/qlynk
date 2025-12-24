@@ -67,6 +67,7 @@ export default function CreatePage() {
   const [showPreview, setShowPreview] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
+  const [userProfile, setUserProfile] = useState(null);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -82,7 +83,7 @@ export default function CreatePage() {
     links: []
   });
 
-  // Check if user is logged in on mount
+  // Check if user is logged in on mount and fetch profile
   useEffect(() => {
     const checkAuth = async () => {
       const supabase = createClient();
@@ -92,6 +93,12 @@ export default function CreatePage() {
         router.push('/auth/signup');
         return;
       }
+
+      // Fetch user profile to get username
+      const { getCurrentProfile } = await import('@/lib/supabase');
+      const profile = await getCurrentProfile();
+      setUserProfile(profile);
+
       setCheckingAuth(false);
     };
     checkAuth();
@@ -667,7 +674,7 @@ export default function CreatePage() {
               <ul className="space-y-3 text-charcoal text-lg">
                 <li className="flex items-start">
                   <span className="text-green mr-3 text-2xl">✓</span>
-                  <span>Your page will be live at: <span className="font-mono bg-white px-3 py-1 rounded-lg font-bold border border-gray-200">qlynk.site/username</span></span>
+                  <span>Your page will be live at: <span className="font-mono bg-white px-3 py-1 rounded-lg font-bold border border-gray-200">qlynk.site/{userProfile?.username || 'your-username'}</span></span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-green mr-3 text-2xl">✓</span>
