@@ -1,13 +1,6 @@
 import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
-import {
-  ProfessionalTemplate,
-  CreativeTemplate,
-  MinimalistTemplate,
-  DarkTemplate,
-  VibrantTemplate,
-  socialIcons
-} from '@/components/Templates';
+import { THEMES } from '@/lib/themeRegistry';
 
 // This tells Next.js to generate pages dynamically
 export const dynamic = 'force-dynamic';
@@ -37,14 +30,29 @@ export default async function PublicPage({ params }) {
     notFound(); // Show 404 page
   }
 
-  // Map social links with icons
-  const socialLinksWithIcons = page.social_links?.map(link => ({
-    ...link,
-    icon: socialIcons[link.platform]
-  })) || [];
+  // Get the theme configuration
+  const themeConfig = THEMES[page.theme];
 
-  // Format data for template
-  const pageData = {
+  // Fallback to quickpitch if theme not found
+  if (!themeConfig) {
+    console.warn(`Theme "${page.theme}" not found, falling back to quickpitch`);
+    const QuickPitch = THEMES.quickpitch.component;
+    return <QuickPitch data={{
+      config_version: 'v1',
+      headline: page.name || 'Welcome',
+      subhead: page.tagline || page.profession || '',
+      email: page.email || ''
+    }} />;
+  }
+
+  // Get the theme component
+  const ThemeComponent = themeConfig.component;
+
+  // Merge theme_data with basic page fields
+  // Theme components expect data from theme_data JSONB field
+  const componentData = {
+    ...page.theme_data, // Theme-specific data from JSONB
+    // Add common fields that might be used across themes
     name: page.name,
     profession: page.profession,
     tagline: page.tagline,
@@ -52,22 +60,9 @@ export default async function PublicPage({ params }) {
     profileImage: page.profile_image,
     email: page.email,
     phone: page.phone,
-    cta: page.cta_text,
-    ctaLink: page.cta_link,
-    socialLinks: socialLinksWithIcons,
-    links: page.custom_links || []
+    socialLinks: page.social_links || [],
+    customLinks: page.custom_links || []
   };
 
-  // Select the appropriate template component
-  const templates = {
-    professional: ProfessionalTemplate,
-    creative: CreativeTemplate,
-    minimalist: MinimalistTemplate,
-    dark: DarkTemplate,
-    vibrant: VibrantTemplate,
-  };
-
-  const TemplateComponent = templates[page.theme] || ProfessionalTemplate;
-
-  return <TemplateComponent data={pageData} />;
+  return <ThemeComponent data={componentData} />;
 }
