@@ -9,6 +9,7 @@ import { THEME_CATEGORIES, getThemesByCategory, getThemeById } from '@/lib/theme
 import ThemeCard from '@/components/ThemeCard';
 import DynamicForm from '@/components/DynamicForm';
 import { THEME_SCHEMAS } from '@/lib/themeSchemas';
+import QlynkBackground from '@/components/QlynkBackground';
 
 // Map use case IDs to category IDs
 const USE_CASE_TO_CATEGORY = {
@@ -114,14 +115,17 @@ export default function CreatePage() {
       }
 
       setShowPreview(true);
+      setStep(3); // Move to preview step
+      return;
     }
     setStep(step + 1);
   };
 
   const handleBack = () => {
-    if (showPreview) {
+    if (showPreview && step === 3) {
       setShowPreview(false);
-    } else {
+      setStep(2); // Go back to content form
+    } else if (step > 0) {
       setStep(step - 1);
     }
   };
@@ -162,7 +166,8 @@ export default function CreatePage() {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4">
+    <div className="min-h-screen relative overflow-hidden py-12 px-4">
+      <QlynkBackground />
       <div className="max-w-6xl mx-auto">
         {/* Progress Steps */}
         <div className="mb-12">

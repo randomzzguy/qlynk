@@ -100,7 +100,7 @@ export default function DynamicForm({ fields, data, onChange }) {
                                             <textarea
                                                 value={item[itemField.name] || ''}
                                                 onChange={(e) => handleArrayItemChange(field.name, index, itemField.name, e.target.value)}
-                                                className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
+                                                className="w-full px-4 py-2 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
                                                 rows={3}
                                             />
                                         ) : itemField.type === 'number' ? (
@@ -110,14 +110,14 @@ export default function DynamicForm({ fields, data, onChange }) {
                                                 onChange={(e) => handleArrayItemChange(field.name, index, itemField.name, parseInt(e.target.value))}
                                                 min={itemField.min}
                                                 max={itemField.max}
-                                                className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
+                                                className="w-full px-4 py-2 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
                                             />
                                         ) : (
                                             <input
                                                 type="text"
                                                 value={item[itemField.name] || ''}
                                                 onChange={(e) => handleArrayItemChange(field.name, index, itemField.name, e.target.value)}
-                                                className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
+                                                className="w-full px-4 py-2 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
                                             />
                                         )}
                                     </div>
@@ -143,7 +143,7 @@ export default function DynamicForm({ fields, data, onChange }) {
                         value={value}
                         onChange={(e) => handleFieldChange(field.name, e.target.value)}
                         required={field.required}
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
+                        className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
                         rows={4}
                         placeholder={field.placeholder}
                     />
@@ -153,7 +153,7 @@ export default function DynamicForm({ fields, data, onChange }) {
                         value={value}
                         onChange={(e) => handleFieldChange(field.name, e.target.value)}
                         required={field.required}
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
+                        className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
                         placeholder={field.placeholder}
                     />
                 ) : field.type === 'url' ? (
@@ -162,7 +162,7 @@ export default function DynamicForm({ fields, data, onChange }) {
                         value={value}
                         onChange={(e) => handleFieldChange(field.name, e.target.value)}
                         required={field.required}
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
+                        className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
                         placeholder={field.placeholder || 'https://'}
                     />
                 ) : field.type === 'number' ? (
@@ -173,7 +173,7 @@ export default function DynamicForm({ fields, data, onChange }) {
                         required={field.required}
                         min={field.min}
                         max={field.max}
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
+                        className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
                         placeholder={field.placeholder}
                     />
                 ) : (
@@ -183,7 +183,7 @@ export default function DynamicForm({ fields, data, onChange }) {
                         onChange={(e) => handleFieldChange(field.name, e.target.value)}
                         required={field.required}
                         maxLength={field.maxLength}
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
+                        className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
                         placeholder={field.placeholder}
                     />
                 )}
