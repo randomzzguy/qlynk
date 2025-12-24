@@ -49,6 +49,8 @@ const USE_CASES = [
   }
 ];
 
+import { getThemeFormFields } from '@/lib/themeFormFields';
+
 export default function CreatePage() {
   const router = useRouter();
   const [step, setStep] = useState(0);
@@ -101,16 +103,17 @@ export default function CreatePage() {
     }
     if (step === 2) {
       // Validate required fields before moving to preview
-      const themeConfig = getThemeById(selectedTheme);
-      const schema = THEME_SCHEMAS[selectedTheme];
+      const formFields = getThemeFormFields(selectedTheme);
+      const requiredFields = formFields.filter(f => f.required);
 
-      try {
-        schema.parse(themeData);
-        setShowPreview(true);
-      } catch (error) {
-        toast.error(`Please fill in all required fields: ${error.errors[0].message}`);
-        return;
+      for (const field of requiredFields) {
+        if (!themeData[field.name] || themeData[field.name] === '') {
+          toast.error(`Please fill in: ${field.label}`);
+          return;
+        }
       }
+
+      setShowPreview(true);
     }
     setStep(step + 1);
   };
@@ -155,27 +158,8 @@ export default function CreatePage() {
   const availableThemes = category ? getThemesByCategory(category) : [];
   const selectedThemeConfig = selectedTheme ? getThemeById(selectedTheme) : null;
   const ThemeComponent = selectedThemeConfig?.component;
+  const formFields = selectedTheme ? getThemeFormFields(selectedTheme) : [];
 
-  // Get form fields for selected theme
-  const getFormFields = () => {
-    if (!selectedTheme) return [];
-
-    const themeConfig = getThemeById(selectedTheme);
-    // Convert Zod schema to form fields
-    // This is a simplified version - you might want to enhance this
-    const schema = THEME_SCHEMAS[selectedTheme];
-
-    // For now, return a basic structure based on required fields
-    // You can enhance this to parse the Zod schema more comprehensively
-    return themeConfig.requiredFields.map(fieldName => ({
-      name: fieldName,
-      type: fieldName.includes('email') ? 'email' :
-        fieldName.includes('url') || fieldName.includes('Link') ? 'url' :
-          fieldName.includes('bio') || fieldName.includes('desc') ? 'textarea' : 'text',
-      required: true,
-      label: fieldName.charAt(0).toUpperCase() + fieldName.slice(1).replace(/([A-Z])/g, ' $1')
-    }));
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4">
@@ -218,8 +202,8 @@ export default function CreatePage() {
                     key={uc.id}
                     onClick={() => setUseCase(uc.id)}
                     className={`p-8 rounded-2xl border-2 cursor-pointer transition-all ${useCase === uc.id
-                        ? 'border-[#f46530] bg-orange-50'
-                        : 'border-gray-200 hover:border-gray-300'
+                      ? 'border-[#f46530] bg-orange-50'
+                      : 'border-gray-200 hover:border-gray-300'
                       }`}
                   >
                     <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${uc.color} flex items-center justify-center mb-4`}>
@@ -272,7 +256,7 @@ export default function CreatePage() {
 
             <div className="bg-white rounded-2xl p-8 shadow-lg">
               <DynamicForm
-                fields={getFormFields()}
+                fields={formFields}
                 data={themeData}
                 onChange={setThemeData}
               />
