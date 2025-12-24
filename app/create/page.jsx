@@ -140,7 +140,7 @@ export default function CreatePage() {
       const pageData = {
         theme: selectedTheme,
         themeCategory: category,
-        themeData: themeData
+        themeData: formattedThemeData
       };
 
       const { data, error } = await createPage(pageData);
@@ -157,12 +157,53 @@ export default function CreatePage() {
     }
   };
 
+  // Helper function to format data based on schema types
+  const formatThemeData = (data, fields) => {
+    if (!data) return data;
+    const formatted = { ...data };
+
+    fields.forEach(field => {
+      const value = formatted[field.name];
+
+      if (field.type === 'tags' && typeof value === 'string') {
+        formatted[field.name] = value.split(',').map(s => s.trim()).filter(Boolean);
+      }
+      else if (field.type === 'array' && Array.isArray(value)) {
+        formatted[field.name] = value.map(item => {
+          const itemFormatted = { ...item };
+          field.itemFields.forEach(itemField => {
+            if (itemField.type === 'tags' && typeof item[itemField.name] === 'string') {
+              itemFormatted[itemField.name] = item[itemField.name].split(',').map(s => s.trim()).filter(Boolean);
+            }
+          });
+          return itemFormatted;
+        });
+      }
+      else if (field.type === 'object' && value && field.fields) {
+        // Recursively handle nested objects if needed, though current structure is flat enough
+        // implementing basic object field check
+        const objectFormatted = { ...value };
+        field.fields.forEach(nestedField => {
+          if (nestedField.type === 'tags' && typeof value[nestedField.name] === 'string') {
+            objectFormatted[nestedField.name] = value[nestedField.name].split(',').map(s => s.trim()).filter(Boolean);
+          }
+        });
+        formatted[field.name] = objectFormatted;
+      }
+    });
+
+    return formatted;
+  };
+
   // Get themes for selected category
   const category = USE_CASE_TO_CATEGORY[useCase];
   const availableThemes = category ? getThemesByCategory(category) : [];
   const selectedThemeConfig = selectedTheme ? getThemeById(selectedTheme) : null;
   const ThemeComponent = selectedThemeConfig?.component;
   const formFields = selectedTheme ? getThemeFormFields(selectedTheme) : [];
+
+  // Format data for preview and publish
+  const formattedThemeData = formatThemeData(themeData, formFields);
 
 
   return (
@@ -278,7 +319,7 @@ export default function CreatePage() {
             </div>
 
             <div className="bg-white rounded-2xl overflow-hidden shadow-2xl">
-              <ThemeComponent data={themeData} />
+              <ThemeComponent data={formattedThemeData} />
             </div>
           </div>
         )}
