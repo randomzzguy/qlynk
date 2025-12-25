@@ -147,6 +147,8 @@ export default function CreatePage() {
         tagline: formattedThemeData.headline || formattedThemeData.tagline || formattedThemeData.subhead || '',
         bio: formattedThemeData.bio || formattedThemeData.intro || formattedThemeData.about || '',
         email: formattedThemeData.email || userProfile?.email || '',
+        cta: formattedThemeData.ctaText || formattedThemeData.buttonText || 'Contact Me',
+        ctaLink: formattedThemeData.ctaLink || formattedThemeData.link || formattedThemeData.purchaseLink || formattedThemeData.waitlistUrl || formattedThemeData.calendlyUrl || formattedThemeData.repoUrl || `mailto:${formattedThemeData.email || userProfile?.email || ''}`,
       };
 
       const { data, error } = await createPage(pageData);
