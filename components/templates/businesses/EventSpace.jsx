@@ -14,7 +14,7 @@ export default function EventSpace({ data }) {
     const colors = themeColors.eventspace;
 
     const mockData = {
-        venueName: data?.venueName || "The Grand Ballroom",
+        venueName: data?.name || "The Grand Ballroom",
         tagline: data?.tagline || "Elegant event space in the heart of downtown",
         capacity: data?.capacity || "Up to 300 guests",
         amenities: data?.amenities || [

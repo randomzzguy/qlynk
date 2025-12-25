@@ -17,6 +17,7 @@ export default function NarrativeScroll({ data }) {
     const colors = themeColors.narrativescroll;
 
     const mockData = {
+        name: data?.name || "A Journey Through Design",
         chapters: data?.chapters || [
             {
                 title: "Learning",
@@ -65,7 +66,7 @@ export default function NarrativeScroll({ data }) {
                     transition={{ duration: 1 }}
                 >
                     <h1 className="text-6xl md:text-8xl font-black mb-8 leading-tight">
-                        A Journey Through Design
+                        {mockData.name}
                     </h1>
                     <p className="text-2xl md:text-3xl mb-12" style={{ color: colors.textLight }}>
                         From student to storyteller

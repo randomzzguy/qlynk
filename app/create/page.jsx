@@ -140,7 +140,13 @@ export default function CreatePage() {
       const pageData = {
         theme: selectedTheme,
         themeCategory: category,
-        themeData: formattedThemeData
+        themeData: formattedThemeData,
+        // Map common fields to top-level columns to satisfy DB constraints
+        name: formattedThemeData.name || userProfile?.username || 'My Page',
+        profession: formattedThemeData.role || formattedThemeData.profession || '',
+        tagline: formattedThemeData.headline || formattedThemeData.tagline || formattedThemeData.subhead || '',
+        bio: formattedThemeData.bio || formattedThemeData.intro || formattedThemeData.about || '',
+        email: formattedThemeData.email || userProfile?.email || '',
       };
 
       const { data, error } = await createPage(pageData);

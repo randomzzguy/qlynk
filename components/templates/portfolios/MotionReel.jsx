@@ -16,6 +16,7 @@ export default function MotionReel({ data }) {
     const colors = themeColors.motionreel;
 
     const mockData = {
+        name: data?.name || "Motion Designer",
         heroReel: data?.heroReel || { url: "#", poster: "🎬" },
         projects: data?.projects || [
             { title: "Brand Commercial", thumbnail: "📺", videoUrl: "#", duration: "0:30" },
@@ -46,7 +47,7 @@ export default function MotionReel({ data }) {
                         transition={{ duration: 0.8 }}
                     >
                         <h1 className="text-5xl md:text-7xl font-black mb-4">
-                            Motion Designer
+                            {mockData.name}
                         </h1>
                         <p className="text-2xl mb-8" style={{ color: colors.textLight }}>
                             Bringing brands to life through motion

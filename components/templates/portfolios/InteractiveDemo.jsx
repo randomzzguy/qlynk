@@ -16,6 +16,7 @@ export default function InteractiveDemo({ data }) {
     const colors = themeColors.interactivedemo;
 
     const mockData = {
+        name: data?.name || "Creative Coder",
         heroDemo: data?.heroDemo || { url: "#", title: "Interactive 3D Scene" },
         demos: data?.demos || [
             { title: "Particle System", embedUrl: "#", tech: ["Three.js", "WebGL"] },
@@ -42,7 +43,7 @@ export default function InteractiveDemo({ data }) {
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
                     <div className="flex items-center gap-2">
                         <Code2 size={24} style={{ color: colors.primary }} />
-                        <span className="font-bold">Creative Coder</span>
+                        <span className="font-bold">{mockData.name}</span>
                     </div>
                     <a href={mockData.githubUrl} target="_blank" rel="noopener noreferrer"
                         className="flex items-center gap-2 px-6 py-2 rounded-lg font-bold transition-all"

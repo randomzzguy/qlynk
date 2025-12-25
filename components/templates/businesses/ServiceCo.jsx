@@ -14,7 +14,7 @@ export default function ServiceCo({ data }) {
     const colors = themeColors.serviceco;
 
     const mockData = {
-        companyName: data?.companyName || "Apex Consulting",
+        companyName: data?.name || "Apex Consulting",
         tagline: data?.tagline || "Strategic solutions that drive measurable business growth",
         services: data?.services || [
             { title: "Strategy Consulting", desc: "Data-driven insights to transform your business" },

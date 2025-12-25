@@ -17,7 +17,7 @@ export default function LaunchPad({ data }) {
     const colors = themeColors.launchpad;
 
     const mockData = {
-        productName: data?.productName || "NextGen App",
+        productName: data?.name || "NextGen App",
         tagline: data?.tagline || "The future of productivity is here",
         heroVideo: data?.heroVideo || "🚀",
         problem: data?.problem || "Traditional tools are slow, complicated, and expensive. Teams waste hours on tasks that should take minutes.",

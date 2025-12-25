@@ -16,6 +16,7 @@ export default function StoryBuilder({ data }) {
     const colors = themeColors.storybuilder;
 
     const mockData = {
+        name: data?.name || "Sarah Jones",
         storyBlocks: data?.storyBlocks || [
             { type: 'text', content: "It started with a simple question: Why do most websites feel soulless?" },
             { type: 'text', content: "After 10 years in corporate design, I realized the answer. We'd forgotten to tell stories. We'd optimized for clicks, not connections." },
@@ -40,6 +41,13 @@ export default function StoryBuilder({ data }) {
 
     return (
         <div className="min-h-screen font-serif" style={{ backgroundColor: colors.bg, color: colors.text }}>
+            {/* Header */}
+            <nav className="p-8 flex justify-between items-center relative z-10">
+                <span className="text-lg font-bold tracking-widest uppercase border-b-2 pb-1" style={{ borderColor: colors.primary }}>
+                    {mockData.name}
+                </span>
+            </nav>
+
             {/* Hero */}
             <section className="min-h-screen flex items-center justify-center px-6 py-20">
                 <motion.div

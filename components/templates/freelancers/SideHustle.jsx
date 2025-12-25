@@ -16,6 +16,7 @@ export default function SideHustle({ data }) {
     const colors = themeColors.sidehustle;
 
     const mockData = {
+        name: data?.name || "Side Hustle Studio",
         intro: data?.intro || "I design websites when I'm not teaching yoga 🧘‍♀️",
         offers: data?.offers || [
             { title: "Website Design", emoji: "🎨", desc: "Beautiful sites that don't break the bank" },
@@ -43,7 +44,7 @@ export default function SideHustle({ data }) {
                 <div className="max-w-6xl mx-auto flex justify-between items-center">
                     <div className="flex items-center gap-2">
                         <Sparkles size={24} style={{ color: colors.primary }} />
-                        <span className="font-bold text-lg">Side Hustle Studio</span>
+                        <span className="font-bold text-lg">{mockData.name}</span>
                     </div>
                     <div className="flex gap-3">
                         <a href={mockData.socials.instagram} target="_blank" rel="noopener noreferrer"

@@ -16,6 +16,7 @@ export default function HireMeNow({ data }) {
     const colors = themeColors.hiremenow;
 
     const mockData = {
+        name: data?.name || "Alex Smith",
         available: data?.available ?? true,
         offer: data?.offer || {
             title: "20% Off First Project",
@@ -63,6 +64,16 @@ export default function HireMeNow({ data }) {
 
     return (
         <div className="min-h-screen" style={{ backgroundColor: colors.bg, color: colors.text }}>
+            {/* Header */}
+            <header className="p-6 flex justify-between items-center border-b border-gray-800">
+                <span className="text-xl font-black uppercase tracking-wider">
+                    {mockData.name}
+                </span>
+                <span className="text-sm font-bold px-3 py-1 rounded" style={{ backgroundColor: colors.bgAlt }}>
+                    FREELANCE DEVELOPER
+                </span>
+            </header>
+
             {/* Availability Banner */}
             <motion.div
                 className="py-3 px-6 text-center font-bold"

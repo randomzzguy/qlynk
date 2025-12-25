@@ -17,7 +17,7 @@ export default function HardwareShowcase({ data }) {
     const colors = themeColors.hardwareshowcase;
 
     const mockData = {
-        productName: data?.productName || "SmartWatch Pro",
+        productName: data?.name || "SmartWatch Pro",
         price: data?.price || "$299",
         gallery: data?.gallery || ["⌚", "📱", "💻", "🎧"],
         specs: data?.specs || [

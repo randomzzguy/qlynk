@@ -16,6 +16,7 @@ export default function CaseStudy({ data }) {
     const colors = themeColors.casestudy;
 
     const mockData = {
+        name: data?.name || "Case Studies",
         intro: data?.intro || "Product designer crafting experiences that drive business results",
         caseStudies: data?.caseStudies || [
             {
@@ -40,7 +41,7 @@ export default function CaseStudy({ data }) {
             {/* Header */}
             <header className="py-8 px-6 border-b" style={{ borderColor: colors.border }}>
                 <div className="max-w-5xl mx-auto flex justify-between items-center">
-                    <h1 className="text-xl font-bold">Case Studies</h1>
+                    <h1 className="text-xl font-bold">{mockData.name}</h1>
                     <a href={`mailto:${mockData.email}`}
                         className="px-6 py-2 rounded-lg font-bold transition-all"
                         style={{ backgroundColor: colors.primary, color: '#ffffff' }}>

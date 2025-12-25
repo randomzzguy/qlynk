@@ -14,7 +14,7 @@ export default function EcoBrand({ data }) {
     const colors = themeColors.ecobrand;
 
     const mockData = {
-        brandName: data?.brandName || "EarthFirst Goods",
+        brandName: data?.name || "EarthFirst Goods",
         mission: data?.mission || "Creating sustainable products that don't cost the Earth",
         impact: data?.impact || [
             { metric: "Trees Planted", value: "50,000+" },

@@ -14,7 +14,7 @@ export default function FranchiseHub({ data }) {
     const colors = themeColors.franchisehub;
 
     const mockData = {
-        brandName: data?.brandName || "FreshBite Cafés",
+        brandName: data?.name || "FreshBite Cafés",
         tagline: data?.tagline || "Fresh food, friendly service, in your neighborhood",
         locations: data?.locations || [
             { city: "Austin", address: "123 Main St", phone: "(512) 555-0101" },

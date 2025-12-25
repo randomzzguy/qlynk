@@ -17,6 +17,7 @@ export default function GalleryGrid({ data }) {
     const colors = themeColors.gallerygrid;
 
     const mockData = {
+        name: data?.name || "Portfolio",
         intro: data?.intro || "Visual storyteller capturing moments that matter",
         projects: data?.projects || [
             { title: "Urban Landscapes", category: "Photography", tags: ["photography", "urban"], featured: "🏙️" },
@@ -41,7 +42,7 @@ export default function GalleryGrid({ data }) {
             {/* Minimal Header */}
             <header className="py-8 px-6 border-b" style={{ borderColor: colors.border }}>
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
-                    <h1 className="text-2xl font-bold">Portfolio</h1>
+                    <h1 className="text-2xl font-bold">{mockData.name}</h1>
                     <a href={`mailto:${mockData.email}`}
                         className="px-6 py-2 rounded-lg font-bold transition-all"
                         style={{ backgroundColor: colors.primary, color: colors.bg }}>

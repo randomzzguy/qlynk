@@ -17,6 +17,7 @@ export default function QuickPitch({ data }) {
 
     // Mock data structure - will be replaced with actual user data
     const mockData = {
+        name: data?.name || "John Doe",
         headline: data?.headline || "I Build Websites That Convert",
         subhead: data?.subhead || "Helping businesses grow with modern web solutions. Available now.",
         services: data?.services || [
@@ -35,6 +36,13 @@ export default function QuickPitch({ data }) {
 
     return (
         <div className="min-h-screen" style={{ backgroundColor: colors.bg }}>
+            {/* Header */}
+            <nav className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-20">
+                <span className="text-xl font-black tracking-tight" style={{ color: colors.text }}>
+                    {mockData.name}
+                </span>
+            </nav>
+
             {/* Hero Section - Full Viewport */}
             <section className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
                 {/* Accent Background Element */}

@@ -14,7 +14,7 @@ export default function OpenSource({ data }) {
     const colors = themeColors.opensource;
 
     const mockData = {
-        projectName: data?.projectName || "react-awesome-ui",
+        projectName: data?.name || "react-awesome-ui",
         tagline: data?.tagline || "Beautiful, accessible React components for modern web apps",
         stats: data?.stats || [
             { label: "Stars", value: "12.5k", icon: Star },

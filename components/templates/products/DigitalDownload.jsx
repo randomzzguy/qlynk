@@ -16,7 +16,7 @@ export default function DigitalDownload({ data }) {
     const colors = themeColors.digitaldownload;
 
     const mockData = {
-        productName: data?.productName || "Ultimate Design System",
+        productName: data?.name || "Ultimate Design System",
         price: data?.price || "$49",
         previewItems: data?.previewItems || [
             "📄", "🎨", "📐", "🖼️", "📊", "✨"

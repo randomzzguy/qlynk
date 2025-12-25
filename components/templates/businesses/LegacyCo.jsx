@@ -14,7 +14,7 @@ export default function LegacyCo({ data }) {
     const colors = themeColors.legacyco;
 
     const mockData = {
-        companyName: data?.companyName || "Heritage Craftworks",
+        companyName: data?.name || "Heritage Craftworks",
         founded: data?.founded || "1952",
         tagline: data?.tagline || "Three generations of excellence in traditional craftsmanship",
         timeline: data?.timeline || [

@@ -16,6 +16,7 @@ export default function SkillStack({ data }) {
     const colors = themeColors.skillstack;
 
     const mockData = {
+        name: data?.name || "Jane Doe",
         bio: data?.bio || "Full-stack developer specializing in React, Node.js, and cloud architecture. 5+ years building scalable web applications.",
         skills: data?.skills || [
             { name: "React", level: 95 },
@@ -63,7 +64,7 @@ export default function SkillStack({ data }) {
                 <div className="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
                     <div className="flex items-center gap-2">
                         <Code size={24} style={{ color: colors.primary }} />
-                        <span className="font-mono font-bold text-lg">DevPortfolio</span>
+                        <span className="font-mono font-bold text-lg">{data?.name || "DevPortfolio"}</span>
                     </div>
                     <div className="flex gap-4">
                         <a href={mockData.github} target="_blank" rel="noopener noreferrer"

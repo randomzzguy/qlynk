@@ -14,7 +14,7 @@ export default function NicheTool({ data }) {
     const colors = themeColors.nichetool;
 
     const mockData = {
-        toolName: data?.toolName || "TextTweaker",
+        toolName: data?.name || "TextTweaker",
         tagline: data?.tagline || "Transform boring text into engaging copy. Instantly.",
         demoEmbed: data?.demoEmbed || "✨",
         problem: data?.problem || "Writing engaging copy takes hours. Most tools are bloated with features you'll never use.",

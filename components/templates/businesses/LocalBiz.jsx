@@ -14,7 +14,7 @@ export default function LocalBiz({ data }) {
     const colors = themeColors.localbiz;
 
     const mockData = {
-        businessName: data?.businessName || "Bella's Bistro",
+        businessName: data?.name || "Bella's Bistro",
         tagline: data?.tagline || "Authentic Italian cuisine in the heart of downtown",
         address: data?.address || "123 Main Street, Austin, TX 78701",
         phone: data?.phone || "(512) 555-0123",

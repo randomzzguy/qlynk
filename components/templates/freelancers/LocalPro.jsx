@@ -16,6 +16,7 @@ export default function LocalPro({ data }) {
     const colors = themeColors.localpro;
 
     const mockData = {
+        name: data?.name || "Your Business Name",
         serviceArea: data?.serviceArea || "Austin, TX",
         since: data?.since || "2018",
         gallery: data?.gallery || [
@@ -58,7 +59,7 @@ export default function LocalPro({ data }) {
                         </div>
 
                         <h1 className="text-5xl md:text-7xl font-black mb-6">
-                            Your Local Photography Expert
+                            {mockData.name}
                         </h1>
 
                         <p className="text-2xl mb-8" style={{ color: colors.textLight }}>

@@ -16,7 +16,7 @@ export default function FeatureFocus({ data }) {
     const colors = themeColors.featurefocus;
 
     const mockData = {
-        productName: data?.productName || "CloudSync Pro",
+        productName: data?.name || "CloudSync Pro",
         tagline: data?.tagline || "Seamless file synchronization across all your devices",
         features: data?.features || [
             {
