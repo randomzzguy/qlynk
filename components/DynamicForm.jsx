@@ -97,12 +97,23 @@ export default function DynamicForm({ fields, data, onChange }) {
                                             {itemField.label || itemField.name}
                                         </label>
                                         {itemField.type === 'textarea' ? (
-                                            <textarea
-                                                value={item[itemField.name] || ''}
-                                                onChange={(e) => handleArrayItemChange(field.name, index, itemField.name, e.target.value)}
-                                                className="w-full px-4 py-2 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
-                                                rows={3}
-                                            />
+                                            <div>
+                                                <textarea
+                                                    value={item[itemField.name] || ''}
+                                                    onChange={(e) => handleArrayItemChange(field.name, index, itemField.name, e.target.value)}
+                                                    maxLength={itemField.maxLength}
+                                                    className="w-full px-4 py-2 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
+                                                    rows={3}
+                                                />
+                                                {itemField.maxLength && (
+                                                    <p className={`text-xs mt-1 text-right ${(item[itemField.name] || '').length > itemField.maxLength * 0.9
+                                                            ? 'text-orange-600 font-semibold'
+                                                            : 'text-gray-500'
+                                                        }`}>
+                                                        {(item[itemField.name] || '').length} / {itemField.maxLength}
+                                                    </p>
+                                                )}
+                                            </div>
                                         ) : itemField.type === 'number' ? (
                                             <input
                                                 type="number"
@@ -113,12 +124,23 @@ export default function DynamicForm({ fields, data, onChange }) {
                                                 className="w-full px-4 py-2 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
                                             />
                                         ) : (
-                                            <input
-                                                type="text"
-                                                value={item[itemField.name] || ''}
-                                                onChange={(e) => handleArrayItemChange(field.name, index, itemField.name, e.target.value)}
-                                                className="w-full px-4 py-2 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
-                                            />
+                                            <div>
+                                                <input
+                                                    type="text"
+                                                    value={item[itemField.name] || ''}
+                                                    onChange={(e) => handleArrayItemChange(field.name, index, itemField.name, e.target.value)}
+                                                    maxLength={itemField.maxLength}
+                                                    className="w-full px-4 py-2 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
+                                                />
+                                                {itemField.maxLength && itemField.type === 'text' && (
+                                                    <p className={`text-xs mt-1 text-right ${(item[itemField.name] || '').length > itemField.maxLength * 0.9
+                                                            ? 'text-orange-600 font-semibold'
+                                                            : 'text-gray-500'
+                                                        }`}>
+                                                        {(item[itemField.name] || '').length} / {itemField.maxLength}
+                                                    </p>
+                                                )}
+                                            </div>
                                         )}
                                     </div>
                                 ))}
@@ -139,14 +161,25 @@ export default function DynamicForm({ fields, data, onChange }) {
                 </label>
 
                 {field.type === 'textarea' ? (
-                    <textarea
-                        value={value}
-                        onChange={(e) => handleFieldChange(field.name, e.target.value)}
-                        required={field.required}
-                        className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
-                        rows={4}
-                        placeholder={field.placeholder}
-                    />
+                    <div>
+                        <textarea
+                            value={value}
+                            onChange={(e) => handleFieldChange(field.name, e.target.value)}
+                            required={field.required}
+                            maxLength={field.maxLength}
+                            className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
+                            rows={4}
+                            placeholder={field.placeholder}
+                        />
+                        {field.maxLength && (
+                            <p className={`text-xs mt-1 text-right ${value.length > field.maxLength * 0.9
+                                    ? 'text-orange-600 font-semibold'
+                                    : 'text-gray-500'
+                                }`}>
+                                {value.length} / {field.maxLength}
+                            </p>
+                        )}
+                    </div>
                 ) : field.type === 'email' ? (
                     <input
                         type="email"
@@ -177,20 +210,28 @@ export default function DynamicForm({ fields, data, onChange }) {
                         placeholder={field.placeholder}
                     />
                 ) : (
-                    <input
-                        type="text"
-                        value={value}
-                        onChange={(e) => handleFieldChange(field.name, e.target.value)}
-                        required={field.required}
-                        maxLength={field.maxLength}
-                        className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
-                        placeholder={field.placeholder}
-                    />
+                    <div>
+                        <input
+                            type="text"
+                            value={value}
+                            onChange={(e) => handleFieldChange(field.name, e.target.value)}
+                            required={field.required}
+                            maxLength={field.maxLength}
+                            className="w-full px-4 py-3 text-neutral-900 border-2 border-gray-200 rounded-lg focus:border-[#f46530] focus:outline-none transition-colors"
+                            placeholder={field.placeholder}
+                        />
+                        {field.maxLength && (
+                            <p className={`text-xs mt-1 text-right ${value.length > field.maxLength * 0.9
+                                    ? 'text-orange-600 font-semibold'
+                                    : 'text-gray-500'
+                                }`}>
+                                {value.length} / {field.maxLength}
+                            </p>
+                        )}
+                    </div>
                 )}
 
-                {field.helperText && (
-                    <p className="text-xs text-gray-500 mt-1">{field.helperText}</p>
-                )}
+
             </div>
         );
     };
