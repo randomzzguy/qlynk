@@ -44,6 +44,7 @@ export default function NarrativeScroll({ data }) {
             ctaText: "Write the Next Chapter Together",
             ctaLink: "mailto:story@example.com"
         }
+        artifactsTitle: data?.artifactsTitle || "Notable Work"
     };
 
     return (
@@ -147,7 +148,7 @@ export default function NarrativeScroll({ data }) {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
-                        Notable Work
+                        {mockData.artifactsTitle}
                     </motion.h2>
 
                     <div className="grid md:grid-cols-2 gap-8">

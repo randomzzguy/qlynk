@@ -54,7 +54,9 @@ export default function FeatureFocus({ data }) {
             ]
         },
         ctaPrimary: data?.ctaPrimary || "Start Free Trial",
-        ctaSecondary: data?.ctaSecondary || "View Pricing"
+        ctaSecondary: data?.ctaSecondary || "View Pricing",
+        featuresTitle: data?.featuresTitle || "Key Features",
+        comparisonTitle: data?.comparisonTitle || "How We Compare"
     };
 
     return (
@@ -95,6 +97,9 @@ export default function FeatureFocus({ data }) {
             {/* Features */}
             <section className="py-20 px-6">
                 <div className="max-w-7xl mx-auto">
+                    <h2 className="text-4xl font-black text-center mb-16">
+                        {mockData.featuresTitle}
+                    </h2>
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {mockData.features.map((feature, index) => (
                             <motion.div
@@ -150,7 +155,7 @@ export default function FeatureFocus({ data }) {
                 <section className="py-20 px-6" style={{ backgroundColor: colors.bgAlt }}>
                     <div className="max-w-4xl mx-auto">
                         <h2 className="text-4xl font-black text-center mb-16">
-                            How We Compare
+                            {mockData.comparisonTitle}
                         </h2>
 
                         <div className="overflow-x-auto">

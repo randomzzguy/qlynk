@@ -27,7 +27,10 @@ export default function ServiceCo({ data }) {
             { metric: "Projects Delivered", value: "500+" }
         ],
         clients: data?.clients || ["🏢", "🏦", "🏭", "🏪", "🏨", "🏛️"],
-        ctaLink: data?.ctaLink || "#"
+        ctaLink: data?.ctaLink || "#",
+        servicesTitle: data?.servicesTitle || "Our Services",
+        resultsTitle: data?.resultsTitle || "Our Results",
+        clientsTitle: data?.clientsTitle || "Trusted by Industry Leaders"
     };
 
     return (
@@ -62,6 +65,9 @@ export default function ServiceCo({ data }) {
             {/* Results */}
             <section className="py-16 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-6xl mx-auto">
+                    <h2 className="text-3xl font-black text-center mb-12">
+                        {mockData.resultsTitle}
+                    </h2>
                     <div className="grid md:grid-cols-3 gap-8">
                         {mockData.results.map((result, index) => (
                             <motion.div
@@ -88,7 +94,7 @@ export default function ServiceCo({ data }) {
             <section className="py-20 px-6">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-16">
-                        Our Services
+                        {mockData.servicesTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-3 gap-8">
@@ -119,7 +125,7 @@ export default function ServiceCo({ data }) {
             <section className="py-20 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-3xl font-black text-center mb-12">
-                        Trusted by Industry Leaders
+                        {mockData.clientsTitle}
                     </h2>
 
                     <div className="flex justify-center gap-8 flex-wrap">

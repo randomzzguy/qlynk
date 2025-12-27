@@ -41,7 +41,9 @@ export default function HireMeNow({ data }) {
             }
         ],
         calendlyUrl: data?.calendlyUrl || "https://calendly.com/yourname",
-        email: data?.email || "urgent@example.com"
+        email: data?.email || "urgent@example.com",
+        pricingTitle: data?.pricingTitle || "Fast-Track Pricing",
+        calendarTitle: data?.calendarTitle || "Availability"
     };
 
     // Countdown timer effect
@@ -198,7 +200,7 @@ export default function HireMeNow({ data }) {
             <section className="py-20 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-7xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-16">
-                        Fast-Track Pricing
+                        {mockData.pricingTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-3 gap-8">

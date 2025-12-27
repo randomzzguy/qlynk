@@ -32,7 +32,9 @@ export default function LaunchPad({ data }) {
             { q: "When will it launch?", a: "We're launching in Q1 2025. Join the waitlist for early access!" },
             { q: "What's the pricing?", a: "Early adopters get 50% off for life. Regular pricing starts at $29/month." },
             { q: "Is there a free trial?", a: "Yes! All waitlist members get a 30-day free trial." }
-        ]
+        ],
+        testimonialsTitle: data?.testimonialsTitle || "What Early Adopters Say",
+        faqTitle: data?.faqTitle || "FAQ"
     };
 
     const handleSubmit = (e) => {
@@ -142,7 +144,7 @@ export default function LaunchPad({ data }) {
             <section className="py-20 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-16">
-                        What Early Users Are Saying
+                        {mockData.testimonialsTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-3 gap-8">
@@ -173,7 +175,7 @@ export default function LaunchPad({ data }) {
             <section className="py-20 px-6">
                 <div className="max-w-4xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-16">
-                        Frequently Asked Questions
+                        {mockData.faqTitle}
                     </h2>
 
                     <div className="space-y-6">

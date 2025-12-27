@@ -31,7 +31,9 @@ export default function QuickPitch({ data }) {
             { quote: "Professional, responsive, and incredibly talented. A pleasure to work with.", name: "Emma Thompson", role: "Marketing Director" }
         ],
         email: data?.email || "hello@yourname.com",
-        calendlyUrl: data?.calendlyUrl || "https://calendly.com/yourname"
+        calendlyUrl: data?.calendlyUrl || "https://calendly.com/yourname",
+        servicesTitle: data?.servicesTitle || "What I Do",
+        testimonialsTitle: data?.testimonialsTitle || "Client Love"
     };
 
     return (
@@ -149,7 +151,7 @@ export default function QuickPitch({ data }) {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
-                        What I Do
+                        {mockData.servicesTitle}
                     </motion.h2>
 
                     <div className="grid md:grid-cols-3 gap-8">
@@ -192,7 +194,7 @@ export default function QuickPitch({ data }) {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
-                        Client Love
+                        {mockData.testimonialsTitle}
                     </motion.h2>
 
                     <div className="relative">

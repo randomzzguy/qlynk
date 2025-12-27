@@ -23,7 +23,8 @@ export default function FranchiseHub({ data }) {
             { city: "San Antonio", address: "321 Elm St", phone: "(210) 555-0104" }
         ],
         aboutBrand: data?.aboutBrand || "Since 2010, we've been serving fresh, locally-sourced food across Texas. Each location maintains our high standards while celebrating local flavors.",
-        franchiseLink: data?.franchiseLink || "#"
+        franchiseLink: data?.franchiseLink || "#",
+        locationsTitle: data?.locationsTitle || "Find a Location Near You"
     };
 
     return (
@@ -56,7 +57,7 @@ export default function FranchiseHub({ data }) {
             <section className="py-20 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-16">
-                        Find a Location Near You
+                        {mockData.locationsTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-2 gap-8">

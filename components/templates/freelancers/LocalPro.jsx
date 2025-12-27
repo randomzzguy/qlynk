@@ -38,7 +38,11 @@ export default function LocalPro({ data }) {
         ],
         phone: data?.phone || "(512) 555-0123",
         email: data?.email || "hello@localpro.com",
-        mapEmbedUrl: data?.mapEmbedUrl || "https://maps.google.com"
+        mapEmbedUrl: data?.mapEmbedUrl || "https://maps.google.com",
+        galleryTitle: data?.galleryTitle || "Recent Work Around Town",
+        reviewsTitle: data?.reviewsTitle || "What Locals Are Saying",
+        faqTitle: data?.faqTitle || "Common Questions",
+        mapTitle: data?.mapTitle || "Let's Connect"
     };
 
     return (
@@ -92,7 +96,7 @@ export default function LocalPro({ data }) {
             <section className="py-16 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-7xl mx-auto">
                     <h2 className="text-4xl font-black mb-12 text-center">
-                        Recent Work Around Town
+                        {mockData.galleryTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -127,7 +131,7 @@ export default function LocalPro({ data }) {
             <section className="py-16 px-6">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-4xl font-black mb-12 text-center">
-                        What Locals Are Saying
+                        {mockData.reviewsTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-2 gap-6">
@@ -166,7 +170,7 @@ export default function LocalPro({ data }) {
             <section className="py-16 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-4xl mx-auto">
                     <h2 className="text-4xl font-black mb-12 text-center">
-                        Common Questions
+                        {mockData.faqTitle}
                     </h2>
 
                     <div className="space-y-4">
@@ -196,7 +200,7 @@ export default function LocalPro({ data }) {
                     <div className="grid md:grid-cols-2 gap-12">
                         <div>
                             <h2 className="text-4xl font-black mb-6">
-                                Let's Connect
+                                {mockData.mapTitle}
                             </h2>
                             <p className="text-xl mb-8" style={{ color: colors.textLight }}>
                                 Serving the {mockData.serviceArea} area with pride. Reach out today!

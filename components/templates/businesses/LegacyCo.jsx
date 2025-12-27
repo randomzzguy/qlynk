@@ -27,8 +27,12 @@ export default function LegacyCo({ data }) {
             { title: "Quality First", desc: "Every piece handcrafted to perfection" },
             { title: "Time-Honored Techniques", desc: "Traditional methods passed down through generations" },
             { title: "Customer Relationships", desc: "Many clients have been with us for decades" }
+            { title: "Customer Relationships", desc: "Many clients have been with us for decades" }
         ],
-        awards: data?.awards || ["🏆", "🥇", "⭐", "🎖️"]
+        awards: data?.awards || ["🏆", "🥇", "⭐", "🎖️"],
+        timelineTitle: data?.timelineTitle || "Our Journey",
+        valuesTitle: data?.valuesTitle || "Our Values",
+        awardsTitle: data?.awardsTitle || "Recognition & Awards"
     };
 
     return (
@@ -70,7 +74,7 @@ export default function LegacyCo({ data }) {
             <section className="py-20 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-4xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-16">
-                        Our Journey
+                        {mockData.timelineTitle}
                     </h2>
 
                     <div className="space-y-8">
@@ -103,7 +107,7 @@ export default function LegacyCo({ data }) {
             <section className="py-20 px-6">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-16">
-                        Our Values
+                        {mockData.valuesTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-3 gap-8">
@@ -131,7 +135,7 @@ export default function LegacyCo({ data }) {
             <section className="py-20 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-5xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-12">
-                        Recognition & Awards
+                        {mockData.awardsTitle}
                     </h2>
 
                     <div className="flex justify-center gap-8">

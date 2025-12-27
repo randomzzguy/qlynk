@@ -27,7 +27,11 @@ export default function InteractiveDemo({ data }) {
             { language: "javascript", code: "const scene = new THREE.Scene();\nconst camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);" },
             { language: "glsl", code: "void main() {\n  vec3 color = vec3(0.5 + 0.5 * sin(time));\n  gl_FragColor = vec4(color, 1.0);\n}" }
         ],
-        githubUrl: data?.githubUrl || "https://github.com/username"
+        githubUrl: data?.githubUrl || "https://github.com/username",
+        demosTitle: data?.demosTitle || "Live Demos",
+        snippetsTitle: data?.snippetsTitle || "Code Snippets",
+        githubTitle: data?.githubTitle || "Explore More on GitHub",
+        githubButtonText: data?.githubButtonText || "View GitHub Profile"
     };
 
     const copyToClipboard = (code, index) => {
@@ -82,7 +86,7 @@ export default function InteractiveDemo({ data }) {
                 <div className="max-w-7xl mx-auto">
                     <h2 className="text-3xl font-bold mb-12 flex items-center gap-3">
                         <span style={{ color: colors.primary }}>&gt;_</span>
-                        Live Demos
+                        {mockData.demosTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-3 gap-6">
@@ -135,7 +139,7 @@ export default function InteractiveDemo({ data }) {
                 <div className="max-w-5xl mx-auto">
                     <h2 className="text-3xl font-bold mb-12 flex items-center gap-3">
                         <span style={{ color: colors.accent }}>{'{}'}</span>
-                        Code Snippets
+                        {mockData.snippetsTitle}
                     </h2>
 
                     <div className="space-y-6">
@@ -186,7 +190,7 @@ export default function InteractiveDemo({ data }) {
                     >
                         <Github size={64} style={{ color: colors.primary }} className="mx-auto mb-6" />
                         <h2 className="text-4xl font-bold mb-6">
-                            Explore More on GitHub
+                            {mockData.githubTitle}
                         </h2>
                         <p className="text-xl mb-8" style={{ color: colors.textLight }}>
                             Open source projects, experiments, and code samples
@@ -199,7 +203,7 @@ export default function InteractiveDemo({ data }) {
                             style={{ backgroundColor: colors.primary, color: colors.bg }}
                         >
                             <Github size={24} />
-                            View GitHub Profile
+                            {mockData.githubButtonText}
                         </a>
                     </motion.div>
                 </div>

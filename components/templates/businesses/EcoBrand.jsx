@@ -27,7 +27,9 @@ export default function EcoBrand({ data }) {
             { title: "Fair Trade", desc: "Ethical wages and working conditions guaranteed" },
             { title: "Give Back", desc: "1% of revenue goes to environmental causes" }
         ],
-        ctaLink: data?.ctaLink || "#"
+        ctaLink: data?.ctaLink || "#",
+        impactTitle: data?.impactTitle || "Our Impact So Far",
+        valuesTitle: data?.valuesTitle || "Our Commitments"
     };
 
     return (
@@ -64,7 +66,7 @@ export default function EcoBrand({ data }) {
             <section className="py-20 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-16">
-                        Our Impact So Far
+                        {mockData.impactTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-3 gap-8">
@@ -92,7 +94,7 @@ export default function EcoBrand({ data }) {
             <section className="py-20 px-6">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-16">
-                        Our Commitments
+                        {mockData.valuesTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-2 gap-8">

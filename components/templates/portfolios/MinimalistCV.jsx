@@ -38,7 +38,12 @@ export default function MinimalistCV({ data }) {
             { school: "Design University", degree: "BFA in Interaction Design", year: "2019" }
         ],
         email: data?.email || "alex@example.com",
-        resumeUrl: data?.resumeUrl || "#"
+        resumeUrl: data?.resumeUrl || "#",
+        featuredProjectTitle: data?.featuredProjectTitle || "Featured Work",
+        skillsTitle: data?.skillsTitle || "Skills",
+        experienceTitle: data?.experienceTitle || "Experience",
+        educationTitle: data?.educationTitle || "Education",
+        downloadResumeText: data?.downloadResumeText || "Download CV"
     };
 
     return (
@@ -86,7 +91,7 @@ export default function MinimalistCV({ data }) {
                         transition={{ duration: 0.6 }}
                     >
                         <h2 className="text-sm font-bold uppercase tracking-wider mb-8" style={{ color: colors.textLight }}>
-                            Featured Work
+                            {mockData.featuredProjectTitle}
                         </h2>
 
                         <a href={mockData.featuredProject.link}
@@ -120,7 +125,7 @@ export default function MinimalistCV({ data }) {
             <section className="py-16 px-6">
                 <div className="max-w-4xl mx-auto">
                     <h2 className="text-sm font-bold uppercase tracking-wider mb-8" style={{ color: colors.textLight }}>
-                        Skills
+                        {mockData.skillsTitle}
                     </h2>
 
                     <div className="space-y-6">
@@ -158,7 +163,7 @@ export default function MinimalistCV({ data }) {
             <section className="py-16 px-6 border-t" style={{ borderColor: colors.border }}>
                 <div className="max-w-4xl mx-auto">
                     <h2 className="text-sm font-bold uppercase tracking-wider mb-12" style={{ color: colors.textLight }}>
-                        Experience
+                        {mockData.experienceTitle}
                     </h2>
 
                     <div className="space-y-12">
@@ -207,7 +212,7 @@ export default function MinimalistCV({ data }) {
             <section className="py-16 px-6 border-t" style={{ borderColor: colors.border }}>
                 <div className="max-w-4xl mx-auto">
                     <h2 className="text-sm font-bold uppercase tracking-wider mb-8" style={{ color: colors.textLight }}>
-                        Education
+                        {mockData.educationTitle}
                     </h2>
 
                     {mockData.education.map((edu, index) => (
@@ -241,7 +246,7 @@ export default function MinimalistCV({ data }) {
                         style={{ borderColor: colors.primary, color: colors.primary }}
                     >
                         <Download size={20} className="inline mr-2" />
-                        Download CV
+                        {mockData.downloadResumeText}
                     </a>
                 </div>
             </section>

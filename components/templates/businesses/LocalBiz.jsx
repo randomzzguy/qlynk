@@ -29,7 +29,10 @@ export default function LocalBiz({ data }) {
             { text: "Cozy atmosphere, delicious food. Highly recommend!", name: "Mike R.", rating: 5 },
             { text: "Family-owned gem. We come here every week!", name: "Sarah T.", rating: 5 }
         ],
-        gallery: data?.gallery || ["🍝", "🍕", "🍷", "🥗"]
+        gallery: data?.gallery || ["🍝", "🍕", "🍷", "🥗"],
+        hoursTitle: data?.hoursTitle || "Hours",
+        reviewsTitle: data?.reviewsTitle || "What Our Customers Say",
+        galleryTitle: data?.galleryTitle || "Gallery"
     };
 
     return (
@@ -74,6 +77,9 @@ export default function LocalBiz({ data }) {
             {/* Gallery */}
             <section className="py-16 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-7xl mx-auto">
+                    <h2 className="text-4xl font-black text-center mb-12">
+                        {mockData.galleryTitle}
+                    </h2>
                     <div className="grid md:grid-cols-4 gap-6">
                         {mockData.gallery.map((img, index) => (
                             <motion.div
@@ -106,7 +112,7 @@ export default function LocalBiz({ data }) {
                     >
                         <div className="flex items-center gap-3 mb-8">
                             <Clock size={32} style={{ color: colors.primary }} />
-                            <h2 className="text-3xl font-black">Hours</h2>
+                            <h2 className="text-3xl font-black">{mockData.hoursTitle}</h2>
                         </div>
 
                         <div className="space-y-4">
@@ -163,7 +169,7 @@ export default function LocalBiz({ data }) {
             <section className="py-20 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-16">
-                        What Our Customers Say
+                        {mockData.reviewsTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-3 gap-8">

@@ -29,7 +29,9 @@ export default function GalleryGrid({ data }) {
         ],
         about: data?.about || "Award-winning visual artist with 10+ years of experience. Featured in Vogue, National Geographic, and Creative Review.",
         email: data?.email || "hello@gallery.com",
-        instagram: data?.instagram || "@username"
+        instagram: data?.instagram || "@username",
+        aboutTitle: data?.aboutTitle || "About",
+        contactButtonText: data?.contactButtonText || "Contact"
     };
 
     const allTags = ['all', ...new Set(mockData.projects.flatMap(p => p.tags))];
@@ -46,7 +48,7 @@ export default function GalleryGrid({ data }) {
                     <a href={`mailto:${mockData.email}`}
                         className="px-6 py-2 rounded-lg font-bold transition-all"
                         style={{ backgroundColor: colors.primary, color: colors.bg }}>
-                        Contact
+                        {mockData.contactButtonText}
                     </a>
                 </div>
             </header>
@@ -125,7 +127,7 @@ export default function GalleryGrid({ data }) {
             {/* About Section */}
             <section className="py-20 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-3xl mx-auto text-center">
-                    <h2 className="text-3xl font-bold mb-6">About</h2>
+                    <h2 className="text-3xl font-bold mb-6">{mockData.aboutTitle}</h2>
                     <p className="text-xl leading-relaxed mb-8" style={{ color: colors.textLight }}>
                         {mockData.about}
                     </p>

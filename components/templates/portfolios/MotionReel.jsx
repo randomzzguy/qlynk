@@ -28,7 +28,12 @@ export default function MotionReel({ data }) {
             { caption: "Behind the scenes of our latest shoot", media: "🎥" },
             { caption: "Color grading workflow", media: "🎨" }
         ],
-        email: data?.email || "motion@example.com"
+        email: data?.email || "motion@example.com",
+        projectsTitle: data?.projectsTitle || "Selected Work",
+        btsTitle: data?.btsTitle || "Behind the Scenes",
+        ctaTitle: data?.ctaTitle || "Let's Create Something Amazing",
+        ctaButtonText: data?.ctaButtonText || "Get In Touch",
+        heroSubtitle: data?.heroSubtitle || "Bringing brands to life through motion"
     };
 
     return (
@@ -50,7 +55,7 @@ export default function MotionReel({ data }) {
                             {mockData.name}
                         </h1>
                         <p className="text-2xl mb-8" style={{ color: colors.textLight }}>
-                            Bringing brands to life through motion
+                            {mockData.heroSubtitle}
                         </p>
 
                         <button
@@ -68,7 +73,7 @@ export default function MotionReel({ data }) {
             {/* Projects Grid - Play on Hover */}
             <section className="py-20 px-6">
                 <div className="max-w-7xl mx-auto">
-                    <h2 className="text-4xl font-black mb-12">Selected Work</h2>
+                    <h2 className="text-4xl font-black mb-12">{mockData.projectsTitle}</h2>
 
                     <div className="grid md:grid-cols-2 gap-8">
                         {mockData.projects.map((project, index) => (
@@ -109,7 +114,7 @@ export default function MotionReel({ data }) {
             {/* Behind the Scenes */}
             <section className="py-20 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-6xl mx-auto">
-                    <h2 className="text-4xl font-black mb-12">Behind the Scenes</h2>
+                    <h2 className="text-4xl font-black mb-12">{mockData.btsTitle}</h2>
 
                     <div className="grid md:grid-cols-2 gap-6">
                         {mockData.bts.map((item, index) => (
@@ -144,7 +149,7 @@ export default function MotionReel({ data }) {
                         transition={{ duration: 0.6 }}
                     >
                         <h2 className="text-5xl font-black mb-6">
-                            Let's Create Something Amazing
+                            {mockData.ctaTitle}
                         </h2>
                         <p className="text-xl mb-12" style={{ color: colors.textLight }}>
                             Available for freelance projects and collaborations
@@ -154,7 +159,7 @@ export default function MotionReel({ data }) {
                             className="inline-block px-12 py-5 rounded-lg font-bold text-xl transition-all shadow-2xl"
                             style={{ backgroundColor: colors.primary }}
                         >
-                            Get In Touch
+                            {mockData.ctaButtonText}
                         </a>
                     </motion.div>
                 </div>

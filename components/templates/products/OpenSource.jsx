@@ -30,7 +30,9 @@ export default function OpenSource({ data }) {
         ],
         contributors: data?.contributors || ["👤", "👤", "👤", "👤", "👤", "👤"],
         githubUrl: data?.githubUrl || "https://github.com/username/repo",
-        docsUrl: data?.docsUrl || "#"
+        docsUrl: data?.docsUrl || "#",
+        featuresTitle: data?.featuresTitle || "Features",
+        contributorsTitle: data?.contributorsTitle || "Built by the Community"
     };
 
     return (
@@ -118,7 +120,7 @@ export default function OpenSource({ data }) {
             {/* Features */}
             <section className="py-20 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-6xl mx-auto">
-                    <h2 className="text-3xl font-bold mb-12 text-center">Features</h2>
+                    <h2 className="text-3xl font-bold mb-12 text-center">{mockData.featuresTitle}</h2>
 
                     <div className="grid md:grid-cols-2 gap-8">
                         {mockData.features.map((feature, index) => (
@@ -145,7 +147,7 @@ export default function OpenSource({ data }) {
             <section className="py-20 px-6">
                 <div className="max-w-5xl mx-auto">
                     <h2 className="text-3xl font-bold mb-12 text-center">
-                        Built by the Community
+                        {mockData.contributorsTitle}
                     </h2>
 
                     <div className="flex justify-center gap-4 mb-12">

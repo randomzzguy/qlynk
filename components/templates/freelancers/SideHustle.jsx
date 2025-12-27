@@ -34,7 +34,10 @@ export default function SideHustle({ data }) {
             twitter: "https://twitter.com/username",
             linkedin: "https://linkedin.com/in/username"
         },
-        email: data?.email || "hey@sidehustle.com"
+        email: data?.email || "hey@sidehustle.com",
+        offersTitle: data?.offersTitle || "What I Can Help With",
+        funFactsTitle: data?.funFactsTitle || "Fun Facts About This Side Hustle",
+        socialsTitle: data?.socialsTitle || "Let's Chat!"
     };
 
     return (
@@ -89,7 +92,7 @@ export default function SideHustle({ data }) {
             <section className="py-16 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-12">
-                        What I Can Help With
+                        {mockData.offersTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -130,7 +133,7 @@ export default function SideHustle({ data }) {
             <section className="py-16 px-6">
                 <div className="max-w-5xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-12">
-                        Fun Facts About This Side Hustle
+                        {mockData.funFactsTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-3 gap-8">
@@ -181,7 +184,7 @@ export default function SideHustle({ data }) {
                     >
                         <Coffee size={48} className="mx-auto mb-6" />
                         <h2 className="text-4xl md:text-5xl font-black mb-6">
-                            Let's Chat!
+                            {mockData.socialsTitle}
                         </h2>
                         <p className="text-xl mb-12 opacity-90">
                             Slide into my DMs or shoot me an email. I'm pretty chill about how we connect 😊

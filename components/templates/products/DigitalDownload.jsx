@@ -34,7 +34,9 @@ export default function DigitalDownload({ data }) {
             { text: "Professional quality, easy to customize. Highly recommend!", name: "Mike R." },
             { text: "The documentation alone is worth the price. Amazing value.", name: "Emma T." }
         ],
-        buyLink: data?.buyLink || "#"
+        buyLink: data?.buyLink || "#",
+        includedTitle: data?.includedTitle || "What's Included",
+        testimonialsTitle: data?.testimonialsTitle || "Loved by Designers"
     };
 
     return (
@@ -116,7 +118,7 @@ export default function DigitalDownload({ data }) {
             <section className="py-20 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-4xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-16">
-                        What's Included
+                        {mockData.includedTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-2 gap-6">
@@ -142,7 +144,7 @@ export default function DigitalDownload({ data }) {
             <section className="py-20 px-6">
                 <div className="max-w-5xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-16">
-                        Loved by Designers
+                        {mockData.testimonialsTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-3 gap-8">

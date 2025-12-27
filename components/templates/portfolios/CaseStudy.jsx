@@ -33,7 +33,10 @@ export default function CaseStudy({ data }) {
             }
         ],
         tools: data?.tools || ["Figma", "React", "TypeScript", "Analytics"],
-        email: data?.email || "design@example.com"
+        email: data?.email || "design@example.com",
+        toolsTitle: data?.toolsTitle || "Tools & Technologies",
+        ctaTitle: data?.ctaTitle || "Like what you see?",
+        ctaButtonText: data?.ctaButtonText || "Start a Project"
     };
 
     return (
@@ -184,7 +187,7 @@ export default function CaseStudy({ data }) {
             {/* Tools Used */}
             <section className="py-16 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-5xl mx-auto">
-                    <h3 className="text-2xl font-bold mb-8 text-center">Tools & Technologies</h3>
+                    <h3 className="text-2xl font-bold mb-8 text-center">{mockData.toolsTitle}</h3>
                     <div className="flex gap-4 overflow-x-auto pb-4">
                         {mockData.tools.map((tool, i) => (
                             <div
@@ -202,7 +205,7 @@ export default function CaseStudy({ data }) {
             {/* CTA */}
             <section className="py-20 px-6">
                 <div className="max-w-4xl mx-auto text-center">
-                    <h3 className="text-4xl font-bold mb-6">Like what you see?</h3>
+                    <h3 className="text-4xl font-bold mb-6">{mockData.ctaTitle}</h3>
                     <p className="text-xl mb-8" style={{ color: colors.textLight }}>
                         Let's discuss how I can help drive results for your product
                     </p>
@@ -211,7 +214,7 @@ export default function CaseStudy({ data }) {
                         className="inline-flex items-center gap-2 px-10 py-5 rounded-lg font-bold text-xl transition-all shadow-lg"
                         style={{ backgroundColor: colors.primary, color: '#ffffff' }}
                     >
-                        Start a Project
+                        {mockData.ctaButtonText}
                         <ArrowRight size={24} />
                     </a>
                 </div>

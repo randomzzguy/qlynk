@@ -36,7 +36,8 @@ export default function StoryBuilder({ data }) {
             }
         ],
         ctaText: data?.ctaText || "Start Your Story",
-        ctaLink: data?.ctaLink || "mailto:story@example.com"
+        ctaLink: data?.ctaLink || "mailto:story@example.com",
+        caseSnippetsTitle: data?.caseSnippetsTitle || "Transformation Stories"
     };
 
     return (
@@ -125,7 +126,7 @@ export default function StoryBuilder({ data }) {
             <section className="py-20 px-6">
                 <div className="max-w-5xl mx-auto">
                     <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-                        Transformation Stories
+                        {mockData.caseSnippetsTitle}
                     </h2>
 
                     <div className="space-y-8">

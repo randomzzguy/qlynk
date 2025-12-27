@@ -49,7 +49,10 @@ export default function SkillStack({ data }) {
         resumeUrl: data?.resumeUrl || "#",
         email: data?.email || "dev@example.com",
         github: data?.github || "https://github.com/username",
-        linkedin: data?.linkedin || "https://linkedin.com/in/username"
+        linkedin: data?.linkedin || "https://linkedin.com/in/username",
+        skillsTitle: data?.skillsTitle || "Tech Stack",
+        projectsTitle: data?.projectsTitle || "Projects",
+        resumeButtonText: data?.resumeButtonText || "Download Resume"
     };
 
     const allTech = [...new Set(mockData.projects.flatMap(p => p.tech))];
@@ -105,7 +108,7 @@ export default function SkillStack({ data }) {
             {/* Skills Section */}
             <section className="py-16 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-6xl mx-auto">
-                    <h2 className="text-3xl font-bold mb-12">Tech Stack</h2>
+                    <h2 className="text-3xl font-bold mb-12">{mockData.skillsTitle}</h2>
 
                     <div className="grid md:grid-cols-2 gap-8">
                         {mockData.skills.map((skill, index) => (
@@ -142,7 +145,7 @@ export default function SkillStack({ data }) {
             <section className="py-16 px-6">
                 <div className="max-w-6xl mx-auto">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
-                        <h2 className="text-3xl font-bold">Projects</h2>
+                        <h2 className="text-3xl font-bold">{mockData.projectsTitle}</h2>
 
                         {/* Tech Filter */}
                         <div className="flex flex-wrap gap-2">
@@ -225,7 +228,7 @@ export default function SkillStack({ data }) {
                             }}
                         >
                             <Download size={20} />
-                            Download Resume
+                            {mockData.resumeButtonText}
                         </a>
                         <a
                             href={`mailto:${mockData.email}`}

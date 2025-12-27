@@ -29,7 +29,8 @@ export default function NicheTool({ data }) {
             free: "10 transformations/day",
             pro: "$9/month - Unlimited"
         },
-        ctaLink: data?.ctaLink || "#"
+        ctaLink: data?.ctaLink || "#",
+        useCasesTitle: data?.useCasesTitle || "Perfect For"
     };
 
     return (
@@ -118,7 +119,7 @@ export default function NicheTool({ data }) {
             <section className="py-20 px-6">
                 <div className="max-w-5xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-16">
-                        Perfect For
+                        {mockData.useCasesTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">

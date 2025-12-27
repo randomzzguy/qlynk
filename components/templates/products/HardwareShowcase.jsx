@@ -33,7 +33,9 @@ export default function HardwareShowcase({ data }) {
             { name: "Silver", inStock: true },
             { name: "Rose Gold", inStock: false }
         ],
-        shippingNote: data?.shippingNote || "Free shipping on orders over $50. Ships within 2-3 business days."
+        shippingNote: data?.shippingNote || "Free shipping on orders over $50. Ships within 2-3 business days.",
+        specsTitle: data?.specsTitle || "Technical Specifications",
+        variantsTitle: data?.variantsTitle || "Color"
     };
 
     return (
@@ -91,7 +93,7 @@ export default function HardwareShowcase({ data }) {
 
                             {/* Variants */}
                             <div className="mb-8">
-                                <h3 className="font-bold mb-4">Color</h3>
+                                <h3 className="font-bold mb-4">{mockData.variantsTitle}</h3>
                                 <div className="flex gap-3">
                                     {mockData.variants.map((variant, index) => (
                                         <button
@@ -139,7 +141,7 @@ export default function HardwareShowcase({ data }) {
             <section className="py-20 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-5xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-16">
-                        Technical Specifications
+                        {mockData.specsTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-2 gap-x-12 gap-y-6">

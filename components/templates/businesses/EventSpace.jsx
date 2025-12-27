@@ -27,7 +27,9 @@ export default function EventSpace({ data }) {
         ],
         gallery: data?.gallery || ["🏛️", "🎭", "🎪", "🎨"],
         pricing: data?.pricing || "Starting at $2,500/event",
-        bookingLink: data?.bookingLink || "#"
+        bookingLink: data?.bookingLink || "#",
+        amenitiesTitle: data?.amenitiesTitle || "Amenities & Features",
+        galleryTitle: data?.galleryTitle || "Gallery"
     };
 
     return (
@@ -72,6 +74,9 @@ export default function EventSpace({ data }) {
             {/* Gallery */}
             <section className="py-16 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-7xl mx-auto">
+                    <h2 className="text-4xl font-black text-center mb-12">
+                        {mockData.galleryTitle}
+                    </h2>
                     <div className="grid md:grid-cols-4 gap-6">
                         {mockData.gallery.map((img, index) => (
                             <motion.div
@@ -97,7 +102,7 @@ export default function EventSpace({ data }) {
             <section className="py-20 px-6">
                 <div className="max-w-5xl mx-auto">
                     <h2 className="text-4xl font-black text-center mb-16">
-                        Amenities & Features
+                        {mockData.amenitiesTitle}
                     </h2>
 
                     <div className="grid md:grid-cols-3 gap-6">
