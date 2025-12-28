@@ -155,97 +155,171 @@ const SlotMachineHero = () => {
 
         {/* Main Content: Slot Machine + Live Preview */}
         <div className="grid lg:grid-cols-2 gap-8 items-start">
-          {/* Left: Slot Machine */}
-          <motion.div
-            className="p-8 rounded-3xl bg-gray-800/50 relative overflow-hidden"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-          >
-            {/* Glow effect on hover */}
+          {/* Left Column */}
+          <div className="space-y-8">
+            {/* Left: Slot Machine */}
             <motion.div
-              className="absolute inset-0 rounded-3xl bg-[#f46530]/20 opacity-0"
-              whileHover={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            />
+              className="p-8 rounded-3xl bg-gray-800/50 relative overflow-hidden"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
+              {/* Glow effect on hover */}
+              <motion.div
+                className="absolute inset-0 rounded-3xl bg-[#f46530]/20 opacity-0"
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
 
-            <div className="grid grid-cols-3 gap-6 mb-8 relative z-10">
-              {/* Name Reel */}
-              <div className="space-y-3">
-                <div className="text-center text-sm font-bold text-gray-400">
-                  NAME
+              <div className="grid grid-cols-3 gap-6 mb-8 relative z-10">
+                {/* Name Reel */}
+                <div className="space-y-3">
+                  <div className="text-center text-sm font-bold text-gray-400">
+                    NAME
+                  </div>
+                  <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
+                    <motion.div
+                      className="text-4xl font-bold text-white"
+                      key={`name-${reel1Index}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {names[reel1Index]}
+                    </motion.div>
+                  </div>
                 </div>
-                <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
-                  <motion.div
-                    className="text-4xl font-bold text-white"
-                    key={`name-${reel1Index}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {names[reel1Index]}
-                  </motion.div>
+
+                {/* Style Reel */}
+                <div className="space-y-3">
+                  <div className="text-center text-sm font-bold text-gray-400">
+                    STYLE
+                  </div>
+                  <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
+                    <motion.div
+                      className="text-5xl"
+                      key={`style-${reel2Index}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {styles[reel2Index]}
+                    </motion.div>
+                  </div>
+                </div>
+
+                {/* Profession Reel */}
+                <div className="space-y-3">
+                  <div className="text-center text-sm font-bold text-gray-400">
+                    FOR
+                  </div>
+                  <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
+                    <motion.div
+                      className="text-2xl font-bold text-white"
+                      key={`prof-${reel3Index}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {professions[reel3Index]}
+                    </motion.div>
+                  </div>
                 </div>
               </div>
 
-              {/* Style Reel */}
-              <div className="space-y-3">
-                <div className="text-center text-sm font-bold text-gray-400">
-                  STYLE
-                </div>
-                <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
-                  <motion.div
-                    className="text-5xl"
-                    key={`style-${reel2Index}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {styles[reel2Index]}
-                  </motion.div>
-                </div>
-              </div>
-
-              {/* Profession Reel */}
-              <div className="space-y-3">
-                <div className="text-center text-sm font-bold text-gray-400">
-                  FOR
-                </div>
-                <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
-                  <motion.div
-                    className="text-2xl font-bold text-white"
-                    key={`prof-${reel3Index}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {professions[reel3Index]}
-                  </motion.div>
+              <div className="text-center space-y-6 relative z-10">
+                <motion.button
+                  className="px-12 py-5 rounded-xl text-xl font-black bg-[#f46530] text-white shadow-lg shadow-[#f46530]/30 relative overflow-hidden"
+                  onClick={spin}
+                  disabled={isSpinning}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.8 }}
+                >
+                  <span className="relative z-10">🎰 SPIN THE WHEEL</span>
+                </motion.button>
+                <div className="text-sm text-gray-400">
+                  Click to see another combination
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="text-center space-y-6 relative z-10">
-              <motion.button
-                className="px-12 py-5 rounded-xl text-xl font-black bg-[#f46530] text-white shadow-lg shadow-[#f46530]/30 relative overflow-hidden"
-                onClick={spin}
-                disabled={isSpinning}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
+            {/* Live Counter */}
+            <motion.div
+              className="text-center space-y-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1 }}
+            >
+              <div className="inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-gray-800/50 w-full justify-center">
+                <div className="relative">
+                  <motion.div
+                    className="absolute inset-0 rounded-full bg-[#f46530]"
+                    animate={{
+                      scale: [0.8, 1.2, 0.8],
+                      opacity: [1, 0.5, 0]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeOut"
+                    }}
+                  />
+                  <div className="w-4 h-4 rounded-full relative z-10 bg-[#f46530]"></div>
+                </div>
+                <div>
+                  <motion.div
+                    className="text-4xl font-black text-[#f46530]"
+                    key={counter}
+                    initial={{ scale: 1.2 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {counter.toLocaleString()}
+                  </motion.div>
+                  <div className="text-sm text-gray-400">
+                    portfolios created today
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* CTA */}
+            <motion.div
+              className="text-center space-y-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.2 }}
+            >
+              <motion.a
+                href="/create"
+                className="px-12 py-6 rounded-xl text-xl font-bold bg-[#f46530] text-white shadow-lg shadow-[#f46530]/30 inline-block w-full"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                <span className="relative z-10">🎰 SPIN THE WHEEL</span>
-              </motion.button>
-              <div className="text-sm text-gray-400">
-                Click to see another combination
+                Start Building Yours Free
+              </motion.a>
+              <div className="flex items-center justify-center gap-6 text-sm flex-wrap text-gray-400">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg text-[#f46530]">✓</span>
+                  <span>No credit card</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-lg text-[#f46530]">✓</span>
+                  <span>3 min setup</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-lg text-[#f46530]">✓</span>
+                  <span>Free forever</span>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
 
           {/* Right: Live Preview */}
           <motion.div
@@ -365,76 +439,7 @@ const SlotMachineHero = () => {
           </motion.div>
         </div>
 
-        {/* Live Counter */}
-        <motion.div
-          className="text-center space-y-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 1 }}
-        >
-          <div className="inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-gray-800/50">
-            <div className="relative">
-              <motion.div
-                className="absolute inset-0 rounded-full bg-[#f46530]"
-                animate={{
-                  scale: [0.8, 1.2, 0.8],
-                  opacity: [1, 0.5, 0]
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeOut"
-                }}
-              />
-              <div className="w-4 h-4 rounded-full relative z-10 bg-[#f46530]"></div>
-            </div>
-            <div>
-              <motion.div
-                className="text-4xl font-black text-[#f46530]"
-                key={counter}
-                initial={{ scale: 1.2 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                {counter.toLocaleString()}
-              </motion.div>
-              <div className="text-sm text-gray-400">
-                portfolios created today
-              </div>
-            </div>
-          </div>
-        </motion.div>
 
-        {/* CTA */}
-        <motion.div
-          className="text-center space-y-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 1.2 }}
-        >
-          <motion.a
-            href="/create"
-            className="px-12 py-6 rounded-xl text-xl font-bold bg-[#f46530] text-white shadow-lg shadow-[#f46530]/30 inline-block"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Start Building Yours Free
-          </motion.a>
-          <div className="flex items-center justify-center gap-6 text-sm flex-wrap text-gray-400">
-            <div className="flex items-center gap-2">
-              <span className="text-lg text-[#f46530]">✓</span>
-              <span>No credit card</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-lg text-[#f46530]">✓</span>
-              <span>3 min setup</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-lg text-[#f46530]">✓</span>
-              <span>Free forever</span>
-            </div>
-          </div>
-        </motion.div>
 
         {/* Example Cards */}
         <motion.div

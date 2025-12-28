@@ -26,11 +26,10 @@ export default function DashboardSidebar({ onSignOut }) {
           <Link
             key={item.href}
             href={item.href}
-            className={`flex items-center gap-3 px-4 py-3 rounded-lg font-semibold transition-colors ${
-              pathname === item.href
-                ? 'bg-bright-orange text-cream shadow-md'
-                : 'text-muted-foreground hover:bg-card hover:text-foreground'
-            }`}
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg font-semibold transition-colors ${pathname === item.href
+                ? 'bg-bright-orange text-white shadow-md'
+                : 'text-gray-400 hover:bg-white/10 hover:text-white'
+              }`}
           >
             <item.icon size={20} />
             <span>{item.label}</span>
