@@ -101,7 +101,7 @@ function SignupForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...formData, hcaptchaToken: bypassCaptcha ? 'local-bypass' : hcaptchaToken }),
+        body: JSON.stringify({ ...formData, hcaptchaToken: hcaptchaToken || (bypassCaptcha ? 'local-bypass' : null) }),
       });
 
       const data = await response.json();

@@ -65,7 +65,7 @@ export default function LoginPage() {
         },
         body: JSON.stringify({
           ...formData,
-          hcaptchaToken: isLocalhost ? 'local-bypass' : hcaptchaToken,
+          hcaptchaToken: hcaptchaToken || (isLocalhost ? 'local-bypass' : null),
         }),
       });
 

@@ -81,6 +81,40 @@ export default function CreatePage() {
     checkAuth();
   }, [router]);
 
+  // Get themes for selected category
+  const category = USE_CASE_TO_CATEGORY[useCase];
+  const availableThemes = category ? getThemesByCategory(category) : [];
+  const selectedThemeConfig = selectedTheme ? getThemeById(selectedTheme) : null;
+  const ThemeComponent = selectedThemeConfig?.component;
+  const formFields = selectedTheme ? getThemeFormFields(selectedTheme) : [];
+
+  // Populate default values when theme changes
+  useEffect(() => {
+    if (selectedTheme && formFields.length > 0) {
+      const defaultData = { config_version: 'v1' };
+      formFields.forEach(field => {
+        if (field.defaultValue !== undefined) {
+          defaultData[field.name] = field.defaultValue;
+        }
+      });
+      // Preserve existing valid data if switching back/forth (optional, but good UX)
+      // For now, simpler to just reset or merge. Let's merge defaults into current, but prefer current if exists?
+      // Actually, if switching themes, we probably want fresh defaults for that theme's specific fields.
+      // But clearing everything might be annoying.
+      // Let's just set defaults for keys that don't exist yet.
+
+      setThemeData(prev => {
+        const newData = { ...prev };
+        formFields.forEach(field => {
+          if (field.defaultValue !== undefined && newData[field.name] === undefined) {
+            newData[field.name] = field.defaultValue;
+          }
+        });
+        return newData;
+      });
+    }
+  }, [selectedTheme]);
+
   // Show loading while checking auth
   if (checkingAuth) {
     return (
@@ -203,39 +237,7 @@ export default function CreatePage() {
     return formatted;
   };
 
-  // Get themes for selected category
-  const category = USE_CASE_TO_CATEGORY[useCase];
-  const availableThemes = category ? getThemesByCategory(category) : [];
-  const selectedThemeConfig = selectedTheme ? getThemeById(selectedTheme) : null;
-  const ThemeComponent = selectedThemeConfig?.component;
-  const formFields = selectedTheme ? getThemeFormFields(selectedTheme) : [];
 
-  // Populate default values when theme changes
-  useEffect(() => {
-    if (selectedTheme && formFields.length > 0) {
-      const defaultData = { config_version: 'v1' };
-      formFields.forEach(field => {
-        if (field.defaultValue !== undefined) {
-          defaultData[field.name] = field.defaultValue;
-        }
-      });
-      // Preserve existing valid data if switching back/forth (optional, but good UX)
-      // For now, simpler to just reset or merge. Let's merge defaults into current, but prefer current if exists?
-      // Actually, if switching themes, we probably want fresh defaults for that theme's specific fields.
-      // But clearing everything might be annoying.
-      // Let's just set defaults for keys that don't exist yet.
-
-      setThemeData(prev => {
-        const newData = { ...prev };
-        formFields.forEach(field => {
-          if (field.defaultValue !== undefined && newData[field.name] === undefined) {
-            newData[field.name] = field.defaultValue;
-          }
-        });
-        return newData;
-      });
-    }
-  }, [selectedTheme]);
 
   // Format data for preview and publish
   const formattedThemeData = formatThemeData(themeData, formFields);
