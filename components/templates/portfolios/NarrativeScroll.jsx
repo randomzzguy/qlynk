@@ -43,7 +43,7 @@ export default function NarrativeScroll({ data }) {
             text: "The journey continues. Every project is a new chapter, every client a new story to tell.",
             ctaText: "Write the Next Chapter Together",
             ctaLink: "mailto:story@example.com"
-        }
+        },
         artifactsTitle: data?.artifactsTitle || "Notable Work"
     };
 

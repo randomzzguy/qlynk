@@ -27,7 +27,6 @@ export default function LegacyCo({ data }) {
             { title: "Quality First", desc: "Every piece handcrafted to perfection" },
             { title: "Time-Honored Techniques", desc: "Traditional methods passed down through generations" },
             { title: "Customer Relationships", desc: "Many clients have been with us for decades" }
-            { title: "Customer Relationships", desc: "Many clients have been with us for decades" }
         ],
         awards: data?.awards || ["🏆", "🥇", "⭐", "🎖️"],
         timelineTitle: data?.timelineTitle || "Our Journey",
