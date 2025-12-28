@@ -11,6 +11,53 @@ import { themeColors } from '@/lib/themeColors';
  * Aesthetic: Long-scroll storytelling, parallax layers, chapter breaks, custom illustrations
  * Color Palette: Deep Blue (#0369a1) with Teal/Amber accents on light blue background
  */
+function ChapterSection({ chapter, index, scrollYProgress, colors }) {
+    const y = useTransform(
+        scrollYProgress,
+        [(index * 0.25), ((index + 1) * 0.25)],
+        ['0%', '-20%']
+    );
+
+    return (
+        <section
+            className="min-h-screen flex items-center px-6 py-32 relative overflow-hidden"
+            style={{ backgroundColor: index % 2 === 0 ? colors.bg : colors.bgAlt }}
+        >
+            {/* Chapter Background */}
+            <motion.div
+                className="absolute inset-0 flex items-center justify-center text-9xl opacity-5"
+                style={{ y }}
+            >
+                {chapter.bgImage}
+            </motion.div>
+
+            <div className="max-w-4xl mx-auto relative z-10">
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8 }}
+                >
+                    {/* Chapter Number */}
+                    <div className="text-8xl font-black mb-6 opacity-20">
+                        {(index + 1).toString().padStart(2, '0')}
+                    </div>
+
+                    {/* Chapter Title */}
+                    <h2 className="text-5xl md:text-7xl font-black mb-8" style={{ color: colors.primary }}>
+                        {chapter.title}
+                    </h2>
+
+                    {/* Chapter Body */}
+                    <p className="text-2xl md:text-3xl leading-relaxed" style={{ color: colors.textLight }}>
+                        {chapter.body}
+                    </p>
+                </motion.div>
+            </div>
+        </section>
+    );
+}
+
 export default function NarrativeScroll({ data }) {
     const containerRef = useRef(null);
     const { scrollYProgress } = useScroll({ target: containerRef });
@@ -93,49 +140,13 @@ export default function NarrativeScroll({ data }) {
 
             {/* Chapters */}
             {mockData.chapters.map((chapter, index) => (
-                <section
+                <ChapterSection
                     key={index}
-                    className="min-h-screen flex items-center px-6 py-32 relative overflow-hidden"
-                    style={{ backgroundColor: index % 2 === 0 ? colors.bg : colors.bgAlt }}
-                >
-                    {/* Chapter Background */}
-                    <motion.div
-                        className="absolute inset-0 flex items-center justify-center text-9xl opacity-5"
-                        style={{
-                            y: useTransform(
-                                scrollYProgress,
-                                [(index * 0.25), ((index + 1) * 0.25)],
-                                ['0%', '-20%']
-                            )
-                        }}
-                    >
-                        {chapter.bgImage}
-                    </motion.div>
-
-                    <div className="max-w-4xl mx-auto relative z-10">
-                        <motion.div
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-100px" }}
-                            transition={{ duration: 0.8 }}
-                        >
-                            {/* Chapter Number */}
-                            <div className="text-8xl font-black mb-6 opacity-20">
-                                {(index + 1).toString().padStart(2, '0')}
-                            </div>
-
-                            {/* Chapter Title */}
-                            <h2 className="text-5xl md:text-7xl font-black mb-8" style={{ color: colors.primary }}>
-                                {chapter.title}
-                            </h2>
-
-                            {/* Chapter Body */}
-                            <p className="text-2xl md:text-3xl leading-relaxed" style={{ color: colors.textLight }}>
-                                {chapter.body}
-                            </p>
-                        </motion.div>
-                    </div>
-                </section>
+                    chapter={chapter}
+                    index={index}
+                    scrollYProgress={scrollYProgress}
+                    colors={colors}
+                />
             ))}
 
             {/* Artifacts Section */}
