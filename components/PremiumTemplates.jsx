@@ -1,7 +1,36 @@
 "use client";
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Linkedin, Instagram, Twitter, Mail, Github, Facebook, Youtube, ExternalLink, Sparkles, Zap, Code, Palette } from 'lucide-react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { Mail, ExternalLink, Sparkles, Zap, Code, Palette } from 'lucide-react';
+
+class Particle {
+  constructor(canvasWidth, canvasHeight) {
+    this.x = Math.random() * canvasWidth;
+    this.y = Math.random() * canvasHeight;
+    this.vx = (Math.random() - 0.5) * 0.5;
+    this.vy = (Math.random() - 0.5) * 0.5;
+    this.radius = Math.random() * 2 + 1;
+    this.opacity = Math.random() * 0.5 + 0.5;
+    this.color = `hsl(${Math.random() * 60 + 200}, 70%, 70%)`;
+  }
+
+  update(canvasWidth, canvasHeight) {
+    this.x += this.vx;
+    this.y += this.vy;
+
+    if (this.x < 0 || this.x > canvasWidth) this.vx *= -1;
+    if (this.y < 0 || this.y > canvasHeight) this.vy *= -1;
+  }
+
+  draw(ctx) {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = this.opacity;
+    ctx.fill();
+  }
+}
 
 // Cosmic Flow Theme - 3D Space with Particle Constellations
 export const CosmicFlowTheme = ({ data }) => {
@@ -18,44 +47,16 @@ export const CosmicFlowTheme = ({ data }) => {
     const particles = [];
     const particleCount = 150;
 
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.radius = Math.random() * 2 + 1;
-        this.opacity = Math.random() * 0.5 + 0.5;
-        this.color = `hsl(${Math.random() * 60 + 200}, 70%, 70%)`;
-      }
-
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-      }
-
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.globalAlpha = this.opacity;
-        ctx.fill();
-      }
-    }
-
     for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
+      particles.push(new Particle(canvas.width, canvas.height));
     }
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       particles.forEach(particle => {
-        particle.update();
-        particle.draw();
+        particle.update(canvas.width, canvas.height);
+        particle.draw(ctx);
       });
 
       // Draw connections
@@ -89,6 +90,7 @@ export const CosmicFlowTheme = ({ data }) => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setViewport({ w: window.innerWidth, h: window.innerHeight });
     }
   }, []);
@@ -124,7 +126,7 @@ export const CosmicFlowTheme = ({ data }) => {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-cyan-400/50 shadow-2xl shadow-cyan-500/50 relative">
-                <img src={data.profileImage} alt={data.name} className="w-full h-full object-cover" />
+                <Image src={data.profileImage} alt={data.name} fill className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20" />
               </div>
               <motion.div 
@@ -162,7 +164,7 @@ export const CosmicFlowTheme = ({ data }) => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
-              "{data.tagline}"
+              &quot;{data.tagline}&quot;
             </motion.p>
           )}
         </motion.div>
@@ -337,7 +339,7 @@ export const GlassMorphismTheme = ({ data }) => {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white/50 shadow-2xl relative backdrop-blur-sm bg-white/20">
-                <img src={data.profileImage} alt={data.name} className="w-full h-full object-cover" />
+                <Image src={data.profileImage} alt={data.name} fill className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full" />
               </div>
             </motion.div>
@@ -370,7 +372,7 @@ export const GlassMorphismTheme = ({ data }) => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              "{data.tagline}"
+              &quot;{data.tagline}&quot;
             </motion.p>
           )}
         </motion.div>
@@ -569,7 +571,7 @@ export const NeonCityTheme = ({ data }) => {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-cyan-400 relative">
-                <img src={data.profileImage} alt={data.name} className="w-full h-full object-cover" />
+                <Image src={data.profileImage} alt={data.name} fill className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-pink-500/20" />
               </div>
               <motion.div 
@@ -617,7 +619,7 @@ export const NeonCityTheme = ({ data }) => {
               className="text-xl text-cyan-300 italic max-w-2xl mx-auto font-mono"
               style={{ textShadow: '0 0 5px rgba(6, 182, 212, 0.6)' }}
             >
-              "{data.tagline}"
+              &quot;{data.tagline}&quot;
             </motion.p>
           )}
         </motion.div>

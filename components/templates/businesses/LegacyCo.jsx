@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Award, Clock, Users, ArrowRight } from 'lucide-react';
+import { Clock, Users, ArrowRight } from 'lucide-react';
 import { themeColors } from '@/lib/themeColors';
 
 /**

@@ -19,10 +19,10 @@ export default function StoryBuilder({ data }) {
         name: data?.name || "Sarah Jones",
         storyBlocks: data?.storyBlocks || [
             { type: 'text', content: "It started with a simple question: Why do most websites feel soulless?" },
-            { type: 'text', content: "After 10 years in corporate design, I realized the answer. We'd forgotten to tell stories. We'd optimized for clicks, not connections." },
+            { type: 'text', content: "After 10 years in corporate design, I realized the answer. We&apos;d forgotten to tell stories. We&apos;d optimized for clicks, not connections." },
             { type: 'text', content: "So I left. Started fresh. And began helping businesses find their voice again." }
         ],
-        manifesto: data?.manifesto || "Every brand has a story worth telling. My job isn't just to design—it's to listen, understand, and translate your journey into experiences that resonate.",
+        manifesto: data?.manifesto || "Every brand has a story worth telling. My job isn&apos;t just to design—it&apos;s to listen, understand, and translate your journey into experiences that resonate.",
         caseSnippets: data?.caseSnippets || [
             {
                 title: "From Startup to Industry Leader",
@@ -116,7 +116,7 @@ export default function StoryBuilder({ data }) {
                         <Heart size={40} style={{ color: colors.secondary }} className="mx-auto mb-6" />
                         <h2 className="text-4xl md:text-5xl font-bold mb-8">My Philosophy</h2>
                         <p className="text-2xl leading-relaxed italic" style={{ color: colors.textLight }}>
-                            "{mockData.manifesto}"
+                            &ldquo;{mockData.manifesto}&rdquo;
                         </p>
                     </motion.div>
                 </div>
@@ -183,7 +183,7 @@ export default function StoryBuilder({ data }) {
                             Ready to Tell Your Story?
                         </h2>
                         <p className="text-2xl mb-12 opacity-90">
-                            Let's craft a narrative that connects with your audience
+                            Let&apos;s craft a narrative that connects with your audience
                         </p>
                         <a
                             href={mockData.ctaLink}

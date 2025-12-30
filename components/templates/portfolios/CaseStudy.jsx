@@ -207,7 +207,7 @@ export default function CaseStudy({ data }) {
                 <div className="max-w-4xl mx-auto text-center">
                     <h3 className="text-4xl font-bold mb-6">{mockData.ctaTitle}</h3>
                     <p className="text-xl mb-8" style={{ color: colors.textLight }}>
-                        Let's discuss how I can help drive results for your product
+                        Let&apos;s discuss how I can help drive results for your product
                     </p>
                     <a
                         href={`mailto:${mockData.email}`}

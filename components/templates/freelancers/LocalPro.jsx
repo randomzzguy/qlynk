@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { MapPin, Star, Phone, Mail, MessageCircle } from 'lucide-react';
-import { useState } from 'react';
 import { themeColors } from '@/lib/themeColors';
 
 /**
@@ -12,7 +11,6 @@ import { themeColors } from '@/lib/themeColors';
  * Color Palette: Warm Orange (#ea580c) with Lime accents on cream background
  */
 export default function LocalPro({ data }) {
-    const [selectedImage, setSelectedImage] = useState(null);
     const colors = themeColors.localpro;
 
     const mockData = {
@@ -67,7 +65,7 @@ export default function LocalPro({ data }) {
                         </h1>
 
                         <p className="text-2xl mb-8" style={{ color: colors.textLight }}>
-                            Capturing life's moments in the heart of {mockData.serviceArea} since {mockData.since}
+                            Capturing life&apos;s moments in the heart of {mockData.serviceArea} since {mockData.since}
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -151,7 +149,7 @@ export default function LocalPro({ data }) {
                                     ))}
                                 </div>
 
-                                <p className="text-lg mb-4 italic">"{review.text}"</p>
+                                <p className="text-lg mb-4 italic">&ldquo;{review.text}&rdquo;</p>
 
                                 <div>
                                     <p className="font-bold">{review.name}</p>

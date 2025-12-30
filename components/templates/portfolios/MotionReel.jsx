@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { Play, Volume2, VolumeX } from 'lucide-react';
 import { useState } from 'react';
 import { themeColors } from '@/lib/themeColors';
 

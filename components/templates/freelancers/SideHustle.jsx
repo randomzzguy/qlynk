@@ -17,9 +17,9 @@ export default function SideHustle({ data }) {
 
     const mockData = {
         name: data?.name || "Side Hustle Studio",
-        intro: data?.intro || "I design websites when I'm not teaching yoga 🧘‍♀️",
+        intro: data?.intro || "I design websites when I&apos;m not teaching yoga 🧘‍♀️",
         offers: data?.offers || [
-            { title: "Website Design", emoji: "🎨", desc: "Beautiful sites that don't break the bank" },
+            { title: "Website Design", emoji: "🎨", desc: "Beautiful sites that don&apos;t break the bank" },
             { title: "Logo Creation", emoji: "✨", desc: "Memorable branding for your side hustle" },
             { title: "Social Graphics", emoji: "📱", desc: "Eye-catching posts that get noticed" },
             { title: "Quick Fixes", emoji: "🔧", desc: "Website tweaks and updates, fast" }
@@ -37,7 +37,7 @@ export default function SideHustle({ data }) {
         email: data?.email || "hey@sidehustle.com",
         offersTitle: data?.offersTitle || "What I Can Help With",
         funFactsTitle: data?.funFactsTitle || "Fun Facts About This Side Hustle",
-        socialsTitle: data?.socialsTitle || "Let's Chat!"
+        socialsTitle: data?.socialsTitle || "Let&apos;s Chat!"
     };
 
     return (
@@ -76,13 +76,13 @@ export default function SideHustle({ data }) {
                     >
                         <div className="text-8xl mb-8">👋</div>
                         <h1 className="text-5xl md:text-6xl font-black mb-6">
-                            Hey! I'm Your Friendly Neighborhood Designer
+                            Hey! I&apos;m Your Friendly Neighborhood Designer
                         </h1>
                         <p className="text-2xl md:text-3xl mb-8" style={{ color: colors.textLight }}>
                             {mockData.intro}
                         </p>
                         <p className="text-xl" style={{ color: colors.textLight }}>
-                            Let's make something cool together (evenings & weekends work best!)
+                            Let&apos;s make something cool together (evenings & weekends work best!)
                         </p>
                     </motion.div>
                 </div>
@@ -187,7 +187,7 @@ export default function SideHustle({ data }) {
                             {mockData.socialsTitle}
                         </h2>
                         <p className="text-xl mb-12 opacity-90">
-                            Slide into my DMs or shoot me an email. I'm pretty chill about how we connect 😊
+                            Slide into my DMs or shoot me an email. I&apos;m pretty chill about how we connect 😊
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
@@ -211,7 +211,7 @@ export default function SideHustle({ data }) {
                         </div>
 
                         <p className="text-sm opacity-75">
-                            Response time: Usually within 24 hours (unless I'm on the yoga mat 🧘‍♀️)
+                            Response time: Usually within 24 hours (unless I&apos;m on the yoga mat 🧘‍♀️)
                         </p>
                     </motion.div>
                 </div>

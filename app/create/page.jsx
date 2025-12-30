@@ -1,14 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, ArrowLeft, Check, Sparkles, Briefcase, User, ShoppingBag, Palette } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
-import { THEME_CATEGORIES, getThemesByCategory, getThemeById } from '@/lib/themeRegistry';
+import { getThemesByCategory, getThemeById } from '@/lib/themeRegistry';
 import ThemeCard from '@/components/ThemeCard';
 import DynamicForm from '@/components/DynamicForm';
-import { THEME_SCHEMAS } from '@/lib/themeSchemas';
 import QlynkBackground from '@/components/QlynkBackground';
 
 // Map use case IDs to category IDs
@@ -86,7 +85,7 @@ export default function CreatePage() {
   const availableThemes = category ? getThemesByCategory(category) : [];
   const selectedThemeConfig = selectedTheme ? getThemeById(selectedTheme) : null;
   const ThemeComponent = selectedThemeConfig?.component;
-  const formFields = selectedTheme ? getThemeFormFields(selectedTheme) : [];
+  const formFields = useMemo(() => selectedTheme ? getThemeFormFields(selectedTheme) : [], [selectedTheme]);
 
   // Populate default values when theme changes
   useEffect(() => {
@@ -113,7 +112,7 @@ export default function CreatePage() {
         return newData;
       });
     }
-  }, [selectedTheme]);
+  }, [selectedTheme, formFields]);
 
   // Show loading while checking auth
   if (checkingAuth) {
@@ -185,7 +184,7 @@ export default function CreatePage() {
         ctaLink: formattedThemeData.ctaLink || formattedThemeData.link || formattedThemeData.purchaseLink || formattedThemeData.waitlistUrl || formattedThemeData.calendlyUrl || formattedThemeData.repoUrl || `mailto:${formattedThemeData.email || userProfile?.email || ''}`,
       };
 
-      const { data, error } = await createPage(pageData);
+      const { error } = await createPage(pageData);
 
       if (error) throw error;
 

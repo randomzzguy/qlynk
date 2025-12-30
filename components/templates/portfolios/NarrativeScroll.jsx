@@ -206,7 +206,7 @@ export default function NarrativeScroll({ data }) {
                         transition={{ duration: 0.8 }}
                     >
                         <p className="text-3xl md:text-4xl font-bold leading-relaxed mb-12 italic">
-                            "{mockData.epilogue.text}"
+                            &quot;{mockData.epilogue.text}&quot;
                         </p>
 
                         <a

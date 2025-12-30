@@ -153,7 +153,7 @@ export default function ServiceCo({ data }) {
                         Ready to Transform Your Business?
                     </h2>
                     <p className="text-2xl mb-12" style={{ color: colors.textLight }}>
-                        Let's discuss how we can help you achieve your goals
+                        Let&apos;s discuss how we can help you achieve your goals
                     </p>
                     <a
                         href={mockData.ctaLink}

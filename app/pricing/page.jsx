@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Check, Crown, Sparkles, Zap, Code, Palette, ArrowRight, Star } from 'lucide-react';
+import { Check, Crown, Sparkles, Zap, Palette, ArrowRight, Star } from 'lucide-react';
 import Link from 'next/link';
 
 const PricingPage = () => {
@@ -76,7 +76,7 @@ const PricingPage = () => {
             Choose Your <span className="text-bright-orange">Plan</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-12">
-            Start free, then upgrade when you're ready to unlock premium themes and advanced features
+            Start free, then upgrade when you&apos;re ready to unlock premium themes and advanced features
           </p>
         </motion.div>
 

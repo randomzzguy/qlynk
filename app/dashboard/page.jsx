@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { getCurrentProfile, getUserPage, signOut, getCurrentUser } from '@/lib/supabase';
-import { Edit, Eye, BarChart3, LogOut, Plus, ExternalLink } from 'lucide-react';
+import { Edit, Eye, BarChart3, Plus } from 'lucide-react';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import DashboardSearch from '@/components/DashboardSearch';
 
@@ -46,36 +46,7 @@ export default function DashboardPage() {
     };
 
     loadUserData();
-  }, []);
-
-  const loadUserData = async () => {
-    try {
-      // Check auth session first
-      const user = await getCurrentUser();
-      if (!user) {
-        router.push('/auth/login');
-        return;
-      }
-
-      // Then load profile; if missing, send user to create flow
-      const userProfile = await getCurrentProfile();
-      if (!userProfile) {
-        router.push('/create');
-        return;
-      }
-
-      setProfile(userProfile);
-
-      // Try to load user's page
-      const { data: userPage } = await getUserPage();
-      setPage(userPage);
-
-      setLoading(false);
-    } catch (error) {
-      console.error('Error loading dashboard:', error);
-      setLoading(false);
-    }
-  };
+  }, [router]);
 
   const handleSignOut = async () => {
     await signOut();
@@ -227,11 +198,14 @@ export default function DashboardPage() {
                       {page.profile_image ? (
                         <div className="relative inline-block mb-6">
                           <div className="absolute inset-0 bg-bright-orange blur-xl opacity-20 rounded-full"></div>
-                          <img
-                            src={page.profile_image}
-                            alt={page.name}
-                            className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-gray-800 shadow-2xl relative z-10"
-                          />
+                          <div className="w-24 h-24 rounded-full mx-auto border-4 border-gray-800 shadow-2xl relative z-10 overflow-hidden">
+                            <Image
+                              src={page.profile_image}
+                              alt={page.name}
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
                         </div>
                       ) : (
                         <div className="w-24 h-24 bg-bright-orange/10 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl border-4 border-gray-800">

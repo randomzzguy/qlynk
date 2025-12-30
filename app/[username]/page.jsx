@@ -1,6 +1,7 @@
 import { createClient } from '@/utils/supabase/server';
-import { notFound } from 'next/navigation';
 import { THEMES } from '@/lib/themeRegistry';
+import Link from 'next/link';
+import { Sparkles, ArrowRight } from 'lucide-react';
 
 // This tells Next.js to generate pages dynamically
 export const dynamic = 'force-dynamic';
@@ -17,7 +18,29 @@ export default async function PublicPage({ params }) {
     .single();
 
   if (profileError || !profile) {
-    notFound();
+    return (
+      <div className="min-h-screen bg-[#f8f9fa] flex flex-col items-center justify-center text-center px-4">
+        <div className="mb-8">
+          <div className="w-20 h-20 bg-[#f46530]/10 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+            <Sparkles className="text-[#f46530]" size={40} />
+          </div>
+          <h1 className="text-4xl font-black text-[#2a2e30] mb-2">
+            @{username} is available!
+          </h1>
+          <p className="text-xl text-[#474c4e]">
+            This handle hasn&apos;t been claimed yet. It could be yours.
+          </p>
+        </div>
+        
+        <Link 
+          href="/auth/signup" 
+          className="inline-flex items-center gap-2 bg-[#f46530] text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#c14f22] transition-all hover:shadow-lg hover:shadow-[#f46530]/30 hover:-translate-y-0.5"
+        >
+          Claim This Handle
+          <ArrowRight size={20} />
+        </Link>
+      </div>
+    );
   }
 
   const { data: page, error: pageError } = await supabase
@@ -27,7 +50,19 @@ export default async function PublicPage({ params }) {
     .single();
 
   if (pageError || !page) {
-    notFound(); // Show 404 page
+    return (
+      <div className="min-h-screen bg-[#f8f9fa] flex flex-col items-center justify-center text-center px-4">
+        <h1 className="text-3xl font-bold text-[#2a2e30] mb-4">
+          Page Under Construction
+        </h1>
+        <p className="text-[#474c4e] mb-8">
+          @{username} hasn&apos;t published their page yet. Check back soon!
+        </p>
+        <Link href="/" className="text-[#f46530] font-semibold hover:underline">
+          Create your own page on qlynk
+        </Link>
+      </div>
+    );
   }
 
   // Get the theme configuration

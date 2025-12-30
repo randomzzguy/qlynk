@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Code, Download, Github, Linkedin, Mail, ExternalLink } from 'lucide-react';
+import { Code, Download, Github, Linkedin, Mail } from 'lucide-react';
 import { useState } from 'react';
 import { themeColors } from '@/lib/themeColors';
 
@@ -217,7 +217,7 @@ export default function SkillStack({ data }) {
             {/* Resume & Contact */}
             <section className="py-16 px-6" style={{ backgroundColor: colors.bgAlt }}>
                 <div className="max-w-6xl mx-auto text-center">
-                    <h2 className="text-3xl font-bold mb-8">Let's Connect</h2>
+                    <h2 className="text-3xl font-bold mb-8">Let&apos;s Connect</h2>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <a
                             href={mockData.resumeUrl}

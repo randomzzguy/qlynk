@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Edit, BarChart3, Palette, Settings, LogOut } from 'lucide-react';
 
@@ -18,7 +19,7 @@ export default function DashboardSidebar({ onSignOut }) {
     <aside className="w-64 bg-card/80 border-r border-border flex flex-col">
       <div className="p-6">
         <Link href="/" className="flex items-center group">
-          <img src="/assets/logoWhite.svg" alt="qlynk logo" className="h-10 w-auto" />
+          <Image src="/assets/logoWhite.svg" alt="qlynk logo" width={120} height={40} className="h-10 w-auto" />
         </Link>
       </div>
       <nav className="flex-1 px-4 py-6 space-y-2">

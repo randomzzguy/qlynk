@@ -4,43 +4,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Zap, Palette, Shield, BarChart3, Sparkles, ChevronUp, Users, Heart, Target } from 'lucide-react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import QlynkBackground from '@/components/QlynkBackground';
 
 // ====== Animated Components ======
-const AnimatedNumber = ({ value, className = "" }) => {
-  const [displayValue, setDisplayValue] = useState(0);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    const targetValue = parseInt(value.replace(/\D/g, '')) || 0;
-    const duration = 2000;
-    const startTime = performance.now();
-
-    const animate = (currentTime) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      const current = Math.floor(easeOutQuart * targetValue);
-
-      setDisplayValue(current);
-      if (progress < 1) requestAnimationFrame(animate);
-    };
-
-    requestAnimationFrame(animate);
-  }, [value]);
-
-  if (!mounted) {
-    return <span className={className}>{value}</span>;
-  }
-
-  return (
-    <span className={className}>
-      {displayValue.toLocaleString()}{value.includes('%') ? '%' : value.replace(/\d+/g, '')}
-    </span>
-  );
-};
 
 const GlowingOrb = ({ top, left, size = 300, color = 'orange', delay = 0 }) => (
   <motion.div
@@ -600,16 +567,9 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const containerRef = useRef(null);
 
-  const words = ['Professionals', 'Creators', 'Freelancers', 'Products', 'Businesses', 'Everyone'];
-
-  // Scroll-linked animations
-  const { scrollYProgress } = useScroll();
-  const y1 = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
-  const y2 = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const scaleBg = useTransform(scrollYProgress, [0, 0.5], [1, 1.1]);
-
   // Typing effect
   useEffect(() => {
+    const words = ['Professionals', 'Creators', 'Freelancers', 'Products', 'Businesses', 'Everyone'];
     const TYPE_SPEED = 90;
     const DELETE_SPEED = 45;
     const PAUSE_BEFORE_DELETE = 700;
@@ -639,26 +599,21 @@ export default function App() {
     }, isDeleting ? DELETE_SPEED : TYPE_SPEED);
 
     return () => clearTimeout(timer);
-  }, [text, isDeleting, loopNum, words]);
+  }, [text, isDeleting, loopNum]);
 
   // Stats & Content
-  const stats = [
-    { value: "500+", label: "Active Users" },
-    { value: "15K+", label: "Pages Created" },
-    { value: "99.9%", label: "Uptime" }
-  ];
 
   const features = [
-    { icon: Zap, title: "Lightning Fast", desc: "Create your page in under 2 minutes. No technical knowledge required." },
-    { icon: Palette, title: "Beautiful Themes", desc: "Choose from 5 professionally designed templates that look amazing." },
-    { icon: Shield, title: "100% Free", desc: "No hidden costs. Your page stays online forever, completely free." },
-    { icon: BarChart3, title: "Track Analytics", desc: "See how many people visit your page and engage with your content." }
+    { icon: Zap, title: "Your Hub, Your Rules", desc: "Connect all your content, social links, and products in one beautiful, shareable page." },
+    { icon: Palette, title: "Stunning Templates", desc: "Choose from 5 distinct themes—from minimal portfolios to vibrant launchpads." },
+    { icon: Shield, title: "Claim Your Handle", desc: "Secure your unique @username before someone else does. It's yours forever." },
+    { icon: BarChart3, title: "Grow Your Audience", desc: "Built-in analytics show you exactly who's visiting and what they're clicking." }
   ];
 
   const steps = [
-    { num: "1", title: "Answer Questions", desc: "Tell us about yourself in a simple guided form. Takes just 2 minutes." },
-    { num: "2", title: "Pick a Theme", desc: "Choose from 5 beautiful designs. See your page update in real-time." },
-    { num: "3", title: "Go Live", desc: "Your page is instantly live at qlynk.page/yourname. Share it everywhere!" }
+    { num: "1", title: "Claim Your Handle", desc: "Pick your unique username (e.g., qlynk.page/alex). It takes 10 seconds." },
+    { num: "2", title: "Tell Your Story", desc: "Add your bio, links, and photos using our simple editor. No coding needed." },
+    { num: "3", title: "Share & Grow", desc: "Drop your link in your bio, email signature, or business card. Watch your reach expand." }
   ];
 
   return (

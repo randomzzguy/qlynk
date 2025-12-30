@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
@@ -9,10 +10,10 @@ export const BackgroundGradientAnimation = ({
   firstColor = "99, 102, 241",
   secondColor = "168, 85, 247",
   thirdColor = "236, 72, 153",
-  fourthColor = "59, 130, 246",
-  fifthColor = "34, 197, 94",
+  _fourthColor = "59, 130, 246",
+  _fifthColor = "34, 197, 94",
   pointerColor = "99, 102, 241",
-  size = "80%",
+  _size = "80%",
   blendingValue = "normal",
   children,
   className,
@@ -27,6 +28,7 @@ export const BackgroundGradientAnimation = ({
   const [isSafari, setIsSafari] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
   }, []);
 

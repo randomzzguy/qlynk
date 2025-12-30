@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Mail, Clock, Star } from 'lucide-react';
+import { MapPin, Phone, Clock, Star } from 'lucide-react';
 import { themeColors } from '@/lib/themeColors';
 
 /**
@@ -188,7 +188,7 @@ export default function LocalBiz({ data }) {
                                         <Star key={i} size={20} style={{ fill: colors.secondary, color: colors.secondary }} />
                                     ))}
                                 </div>
-                                <p className="text-lg mb-6 italic">"{review.text}"</p>
+                                <p className="text-lg mb-6 italic">&ldquo;{review.text}&rdquo;</p>
                                 <p className="font-bold">— {review.name}</p>
                             </motion.div>
                         ))}

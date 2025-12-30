@@ -2,19 +2,11 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Crown, Lock, Check, X } from 'lucide-react';
-import { premiumTemplates, PremiumBadge } from './PremiumTemplates';
-import { templates } from './Templates';
+import { Sparkles, Crown, Lock, Check } from 'lucide-react';
+import { PremiumBadge } from './PremiumTemplates';
 
 const ThemeSelector = ({ selectedTheme, onThemeChange, isPremium = false }) => {
   const [showPremiumModal, setShowPremiumModal] = useState(false);
-  const [lockedTheme, setLockedTheme] = useState(null);
-
-  // Combine free and premium templates
-  const allTemplates = {
-    ...templates,
-    ...premiumTemplates
-  };
 
   const themeMetadata = {
     // Free themes
@@ -75,7 +67,6 @@ const ThemeSelector = ({ selectedTheme, onThemeChange, isPremium = false }) => {
   const handleThemeClick = (themeKey) => {
     const theme = themeMetadata[themeKey];
     if (theme.isPremium && !isPremium) {
-      setLockedTheme(themeKey);
       setShowPremiumModal(true);
     } else {
       onThemeChange(themeKey);

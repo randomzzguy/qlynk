@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Mail, Share2, Check, HelpCircle } from 'lucide-react';
+import { Share2, Check, HelpCircle } from 'lucide-react';
 import { useState } from 'react';
 import { themeColors } from '@/lib/themeColors';
 
@@ -99,9 +99,9 @@ export default function LaunchPad({ data }) {
                                 animate={{ opacity: 1, scale: 1 }}
                             >
                                 <Check size={48} style={{ color: colors.primary }} className="mx-auto mb-4" />
-                                <h3 className="text-2xl font-bold mb-2">You're on the list!</h3>
+                                <h3 className="text-2xl font-bold mb-2">You&apos;re on the list!</h3>
                                 <p style={{ color: colors.textLight }}>
-                                    We'll notify you when we launch. Check your email for a special gift 🎁
+                                    We&apos;ll notify you when we launch. Check your email for a special gift 🎁
                                 </p>
                             </motion.div>
                         )}
@@ -158,7 +158,7 @@ export default function LaunchPad({ data }) {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: index * 0.1 }}
                             >
-                                <p className="text-lg mb-6 italic">"{testimonial.quote}"</p>
+                                <p className="text-lg mb-6 italic">&quot;{testimonial.quote}&quot;</p>
                                 <div>
                                     <p className="font-bold">{testimonial.name}</p>
                                     <p className="text-sm" style={{ color: colors.textLight }}>
@@ -207,7 +207,7 @@ export default function LaunchPad({ data }) {
                 style={{ background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`, color: '#ffffff' }}>
                 <div className="max-w-4xl mx-auto text-center relative z-10">
                     <h2 className="text-5xl font-black mb-6">
-                        Don't Miss the Launch
+                        Don&apos;t Miss the Launch
                     </h2>
                     <p className="text-2xl mb-12 opacity-90">
                         Be the first to experience the future of productivity

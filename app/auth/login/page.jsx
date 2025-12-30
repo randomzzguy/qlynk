@@ -4,7 +4,6 @@ import { useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/utils/supabase/client';
 import { LogIn, Eye, EyeOff } from 'lucide-react';
 import QlynkBackground from '@/components/QlynkBackground';
 import HCaptcha from '@hcaptcha/react-hcaptcha';

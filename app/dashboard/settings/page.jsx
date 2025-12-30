@@ -1,12 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
-import { Save, User, Mail, Shield, Bell } from 'lucide-react';
+import { Save, User, Mail, Shield } from 'lucide-react';
 
 export default function SettingsPage() {
-    const [isLoading, setIsLoading] = useState(false);
-
     return (
         <div className="min-h-screen flex bg-background">
             <DashboardSidebar />

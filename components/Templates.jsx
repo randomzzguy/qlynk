@@ -1,6 +1,6 @@
 // components/Templates.jsx
-import React from 'react';
-import { Mail, ExternalLink, Github, Twitter, Linkedin, Instagram, Facebook, Youtube } from 'lucide-react';
+import Image from 'next/image';
+import { Mail, ExternalLink } from 'lucide-react';
 
 // 1) Noir – cinematic, high-contrast dark luxury
 export const NoirTemplate = ({ data }) => {
@@ -12,11 +12,13 @@ export const NoirTemplate = ({ data }) => {
           <div className="md:col-span-2">
             <h1 className="text-6xl md:text-7xl font-extrabold tracking-tighter leading-none">{data.name}</h1>
             {data.profession && <p className="text-xl text-neutral-300 mt-4">{data.profession}</p>}
-            {data.tagline && <p className="text-neutral-400 italic mt-2">“{data.tagline}”</p>}
+            {data.tagline && <p className="text-neutral-400 italic mt-2">&ldquo;{data.tagline}&rdquo;</p>}
           </div>
           {data.profileImage && (
             <div className="md:col-span-1">
-              <img src={data.profileImage} alt={data.name} className="w-full aspect-square object-cover rounded-2xl border-2 border-neutral-800" />
+              <div className="relative w-full aspect-square rounded-2xl border-2 border-neutral-800 overflow-hidden">
+                <Image src={data.profileImage} alt={data.name} fill className="object-cover" />
+              </div>
             </div>
           )}
         </div>
@@ -73,11 +75,13 @@ export const ZineTemplate = ({ data }) => {
           <div className="md:col-span-1">
             <div className="bg-white rounded-3xl p-8 shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform">
               {data.profileImage && (
-                <img src={data.profileImage} alt={data.name} className="w-full aspect-square rounded-2xl object-cover mb-6 border-4 border-purple-400" />
+                <div className="relative w-full aspect-square rounded-2xl overflow-hidden mb-6 border-4 border-purple-400">
+                  <Image src={data.profileImage} alt={data.name} fill className="object-cover" />
+                </div>
               )}
               <h1 className="text-3xl font-black text-purple-900 mb-2">{data.name}</h1>
               {data.profession && <p className="text-purple-700 font-semibold mb-3">{data.profession}</p>}
-              {data.tagline && <p className="text-purple-600 italic">“{data.tagline}”</p>}
+              {data.tagline && <p className="text-purple-600 italic">&ldquo;{data.tagline}&rdquo;</p>}
             </div>
           </div>
           <div className="md:col-span-2 space-y-6">
@@ -135,7 +139,7 @@ export const PaperTemplate = ({ data }) => {
         <header className="border-b border-black pb-8">
           <h1 className="text-5xl font-light tracking-tight">{data.name}</h1>
           {data.profession && <p className="text-lg text-gray-600 mt-2">{data.profession}</p>}
-          {data.tagline && <p className="text-gray-500 italic mt-1">“{data.tagline}”</p>}
+          {data.tagline && <p className="text-gray-500 italic mt-1">&ldquo;{data.tagline}&rdquo;</p>}
         </header>
         <main className="mt-12 space-y-16">
           {data.bio && <p className="text-gray-700 leading-loose max-w-prose">{data.bio}</p>}
@@ -193,14 +197,14 @@ export const NeonTemplate = ({ data }) => {
       <div className="max-w-4xl mx-auto px-6 py-20">
         <div className="relative p-10 rounded-3xl border border-gray-800 bg-gradient-to-br from-gray-900 to-gray-950 shadow-2xl shadow-cyan-500/10">
           {data.profileImage && (
-            <div className="absolute -top-12 left-1/2 -translate-x-1/2">
-              <img src={data.profileImage} alt={data.name} className="w-24 h-24 rounded-full object-cover border-4 border-cyan-400 shadow-lg shadow-cyan-400/30" />
+            <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full border-4 border-cyan-400 shadow-lg shadow-cyan-400/30 overflow-hidden">
+              <Image src={data.profileImage} alt={data.name} fill className="object-cover" />
             </div>
           )}
           <div className="text-center mt-10">
             <h1 className="text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-400">{data.name}</h1>
             {data.profession && <p className="text-xl text-gray-300 mt-3">{data.profession}</p>}
-            {data.tagline && <p className="text-gray-400 italic mt-2">“{data.tagline}”</p>}
+            {data.tagline && <p className="text-gray-400 italic mt-2">&ldquo;{data.tagline}&rdquo;</p>}
           </div>
         </div>
         {data.bio && <p className="text-gray-300 leading-relaxed mt-12 max-w-3xl mx-auto text-center">{data.bio}</p>}
@@ -255,13 +259,13 @@ export const OceanTemplate = ({ data }) => {
         <div className="relative">
           {data.profileImage && (
             <div className="absolute -top-10 -left-10 w-40 h-40 rounded-full overflow-hidden shadow-2xl border-8 border-white">
-              <img src={data.profileImage} alt={data.name} className="w-full h-full object-cover" />
+              <Image src={data.profileImage} alt={data.name} fill className="object-cover" />
             </div>
           )}
           <div className="bg-white/70 backdrop-blur-xl rounded-3xl p-12 pl-32 shadow-xl shadow-blue-500/10">
             <h1 className="text-5xl font-bold tracking-tight text-slate-900">{data.name}</h1>
             {data.profession && <p className="text-lg text-blue-600 mt-2">{data.profession}</p>}
-            {data.tagline && <p className="text-slate-500 italic mt-1">“{data.tagline}”</p>}
+            {data.tagline && <p className="text-slate-500 italic mt-1">&ldquo;{data.tagline}&rdquo;</p>}
           </div>
         </div>
         {data.bio && <p className="text-slate-600 leading-relaxed mt-12 max-w-3xl">{data.bio}</p>}
@@ -318,7 +322,9 @@ export const SlateTemplate = ({ data }) => {
             <div className="md:col-span-1 bg-slate-900 text-white p-12 flex flex-col justify-between">
               <div>
                 {data.profileImage && (
-                  <img src={data.profileImage} alt={data.name} className="w-32 h-32 rounded-full object-cover mb-6 border-4 border-slate-700" />
+                  <div className="relative w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-slate-700">
+                    <Image src={data.profileImage} alt={data.name} fill className="object-cover" />
+                  </div>
                 )}
                 <h1 className="text-4xl font-bold">{data.name}</h1>
                 {data.profession && <p className="text-slate-300 mt-2">{data.profession}</p>}
@@ -340,7 +346,7 @@ export const SlateTemplate = ({ data }) => {
               </div>
             </div>
             <div className="md:col-span-2 p-12">
-              {data.tagline && <p className="text-slate-500 italic mb-8">“{data.tagline}”</p>}
+              {data.tagline && <p className="text-slate-500 italic mb-8">&ldquo;{data.tagline}&rdquo;</p>}
               {data.bio && <p className="text-slate-700 leading-relaxed mb-12">{data.bio}</p>}
               {data.links && data.links.length > 0 && (
                 <div className="grid md:grid-cols-2 gap-6">
@@ -385,9 +391,11 @@ export const MonoPressTemplate = ({ data }) => {
       <div className="max-w-4xl mx-auto px-6 py-20">
         <h1 className="text-5xl md:text-6xl font-serif font-bold tracking-tight">{data.name}</h1>
         {data.profession && <p className="text-lg text-neutral-600 mt-2 font-serif">{data.profession}</p>}
-        {data.tagline && <p className="text-neutral-500 italic mt-2 font-serif">“{data.tagline}”</p>}
+        {data.tagline && <p className="text-neutral-500 italic mt-2 font-serif">&ldquo;{data.tagline}&rdquo;</p>}
         {data.profileImage && (
-          <img src={data.profileImage} alt={data.name} className="mt-8 w-40 h-40 object-cover rounded-xl border" />
+          <div className="relative mt-8 w-40 h-40 rounded-xl border overflow-hidden">
+            <Image src={data.profileImage} alt={data.name} fill className="object-cover" />
+          </div>
         )}
         {data.bio && <p className="text-neutral-700 leading-relaxed mt-10 font-serif">{data.bio}</p>}
         {data.links && data.links.length > 0 && (
@@ -427,7 +435,7 @@ export const AuroraTemplate = ({ data }) => {
         <div className="bg-white/70 backdrop-blur-xl rounded-3xl p-12 shadow-xl">
           <h1 className="text-5xl font-bold tracking-tight text-slate-900">{data.name}</h1>
           {data.profession && <p className="text-lg text-violet-600 mt-2">{data.profession}</p>}
-          {data.tagline && <p className="text-slate-600 italic mt-1">“{data.tagline}”</p>}
+          {data.tagline && <p className="text-slate-600 italic mt-1">&ldquo;{data.tagline}&rdquo;</p>}
           {data.bio && <p className="text-slate-700 leading-relaxed mt-8">{data.bio}</p>}
           {data.links && data.links.length > 0 && (
             <div className="mt-10 grid md:grid-cols-2 gap-6">
@@ -465,7 +473,7 @@ export const BrutalistTemplate = ({ data }) => {
         <div className="border-4 border-black rounded-xl p-10 bg-white">
           <h1 className="text-5xl font-black tracking-tighter">{data.name}</h1>
           {data.profession && <p className="text-lg mt-2">{data.profession}</p>}
-          {data.tagline && <p className="mt-2 italic">“{data.tagline}”</p>}
+          {data.tagline && <p className="mt-2 italic">&ldquo;{data.tagline}&rdquo;</p>}
           {data.bio && <p className="mt-8 leading-relaxed">{data.bio}</p>}
           {data.links && data.links.length > 0 && (
             <div className="mt-10 grid md:grid-cols-2 gap-6">
@@ -496,16 +504,6 @@ export const BrutalistTemplate = ({ data }) => {
 };
 // Import premium templates (will be available only for pro users)
  
-
-export const socialIcons = {
-  github: Github,
-  twitter: Twitter,
-  linkedin: Linkedin,
-  instagram: Instagram,
-  facebook: Facebook,
-  youtube: Youtube,
-  mail: Mail,
-};
 
 export const templates = {
   professional: MonoPressTemplate,

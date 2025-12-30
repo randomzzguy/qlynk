@@ -267,7 +267,7 @@ export default function HireMeNow({ data }) {
                         transition={{ duration: 0.6 }}
                     >
                         <h2 className="text-4xl md:text-5xl font-black mb-6">
-                            Don't Wait. Start Today.
+                            Don&apos;t Wait. Start Today.
                         </h2>
                         <p className="text-xl mb-8" style={{ color: colors.textLight }}>
                             Limited availability. First-come, first-served.

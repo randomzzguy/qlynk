@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Zap, Check, ArrowRight } from 'lucide-react';
+import { Zap, ArrowRight } from 'lucide-react';
 import { themeColors } from '@/lib/themeColors';
 
 /**
@@ -17,7 +17,7 @@ export default function NicheTool({ data }) {
         toolName: data?.name || "TextTweaker",
         tagline: data?.tagline || "Transform boring text into engaging copy. Instantly.",
         demoEmbed: data?.demoEmbed || "✨",
-        problem: data?.problem || "Writing engaging copy takes hours. Most tools are bloated with features you'll never use.",
+        problem: data?.problem || "Writing engaging copy takes hours. Most tools are bloated with features you&apos;ll never use.",
         solution: data?.solution || "One simple tool. One clear purpose. Transform your text in seconds, not hours.",
         useCases: data?.useCases || [
             "Social media posts",
@@ -210,7 +210,7 @@ export default function NicheTool({ data }) {
                             Ready to Transform Your Text?
                         </h2>
                         <p className="text-2xl mb-12" style={{ color: colors.textLight }}>
-                            Join 10,000+ users who've already made the switch
+                            Join 10,000+ users who&apos;ve already made the switch
                         </p>
                         <a
                             href={mockData.ctaLink}

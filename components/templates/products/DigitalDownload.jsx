@@ -158,7 +158,7 @@ export default function DigitalDownload({ data }) {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: index * 0.1 }}
                             >
-                                <p className="text-lg mb-6 italic">"{testimonial.text}"</p>
+                                <p className="text-lg mb-6 italic">&quot;{testimonial.text}&quot;</p>
                                 <p className="font-bold">— {testimonial.name}</p>
                             </motion.div>
                         ))}

@@ -5,7 +5,6 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/utils/supabase/client';
 import { Sparkles, Eye, EyeOff } from 'lucide-react';
 import { Suspense } from 'react';
 import QlynkBackground from '@/components/QlynkBackground';
@@ -22,7 +21,8 @@ function SignupForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [needsVerification, setNeedsVerification] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [needsVerification, _setNeedsVerification] = useState(false);
   const [hcaptchaToken, setHcaptchaToken] = useState(null);
   const captchaRef = useRef(null);
 
@@ -120,9 +120,6 @@ function SignupForm() {
       setLoading(false);
     }
   };
-
-  const isLocalhost = typeof window !== 'undefined' &&
-    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
   return (
     <div className="min-h-screen relative overflow-hidden flex items-center justify-center py-12 px-6">

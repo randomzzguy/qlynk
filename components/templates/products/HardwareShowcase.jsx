@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ShoppingCart, Check, Truck } from 'lucide-react';
+import { ShoppingCart, Truck } from 'lucide-react';
 import { useState } from 'react';
 import { themeColors } from '@/lib/themeColors';
 

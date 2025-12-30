@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import DashboardSidebar from '@/components/DashboardSidebar';
-import { getAllThemes, THEMES } from '@/lib/themeRegistry';
+import { getAllThemes } from '@/lib/themeRegistry';
 import ThemeCard from '@/components/ThemeCard';
 import { Search } from 'lucide-react';
 

@@ -57,25 +57,12 @@ export default function QuickPitch({ data }) {
                 />
 
                 <div className="max-w-4xl mx-auto text-center relative z-10">
-                    <motion.h1
-                        className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight"
-                        style={{ color: colors.text }}
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                    >
-                        {mockData.headline}
-                    </motion.h1>
-
-                    <motion.p
-                        className="text-xl md:text-2xl mb-12 max-w-2xl mx-auto"
-                        style={{ color: colors.textLight }}
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                    >
-                        {mockData.subhead}
-                    </motion.p>
+                    <h1 className="text-5xl md:text-7xl font-black mb-6">
+                        Hi, I&apos;m {mockData.name}.
+                    </h1>
+                    <p className="text-2xl md:text-3xl mb-12" style={{ color: colors.textLight }}>
+                        I help startups ship {mockData.expertise} in weeks, not months.
+                    </p>
 
                     <motion.div
                         className="flex flex-col sm:flex-row gap-4 justify-center items-center"
@@ -218,7 +205,7 @@ export default function QuickPitch({ data }) {
                             </div>
 
                             <p className="text-2xl mb-8 leading-relaxed italic" style={{ color: colors.text }}>
-                                "{mockData.testimonials[activeTestimonial].quote}"
+                                &quot;{mockData.testimonials[activeTestimonial].quote}&quot;
                             </p>
 
                             <div>
@@ -261,7 +248,7 @@ export default function QuickPitch({ data }) {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
-                        Let's Work Together
+                        Let&apos;s Work Together
                     </motion.h2>
 
                     <motion.p
