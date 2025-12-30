@@ -37,7 +37,16 @@ const GlowingOrb = ({ top, left, size = 300, color = 'orange', delay = 0 }) => (
 // ====== Slot Machine Hero Component ======
 const SlotMachineHero = () => {
   const names = ['Alex', 'Maya', 'Jordan', 'Riley', 'Sam', 'Taylor', 'Casey', 'Morgan'];
-  const styles = ['🎨', '💎', '🌟', '⚡', '🔥', '✨', '🎯', '🚀'];
+  const styles = [
+    { name: 'QuickPitch', icon: '⚡' },
+    { name: 'MinimalistCV', icon: '📄' },
+    { name: 'GalleryGrid', icon: '🎨' },
+    { name: 'LaunchPad', icon: '🚀' },
+    { name: 'LocalBiz', icon: '🏪' },
+    { name: 'EcoBrand', icon: '🌿' },
+    { name: 'MotionReel', icon: '🎬' },
+    { name: 'SkillStack', icon: '🛠️' }
+  ];
   const professions = ['Designer', 'Developer', 'Artist', 'Writer', 'Founder', 'Creator', 'Musician', 'Coach'];
 
   const [reel1Index, setReel1Index] = useState(0);
@@ -165,14 +174,15 @@ const SlotMachineHero = () => {
                   </div>
                   <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
                     <motion.div
-                      className="text-5xl"
+                      className="text-center"
                       key={`style-${reel2Index}`}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.3 }}
                     >
-                      {styles[reel2Index]}
+                      <div className="text-3xl mb-1">{styles[reel2Index].icon}</div>
+                      <div className="text-base font-bold text-white">{styles[reel2Index].name}</div>
                     </motion.div>
                   </div>
                 </div>
@@ -331,7 +341,7 @@ const SlotMachineHero = () => {
                   transition={{ delay: 0.2 }}
                 >
                   <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#f46530] to-[#c14f22] flex items-center justify-center text-4xl shadow-lg">
-                    {styles[reel2Index]}
+                    {styles[reel2Index].icon}
                   </div>
                   <h1 className="text-3xl font-black text-gray-900 mb-2">
                     {names[reel1Index]}
