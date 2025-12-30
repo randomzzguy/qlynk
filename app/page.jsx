@@ -55,6 +55,83 @@ const SlotMachineHero = () => {
   const [counter, setCounter] = useState(10247);
   const [isSpinning, setIsSpinning] = useState(false);
 
+  const themeStyles = {
+    QuickPitch: {
+      bg: "bg-gradient-to-br from-indigo-900 to-purple-800",
+      text: "text-white",
+      subtext: "text-indigo-200",
+      button: "bg-yellow-400 text-indigo-900 hover:bg-yellow-300 rounded-lg",
+      card: "bg-white/10 border-white/20 text-white",
+      align: "text-center items-center",
+      grid: "grid-cols-1"
+    },
+    MinimalistCV: {
+      bg: "bg-white",
+      text: "text-gray-900",
+      subtext: "text-gray-500",
+      button: "bg-black text-white hover:bg-gray-800 rounded-none",
+      card: "bg-transparent border-l-2 border-gray-200 pl-4 hover:border-black text-gray-900",
+      align: "text-left items-start",
+      grid: "grid-cols-1"
+    },
+    GalleryGrid: {
+      bg: "bg-stone-900",
+      text: "text-stone-100",
+      subtext: "text-stone-400",
+      button: "bg-white text-stone-900 hover:bg-stone-200 rounded-full",
+      card: "bg-stone-800 aspect-video flex items-center justify-center border border-stone-700 hover:border-white text-stone-300",
+      align: "text-center items-center",
+      grid: "grid-cols-2"
+    },
+    LaunchPad: {
+      bg: "bg-gradient-to-br from-blue-600 to-cyan-500",
+      text: "text-white",
+      subtext: "text-blue-100",
+      button: "bg-white text-blue-600 shadow-lg hover:bg-blue-50 rounded-xl",
+      card: "bg-white/20 backdrop-blur-sm border border-white/30 text-white",
+      align: "text-center items-center",
+      grid: "grid-cols-1"
+    },
+    LocalBiz: {
+      bg: "bg-amber-50",
+      text: "text-amber-900",
+      subtext: "text-amber-700",
+      button: "bg-amber-600 text-white hover:bg-amber-700 rounded-md shadow-md",
+      card: "bg-white border border-amber-200 shadow-sm hover:shadow-md text-amber-900",
+      align: "text-center items-center",
+      grid: "grid-cols-1"
+    },
+    EcoBrand: {
+      bg: "bg-emerald-50",
+      text: "text-emerald-900",
+      subtext: "text-emerald-700",
+      button: "bg-emerald-600 text-white hover:bg-emerald-700 rounded-full shadow-lg shadow-emerald-600/20",
+      card: "bg-white border border-emerald-100 shadow-sm rounded-2xl text-emerald-900",
+      align: "text-center items-center",
+      grid: "grid-cols-1"
+    },
+    MotionReel: {
+      bg: "bg-zinc-950",
+      text: "text-white",
+      subtext: "text-zinc-400",
+      button: "bg-red-600 text-white hover:bg-red-700 uppercase tracking-widest rounded-sm",
+      card: "bg-zinc-900 border border-zinc-800 hover:border-red-600/50 text-zinc-300",
+      align: "text-center items-center",
+      grid: "grid-cols-1"
+    },
+    SkillStack: {
+      bg: "bg-slate-900",
+      text: "text-slate-200",
+      subtext: "text-slate-400 font-mono",
+      button: "bg-transparent border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900 font-mono rounded",
+      card: "bg-slate-800/50 border border-slate-700 font-mono text-sm text-slate-300",
+      align: "text-left items-start",
+      grid: "grid-cols-2"
+    }
+  };
+
+  const activeTheme = themeStyles[styles[reel2Index].name] || themeStyles.QuickPitch;
+
   const spinTimeoutRef = useRef(null);
 
   const spin = () => {
@@ -332,43 +409,43 @@ const SlotMachineHero = () => {
               </div>
 
               {/* Mock Webpage Content */}
-              <div className="p-8 bg-gradient-to-br from-gray-50 to-gray-100 min-h-[500px]">
+              <div className={`p-8 min-h-[500px] transition-colors duration-500 ${activeTheme.bg} flex flex-col ${activeTheme.align}`}>
                 {/* Profile Section */}
                 <motion.div
-                  className="text-center mb-8"
+                  className={`mb-8 w-full flex flex-col ${activeTheme.align}`}
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#f46530] to-[#c14f22] flex items-center justify-center text-4xl shadow-lg">
+                  <div className={`w-24 h-24 mb-4 rounded-full bg-gradient-to-br from-[#f46530] to-[#c14f22] flex items-center justify-center text-4xl shadow-lg ${activeTheme.align === 'text-left items-start' ? '' : 'mx-auto'}`}>
                     {styles[reel2Index].icon}
                   </div>
-                  <h1 className="text-3xl font-black text-gray-900 mb-2">
+                  <h1 className={`text-3xl font-black mb-2 ${activeTheme.text}`}>
                     {names[reel1Index]}
                   </h1>
-                  <p className="text-lg text-gray-600 font-semibold">
+                  <p className={`text-lg font-semibold ${activeTheme.text} opacity-90`}>
                     {professions[reel3Index]}
                   </p>
-                  <p className="text-sm text-gray-500 mt-2 max-w-md mx-auto">
+                  <p className={`text-sm mt-2 max-w-md ${activeTheme.subtext} ${activeTheme.align === 'text-left items-start' ? '' : 'mx-auto'}`}>
                     Passionate {professions[reel3Index].toLowerCase()} creating amazing experiences
                   </p>
                 </motion.div>
 
                 {/* CTA Button */}
                 <motion.div
-                  className="text-center mb-8"
+                  className={`mb-8 w-full ${activeTheme.align === 'text-left items-start' ? 'text-left' : 'text-center'}`}
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <button className="px-8 py-3 bg-[#f46530] text-white rounded-lg font-bold shadow-md hover:bg-[#c14f22] transition-colors">
+                  <button className={`px-8 py-3 font-bold transition-all shadow-md ${activeTheme.button}`}>
                     Get In Touch
                   </button>
                 </motion.div>
 
                 {/* Social Links */}
                 <motion.div
-                  className="flex justify-center gap-4 mb-8"
+                  className={`flex gap-4 mb-8 w-full ${activeTheme.align === 'text-left items-start' ? 'justify-start' : 'justify-center'}`}
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.4 }}
@@ -376,7 +453,7 @@ const SlotMachineHero = () => {
                   {['LinkedIn', 'Twitter', 'GitHub'].map((platform, i) => (
                     <div
                       key={i}
-                      className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-300 transition-colors cursor-pointer"
+                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors cursor-pointer ${activeTheme.text === 'text-white' ? 'bg-white/10 hover:bg-white/20 text-white' : 'bg-black/5 hover:bg-black/10 text-gray-900'}`}
                     >
                       <span className="text-xs font-bold">{platform[0]}</span>
                     </div>
@@ -385,7 +462,7 @@ const SlotMachineHero = () => {
 
                 {/* Sample Links */}
                 <motion.div
-                  className="space-y-3 max-w-md mx-auto"
+                  className={`w-full grid gap-4 ${activeTheme.grid} ${activeTheme.align === 'text-left items-start' ? '' : 'max-w-md mx-auto'}`}
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.5 }}
@@ -393,10 +470,10 @@ const SlotMachineHero = () => {
                   {['Portfolio', 'Blog', 'Contact'].map((link, i) => (
                     <div
                       key={i}
-                      className="p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:border-[#f46530] transition-colors cursor-pointer"
+                      className={`p-4 transition-colors cursor-pointer ${activeTheme.card}`}
                     >
-                      <div className="font-bold text-gray-900">{link}</div>
-                      <div className="text-xs text-gray-500 mt-1">
+                      <div className={`font-bold ${activeTheme.text}`}>{link}</div>
+                      <div className={`text-xs mt-1 opacity-70 ${activeTheme.text}`}>
                         Check out my {link.toLowerCase()}
                       </div>
                     </div>
