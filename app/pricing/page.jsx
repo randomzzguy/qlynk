@@ -2,11 +2,40 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Check, X, Zap, Crown } from 'lucide-react';
+import { Check, X, Zap, Crown, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import QlynkBackground from '@/components/QlynkBackground';
+
+// Glowing Orb component matching home page
+const GlowingOrb = ({ top, left, size = 300, color = 'orange', delay = 0 }) => (
+  <motion.div
+    className="absolute rounded-full opacity-20 blur-3xl pointer-events-none z-0"
+    style={{
+      top,
+      left,
+      width: size,
+      height: size,
+      background: color === 'orange'
+        ? `radial-gradient(circle, #f46530, transparent 70%)`
+        : 'radial-gradient(circle, #2AB59E, transparent 70%)',
+    }}
+    animate={{
+      scale: [1, 1.2, 1],
+      opacity: [0.2, 0.4, 0.2],
+    }}
+    transition={{
+      duration: 6,
+      repeat: Infinity,
+      delay,
+      ease: "easeInOut",
+    }}
+  />
+);
 
 export default function PricingPage() {
   const [billingCycle, setBillingCycle] = useState('monthly');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const plans = [
     {
@@ -16,11 +45,11 @@ export default function PricingPage() {
       period: 'for 14 days',
       cta: 'Start Free Trial',
       icon: Zap,
-      color: 'from-orange-400 to-orange-600',
+      color: 'from-[#f46530] to-[#c14f22]',
       features: [
         { name: 'Full Pro features', included: true },
         { name: 'Agent live for trial period', included: true },
-        { name: 'Credit card required', included: false },
+        { name: 'Credit card required', included: true },
         { name: 'Auto-upgrade after trial', included: true },
       ],
       highlight: true,
@@ -32,7 +61,7 @@ export default function PricingPage() {
       period: billingCycle === 'monthly' ? '/month' : '/year (Save 22%)',
       cta: 'Upgrade Now',
       icon: Crown,
-      color: 'from-emerald-400 to-emerald-600',
+      color: 'from-emerald-500 to-emerald-600',
       features: [
         { name: 'Agent live 24/7', included: true },
         { name: '2,000 messages/month', included: true },
@@ -50,7 +79,7 @@ export default function PricingPage() {
       period: billingCycle === 'monthly' ? '/month' : '/year (Save 21%)',
       cta: 'Upgrade Now',
       icon: Crown,
-      color: 'from-purple-400 to-purple-600',
+      color: 'from-purple-500 to-purple-600',
       features: [
         { name: 'Agent live 24/7', included: true },
         { name: '10,000 messages/month', included: true },
@@ -66,45 +95,115 @@ export default function PricingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950">
-      {/* Navigation */}
-      <nav className="bg-stone-900/80 backdrop-blur-lg border-b border-stone-800 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <Image width={140} height={40} src="/assets/logoWhite.svg" alt="qlynk logo" priority />
-          </Link>
-          <Link href="/auth/login" className="text-gray-300 hover:text-orange-500 font-semibold transition-colors">
-            Sign In
-          </Link>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-gray-900 relative overflow-hidden">
+      {/* Background effects matching home page */}
+      <QlynkBackground />
+      
+      {/* Animated Floating Orbs */}
+      <GlowingOrb top="10%" left="5%" size={400} color="orange" delay={0} />
+      <GlowingOrb top="60%" left="80%" size={500} color="teal" delay={1} />
+      <GlowingOrb top="80%" left="20%" size={300} color="orange" delay={2} />
 
-      {/* Animated orbs */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl animate-pulse" />
-      </div>
+      {/* Navigation - matching home page */}
+      <motion.nav
+        className="fixed top-0 w-full z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-700"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <Link href="/" className="flex items-center justify-center h-16 group">
+                <Image
+                  src="/logoWhite.svg"
+                  alt="qlynk logo"
+                  width={125}
+                  height={50}
+                  priority
+                  className="group-hover:scale-105 transition-transform"
+                />
+              </Link>
+            </div>
+
+            <div className="hidden md:flex items-center space-x-6">
+              <Link href="/pricing" className="text-[#f46530] font-medium transition-colors">Pricing</Link>
+              <Link href="/auth/login" className="text-gray-300 hover:text-[#f46530] font-medium transition-colors">Log in</Link>
+              <motion.a
+                href="/auth/signup"
+                className="bg-[#f46530] hover:bg-[#c14f22] text-white px-6 py-2.5 rounded-lg font-bold shadow-sm hover:shadow-md transition-all"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Get Started
+              </motion.a>
+            </div>
+
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden text-gray-300 hover:text-[#f46530] p-2"
+            >
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              className="md:hidden bg-gray-800 border-t border-gray-700"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="px-4 py-3 space-y-2">
+                <Link href="/pricing" className="block px-3 py-2 text-[#f46530]">Pricing</Link>
+                <Link href="/auth/login" className="block px-3 py-2 text-gray-300">Log in</Link>
+                <Link
+                  href="/auth/signup"
+                  className="block bg-[#f46530] text-white text-center px-4 py-2.5 rounded-lg font-medium mt-1"
+                >
+                  Get Started
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
 
       {/* Content */}
-      <div className="relative z-10">
+      <div className="relative z-10 pt-24">
         {/* Header */}
-        <div className="pt-20 pb-16 text-center">
-          <h1 className="text-5xl md:text-6xl font-black text-transparent bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text mb-6">
-            Simple, Transparent Pricing
+        <motion.div 
+          className="pt-16 pb-12 text-center px-4"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="text-5xl md:text-6xl font-black text-white mb-6">
+            Simple, <span className="text-[#f46530]">Transparent</span> Pricing
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Start with a free 14-day trial. No credit card needed to explore. Upgrade anytime to go live.
+            Start with a free 14-day trial. Credit card required. Upgrade anytime to go live.
           </p>
-        </div>
+        </motion.div>
 
         {/* Billing Toggle */}
-        <div className="flex justify-center mb-16">
-          <div className="inline-flex rounded-full bg-stone-800/50 backdrop-blur-sm border border-stone-700 p-1">
+        <motion.div 
+          className="flex justify-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <div className="inline-flex rounded-full bg-gray-800/50 backdrop-blur-sm border border-gray-700 p-1">
             <button
               onClick={() => setBillingCycle('monthly')}
               className={`px-6 py-2 rounded-full font-semibold transition-all ${
                 billingCycle === 'monthly'
-                  ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white'
+                  ? 'bg-[#f46530] text-white'
                   : 'text-gray-400 hover:text-gray-300'
               }`}
             >
@@ -114,33 +213,36 @@ export default function PricingPage() {
               onClick={() => setBillingCycle('annual')}
               className={`px-6 py-2 rounded-full font-semibold transition-all ${
                 billingCycle === 'annual'
-                  ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white'
+                  ? 'bg-[#f46530] text-white'
                   : 'text-gray-400 hover:text-gray-300'
               }`}
             >
               Annual (Save 21%)
             </button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Pricing Cards */}
-        <div className="max-w-7xl mx-auto px-4 mb-20">
+        <div className="max-w-7xl mx-auto px-4 mb-24">
           <div className="grid md:grid-cols-3 gap-8">
-            {plans.map((plan) => {
+            {plans.map((plan, index) => {
               const Icon = plan.icon;
               return (
-                <div
+                <motion.div
                   key={plan.name}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
                   className={`relative rounded-2xl backdrop-blur-sm transition-all duration-300 ${
                     plan.highlight
-                      ? 'md:scale-105 border-2 border-orange-500/50 bg-gradient-to-br from-orange-500/10 to-orange-600/10'
-                      : 'border border-stone-700 bg-stone-900/50 hover:border-stone-600'
+                      ? 'md:scale-105 border-2 border-[#f46530]/50 bg-gradient-to-br from-[#f46530]/10 to-[#c14f22]/10'
+                      : 'border border-gray-700 bg-gray-800/50 hover:border-gray-600'
                   }`}
                 >
                   {/* Badge */}
                   {plan.highlight && (
                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                      <span className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-1 rounded-full text-sm font-bold">
+                      <span className="bg-[#f46530] text-white px-4 py-1 rounded-full text-sm font-bold">
                         Most Popular
                       </span>
                     </div>
@@ -160,7 +262,7 @@ export default function PricingPage() {
                     <div className="mb-8">
                       <div className="text-4xl font-black text-white">
                         {plan.price}
-                        <span className="text-lg text-gray-400 font-normal">{plan.period}</span>
+                        <span className="text-lg text-gray-400 font-normal"> {plan.period}</span>
                       </div>
                     </div>
 
@@ -169,8 +271,8 @@ export default function PricingPage() {
                       href="/auth/signup"
                       className={`w-full block text-center py-3 rounded-lg font-bold transition-all mb-8 ${
                         plan.highlight
-                          ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:shadow-orange-500/50'
-                          : 'bg-stone-800 text-white hover:bg-stone-700'
+                          ? 'bg-[#f46530] hover:bg-[#c14f22] text-white shadow-lg shadow-[#f46530]/30 hover:shadow-[#f46530]/50'
+                          : 'bg-gray-700 text-white hover:bg-gray-600'
                       }`}
                     >
                       {plan.cta}
@@ -181,7 +283,7 @@ export default function PricingPage() {
                       {plan.features.map((feature, i) => (
                         <div key={i} className="flex items-start gap-3">
                           {feature.included ? (
-                            <Check className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" />
+                            <Check className="w-5 h-5 text-[#2AB59E] flex-shrink-0 mt-0.5" />
                           ) : (
                             <X className="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5" />
                           )}
@@ -192,20 +294,27 @@ export default function PricingPage() {
                       ))}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
         </div>
 
         {/* FAQ */}
-        <div className="max-w-3xl mx-auto px-4 mb-20">
-          <h2 className="text-3xl font-black text-white mb-12 text-center">Questions?</h2>
+        <motion.div 
+          className="max-w-3xl mx-auto px-4 mb-24"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <h2 className="text-3xl font-black text-white mb-12 text-center">
+            Frequently Asked <span className="text-[#f46530]">Questions</span>
+          </h2>
           <div className="space-y-6">
             {[
               {
                 q: 'Do I need a credit card for the free trial?',
-                a: 'Yes, a valid credit card is required. We won\'t charge you during the trial period. Your trial automatically upgrades to Creator plan after 14 days.',
+                a: "Yes, a valid credit card is required. We won't charge you during the trial period. Your trial automatically upgrades to Creator plan after 14 days.",
               },
               {
                 q: 'What happens when my trial expires?',
@@ -217,27 +326,48 @@ export default function PricingPage() {
               },
               {
                 q: 'What if I exceed my message limit?',
-                a: 'We\'ll notify you when you\'re approaching your limit. You can upgrade anytime to get more messages.',
+                a: "We'll notify you when you're approaching your limit. You can upgrade anytime to get more messages.",
               },
             ].map((faq, i) => (
-              <div key={i} className="bg-stone-800/50 backdrop-blur-sm border border-stone-700 rounded-xl p-6">
+              <motion.div 
+                key={i} 
+                className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.7 + i * 0.1 }}
+              >
                 <h3 className="text-lg font-bold text-white mb-2">{faq.q}</h3>
                 <p className="text-gray-400">{faq.a}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Footer CTA */}
-        <div className="text-center pb-20">
+        <motion.div 
+          className="text-center pb-20 px-4"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+        >
           <p className="text-gray-400 mb-6">Ready to build your Q-Agent?</p>
-          <Link
+          <motion.a
             href="/auth/signup"
-            className="inline-block bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-lg font-bold hover:shadow-lg hover:shadow-orange-500/50 transition-all"
+            className="inline-flex items-center gap-2 bg-[#f46530] hover:bg-[#c14f22] text-white px-8 py-4 rounded-lg font-bold shadow-lg shadow-[#f46530]/30 hover:shadow-[#f46530]/50 transition-all"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
           >
             Start Your Free Trial
-          </Link>
-        </div>
+            <ArrowRight size={20} />
+          </motion.a>
+        </motion.div>
+
+        {/* Footer */}
+        <footer className="border-t border-gray-700 bg-gray-900/80 backdrop-blur-md">
+          <div className="max-w-7xl mx-auto px-4 py-8 text-center">
+            <p className="text-gray-400">© 2025 qlynk. Your AI ambassador, always on.</p>
+          </div>
+        </footer>
       </div>
     </div>
   );
