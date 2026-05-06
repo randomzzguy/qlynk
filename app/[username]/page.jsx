@@ -2,6 +2,7 @@ import { createClient } from '@/utils/supabase/server';
 import { THEMES } from '@/lib/themeRegistry';
 import Link from 'next/link';
 import { Sparkles, ArrowRight } from 'lucide-react';
+import ChatWidget from '@/components/ChatWidget';
 
 // This tells Next.js to generate pages dynamically
 export const dynamic = 'force-dynamic';
@@ -99,5 +100,27 @@ export default async function PublicPage({ params }) {
     customLinks: page.custom_links || []
   };
 
-  return <ThemeComponent data={componentData} />;
+  // Fetch agent config for chat widget
+  const { data: agentConfig } = await supabase
+    .from('agent_configs')
+    .select('*')
+    .eq('user_id', profile.id)
+    .eq('is_enabled', true)
+    .single();
+
+  return (
+    <>
+      <ThemeComponent data={componentData} />
+      {agentConfig && (
+        <ChatWidget 
+          username={username}
+          agentName={agentConfig.agent_name}
+          agentAvatar={agentConfig.agent_avatar}
+          welcomeMessage={agentConfig.welcome_message}
+          primaryColor={agentConfig.primary_color}
+          position={agentConfig.position}
+        />
+      )}
+    </>
+  );
 }
