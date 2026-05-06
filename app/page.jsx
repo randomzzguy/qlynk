@@ -558,7 +558,7 @@ const AboutUs = () => {
               WHO WE ARE
             </div>
             <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">
-              Empowering your digital <span className="text-orange">identity</span> since 2024.
+              Empowering your digital <span className="text-orange">identity</span> since 2025.
             </h2>
             <p className="text-xl text-gray-300 leading-relaxed">
               Qlynk started with a simple idea: why is it so hard to make a personal page that looks professional and works perfectly on mobile? We removed the friction and kept the magic.
