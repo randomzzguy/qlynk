@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Zap, Palette, Shield, BarChart3, Sparkles, ChevronUp, Users, Heart, Target } from 'lucide-react';
+import { ArrowRight, Bot, Sparkles, Brain, MessageSquare, Zap, Shield, BarChart3, ChevronUp, Users, Heart, Target } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import QlynkBackground from '@/components/QlynkBackground';
 
@@ -34,133 +34,76 @@ const GlowingOrb = ({ top, left, size = 300, color = 'orange', delay = 0 }) => (
   />
 );
 
-// ====== Slot Machine Hero Component ======
-const SlotMachineHero = () => {
-  const names = ['Alex', 'Maya', 'Jordan', 'Riley', 'Sam', 'Taylor', 'Casey', 'Morgan'];
-  const styles = [
-    { name: 'QuickPitch', icon: '⚡' },
-    { name: 'MinimalistCV', icon: '📄' },
-    { name: 'GalleryGrid', icon: '🎨' },
-    { name: 'LaunchPad', icon: '🚀' },
-    { name: 'LocalBiz', icon: '🏪' },
-    { name: 'EcoBrand', icon: '🌿' },
-    { name: 'MotionReel', icon: '🎬' },
-    { name: 'SkillStack', icon: '🛠️' }
-  ];
-  const professions = ['Designer', 'Developer', 'Artist', 'Writer', 'Founder', 'Creator', 'Musician', 'Coach'];
+// ====== AI Agent Demo Hero Component ======
+const AgentDemoHero = () => {
+  const [currentMessage, setCurrentMessage] = useState(0);
+  const [isTyping, setIsTyping] = useState(false);
+  const [displayedResponse, setDisplayedResponse] = useState('');
 
-  const [reel1Index, setReel1Index] = useState(0);
-  const [reel2Index, setReel2Index] = useState(0);
-  const [reel3Index, setReel3Index] = useState(0);
-  const [counter, setCounter] = useState(10247);
-  const [isSpinning, setIsSpinning] = useState(false);
-
-  const themeStyles = {
-    QuickPitch: {
-      bg: "bg-gradient-to-br from-indigo-900 to-purple-800",
-      text: "text-white",
-      subtext: "text-indigo-200",
-      button: "bg-yellow-400 text-indigo-900 hover:bg-yellow-300 rounded-lg",
-      card: "bg-white/10 border-white/20 text-white",
-      align: "text-center items-center",
-      grid: "grid-cols-1"
+  const conversations = [
+    {
+      question: "What does Sarah specialize in?",
+      answer: "Sarah is a full-stack developer with 5+ years of experience in React, Node.js, and cloud architecture. She's particularly passionate about building scalable SaaS products.",
+      name: "Sarah Chen",
+      role: "Full-Stack Developer"
     },
-    MinimalistCV: {
-      bg: "bg-white",
-      text: "text-gray-900",
-      subtext: "text-gray-500",
-      button: "bg-black text-white hover:bg-gray-800 rounded-none",
-      card: "bg-transparent border-l-2 border-gray-200 pl-4 hover:border-black text-gray-900",
-      align: "text-left items-start",
-      grid: "grid-cols-1"
+    {
+      question: "Can I book a consultation with Alex?",
+      answer: "Absolutely! Alex offers free 30-minute discovery calls. You can book directly at calendly.com/alex-design or I can share his availability for this week.",
+      name: "Alex Rivera",
+      role: "UX Designer"
     },
-    GalleryGrid: {
-      bg: "bg-stone-900",
-      text: "text-stone-100",
-      subtext: "text-stone-400",
-      button: "bg-white text-stone-900 hover:bg-stone-200 rounded-full",
-      card: "bg-stone-800 aspect-video flex items-center justify-center border border-stone-700 hover:border-white text-stone-300",
-      align: "text-center items-center",
-      grid: "grid-cols-2"
-    },
-    LaunchPad: {
-      bg: "bg-gradient-to-br from-blue-600 to-cyan-500",
-      text: "text-white",
-      subtext: "text-blue-100",
-      button: "bg-white text-blue-600 shadow-lg hover:bg-blue-50 rounded-xl",
-      card: "bg-white/20 backdrop-blur-sm border border-white/30 text-white",
-      align: "text-center items-center",
-      grid: "grid-cols-1"
-    },
-    LocalBiz: {
-      bg: "bg-amber-50",
-      text: "text-amber-900",
-      subtext: "text-amber-700",
-      button: "bg-amber-600 text-white hover:bg-amber-700 rounded-md shadow-md",
-      card: "bg-white border border-amber-200 shadow-sm hover:shadow-md text-amber-900",
-      align: "text-center items-center",
-      grid: "grid-cols-1"
-    },
-    EcoBrand: {
-      bg: "bg-emerald-50",
-      text: "text-emerald-900",
-      subtext: "text-emerald-700",
-      button: "bg-emerald-600 text-white hover:bg-emerald-700 rounded-full shadow-lg shadow-emerald-600/20",
-      card: "bg-white border border-emerald-100 shadow-sm rounded-2xl text-emerald-900",
-      align: "text-center items-center",
-      grid: "grid-cols-1"
-    },
-    MotionReel: {
-      bg: "bg-zinc-950",
-      text: "text-white",
-      subtext: "text-zinc-400",
-      button: "bg-red-600 text-white hover:bg-red-700 uppercase tracking-widest rounded-sm",
-      card: "bg-zinc-900 border border-zinc-800 hover:border-red-600/50 text-zinc-300",
-      align: "text-center items-center",
-      grid: "grid-cols-1"
-    },
-    SkillStack: {
-      bg: "bg-slate-900",
-      text: "text-slate-200",
-      subtext: "text-slate-400 font-mono",
-      button: "bg-transparent border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900 font-mono rounded",
-      card: "bg-slate-800/50 border border-slate-700 font-mono text-sm text-slate-300",
-      align: "text-left items-start",
-      grid: "grid-cols-2"
+    {
+      question: "What projects has Jordan worked on?",
+      answer: "Jordan has led development on 3 successful startups, including a fintech app with 50k+ users and an AI-powered analytics platform. Check out the portfolio section for case studies!",
+      name: "Jordan Kim",
+      role: "Startup Founder"
     }
-  };
+  ];
 
-  const activeTheme = themeStyles[styles[reel2Index].name] || themeStyles.QuickPitch;
+  const currentConvo = conversations[currentMessage];
 
-  const spinTimeoutRef = useRef(null);
-
-  const spin = () => {
-    if (isSpinning) return;
-
-    setIsSpinning(true);
-
-    // Update counter with animation
-    setCounter(prev => prev + 1);
-
-    // Generate new random indices
-    const newIdx1 = Math.floor(Math.random() * names.length);
-    const newIdx2 = Math.floor(Math.random() * styles.length);
-    const newIdx3 = Math.floor(Math.random() * professions.length);
-
-    // Animate reels with staggered timing
-    setTimeout(() => setReel1Index(newIdx1), 100);
-    setTimeout(() => setReel2Index(newIdx2), 600);
-    setTimeout(() => setReel3Index(newIdx3), 1100);
-
-    // Reset spinning state after animation
-    if (spinTimeoutRef.current) clearTimeout(spinTimeoutRef.current);
-    spinTimeoutRef.current = setTimeout(() => setIsSpinning(false), 2000);
-  };
-
-  // Cleanup timeout on unmount
   useEffect(() => {
+    const cycleMessages = setInterval(() => {
+      setIsTyping(true);
+      setDisplayedResponse('');
+      
+      // Simulate typing effect
+      let charIndex = 0;
+      const typingInterval = setInterval(() => {
+        if (charIndex < conversations[currentMessage].answer.length) {
+          setDisplayedResponse(conversations[currentMessage].answer.slice(0, charIndex + 1));
+          charIndex++;
+        } else {
+          clearInterval(typingInterval);
+          setIsTyping(false);
+          
+          // Wait before next message
+          setTimeout(() => {
+            setCurrentMessage((prev) => (prev + 1) % conversations.length);
+          }, 3000);
+        }
+      }, 20);
+
+      return () => clearInterval(typingInterval);
+    }, 8000);
+
+    // Trigger initial typing
+    setIsTyping(true);
+    let charIndex = 0;
+    const initialTyping = setInterval(() => {
+      if (charIndex < currentConvo.answer.length) {
+        setDisplayedResponse(currentConvo.answer.slice(0, charIndex + 1));
+        charIndex++;
+      } else {
+        clearInterval(initialTyping);
+        setIsTyping(false);
+      }
+    }, 20);
+
     return () => {
-      if (spinTimeoutRef.current) clearTimeout(spinTimeoutRef.current);
+      clearInterval(cycleMessages);
+      clearInterval(initialTyping);
     };
   }, []);
 
@@ -176,14 +119,13 @@ const SlotMachineHero = () => {
             transition={{ duration: 0.5 }}
           >
             <motion.span
-              className="text-xl"
               animate={{ rotate: [0, 10, -10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              ✨
+              <Bot size={20} className="text-[#f46530]" />
             </motion.span>
             <span className="text-sm font-bold tracking-wide text-[#f46530]">
-              YOUR PRESENCE, IN A BLINK
+              THE AGENTIC HUB
             </span>
           </motion.div>
 
@@ -193,7 +135,7 @@ const SlotMachineHero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Spin to see what <span className="bg-gradient-to-r from-[#f46530] to-[#c14f22] bg-clip-text text-transparent">you could build</span>
+            Your Personal <span className="bg-gradient-to-r from-[#f46530] to-[#c14f22] bg-clip-text text-transparent">AI Ambassador</span>
           </motion.h1>
 
           <motion.p
@@ -202,142 +144,48 @@ const SlotMachineHero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            Every spin is a real portfolio you could create in minutes. No two are the same. Find your inspiration.
+            Create an AI agent that knows everything about you. Let visitors chat with your digital twin 24/7 while you focus on what matters.
           </motion.p>
         </div>
 
-        {/* Main Content: Slot Machine + Live Preview */}
+        {/* Main Content: Description + Live Demo */}
         <div className="grid lg:grid-cols-2 gap-8 items-start">
-          {/* Left Column */}
+          {/* Left Column - Value Props */}
           <div className="space-y-8">
-            {/* Left: Slot Machine */}
             <motion.div
               className="p-8 rounded-3xl bg-gray-800/50 relative overflow-hidden"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.6 }}
             >
-              {/* Glow effect on hover */}
-              <motion.div
-                className="absolute inset-0 rounded-3xl bg-[#f46530]/20 opacity-0"
-                whileHover={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              />
-
-              <div className="grid grid-cols-3 gap-6 mb-8 relative z-10">
-                {/* Name Reel */}
-                <div className="space-y-3">
-                  <div className="text-center text-sm font-bold text-gray-400">
-                    NAME
+              <div className="space-y-6 relative z-10">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-[#f46530]/20 flex items-center justify-center text-[#f46530] shrink-0">
+                    <Brain size={24} />
                   </div>
-                  <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
-                    <motion.div
-                      className="text-4xl font-bold text-white"
-                      key={`name-${reel1Index}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {names[reel1Index]}
-                    </motion.div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2">Train Your Agent</h3>
+                    <p className="text-gray-400">Upload your bio, resume, projects, and expertise. Your Q-Agent learns everything about you.</p>
                   </div>
                 </div>
 
-                {/* Style Reel */}
-                <div className="space-y-3">
-                  <div className="text-center text-sm font-bold text-gray-400">
-                    STYLE
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-[#f46530]/20 flex items-center justify-center text-[#f46530] shrink-0">
+                    <MessageSquare size={24} />
                   </div>
-                  <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
-                    <motion.div
-                      className="text-center"
-                      key={`style-${reel2Index}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <div className="text-3xl mb-1">{styles[reel2Index].icon}</div>
-                      <div className="text-base font-bold text-white">{styles[reel2Index].name}</div>
-                    </motion.div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2">24/7 Conversations</h3>
+                    <p className="text-gray-400">Visitors can ask questions, request info, or book meetings - your agent handles it all.</p>
                   </div>
                 </div>
 
-                {/* Profession Reel */}
-                <div className="space-y-3">
-                  <div className="text-center text-sm font-bold text-gray-400">
-                    FOR
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-[#f46530]/20 flex items-center justify-center text-[#f46530] shrink-0">
+                    <BarChart3 size={24} />
                   </div>
-                  <div className="reel-container rounded-2xl border-2 border-gray-700 bg-gray-900/50 h-32 flex items-center justify-center">
-                    <motion.div
-                      className="text-2xl font-bold text-white"
-                      key={`prof-${reel3Index}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {professions[reel3Index]}
-                    </motion.div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="text-center space-y-6 relative z-10">
-                <motion.button
-                  className="px-12 py-5 rounded-xl text-xl font-black bg-[#f46530] text-white shadow-lg shadow-[#f46530]/30 relative overflow-hidden"
-                  onClick={spin}
-                  disabled={isSpinning}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.8 }}
-                >
-                  <span className="relative z-10">🎰 SPIN THE WHEEL</span>
-                </motion.button>
-                <div className="text-sm text-gray-400">
-                  Click to see another combination
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Live Counter */}
-            <motion.div
-              className="text-center space-y-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1 }}
-            >
-              <div className="inline-flex items-center gap-4 px-8 py-4 rounded-2xl bg-gray-800/50 w-full justify-center">
-                <div className="relative">
-                  <motion.div
-                    className="absolute inset-0 rounded-full bg-[#f46530]"
-                    animate={{
-                      scale: [0.8, 1.2, 0.8],
-                      opacity: [1, 0.5, 0]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeOut"
-                    }}
-                  />
-                  <div className="w-4 h-4 rounded-full relative z-10 bg-[#f46530]"></div>
-                </div>
-                <div>
-                  <motion.div
-                    className="text-4xl font-black text-[#f46530]"
-                    key={counter}
-                    initial={{ scale: 1.2 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {counter.toLocaleString()}
-                  </motion.div>
-                  <div className="text-sm text-gray-400">
-                    portfolios created today
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2">Track Everything</h3>
+                    <p className="text-gray-400">See what visitors ask, popular topics, and conversation insights in your dashboard.</p>
                   </div>
                 </div>
               </div>
@@ -351,31 +199,31 @@ const SlotMachineHero = () => {
               transition={{ duration: 0.5, delay: 1.2 }}
             >
               <motion.a
-                href="/create"
+                href="/auth/signup"
                 className="px-12 py-6 rounded-xl text-xl font-bold bg-[#f46530] text-white shadow-lg shadow-[#f46530]/30 inline-block w-full"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Start Building Yours Free
+                Create Your Q-Agent Free
               </motion.a>
               <div className="flex items-center justify-center gap-6 text-sm flex-wrap text-gray-400">
                 <div className="flex items-center gap-2">
-                  <span className="text-lg text-[#f46530]">✓</span>
+                  <span className="text-lg text-[#f46530]">&#10003;</span>
+                  <span>14-day free trial</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-lg text-[#f46530]">&#10003;</span>
                   <span>No credit card</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-lg text-[#f46530]">✓</span>
-                  <span>3 min setup</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-lg text-[#f46530]">✓</span>
-                  <span>Free forever</span>
+                  <span className="text-lg text-[#f46530]">&#10003;</span>
+                  <span>5 min setup</span>
                 </div>
               </div>
             </motion.div>
           </div>
 
-          {/* Right: Live Preview */}
+          {/* Right: Live Agent Demo */}
           <motion.div
             className="lg:sticky lg:top-24"
             initial={{ opacity: 0, x: 50 }}
@@ -385,16 +233,16 @@ const SlotMachineHero = () => {
             <div className="mb-4 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#f46530]/10 border border-[#f46530]/20 text-[#f46530] font-bold text-sm">
                 <Sparkles size={16} />
-                LIVE PREVIEW
+                LIVE DEMO
               </div>
             </div>
 
             <motion.div
               className="rounded-3xl bg-white shadow-2xl overflow-hidden border-4 border-gray-700"
-              key={`preview-${reel1Index}-${reel2Index}-${reel3Index}`}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
+              key={currentMessage}
+              initial={{ opacity: 0.8 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
             >
               {/* Mock Browser Header */}
               <div className="bg-gray-800 px-4 py-3 flex items-center gap-2 border-b-2 border-gray-700">
@@ -404,81 +252,69 @@ const SlotMachineHero = () => {
                   <div className="w-3 h-3 rounded-full bg-green-500"></div>
                 </div>
                 <div className="flex-1 mx-4 bg-gray-700 rounded px-3 py-1 text-xs text-gray-400 font-mono">
-                  qlynk.site/{names[reel1Index].toLowerCase()}
+                  qlynk.site/{currentConvo.name.split(' ')[0].toLowerCase()}
                 </div>
               </div>
 
-              {/* Mock Webpage Content */}
-              <div className={`p-8 min-h-[500px] transition-colors duration-500 ${activeTheme.bg} flex flex-col ${activeTheme.align}`}>
-                {/* Profile Section */}
-                <motion.div
-                  className={`mb-8 w-full flex flex-col ${activeTheme.align}`}
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  <div className={`w-24 h-24 mb-4 rounded-full bg-gradient-to-br from-[#f46530] to-[#c14f22] flex items-center justify-center text-4xl shadow-lg ${activeTheme.align === 'text-left items-start' ? '' : 'mx-auto'}`}>
-                    {styles[reel2Index].icon}
+              {/* Chat Demo Content */}
+              <div className="bg-gradient-to-br from-gray-900 to-gray-800 p-6 min-h-[480px] flex flex-col">
+                {/* Profile Header */}
+                <div className="flex items-center gap-4 mb-6 pb-4 border-b border-gray-700">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#f46530] to-[#c14f22] flex items-center justify-center text-2xl text-white font-bold">
+                    {currentConvo.name.split(' ').map(n => n[0]).join('')}
                   </div>
-                  <h1 className={`text-3xl font-black mb-2 ${activeTheme.text}`}>
-                    {names[reel1Index]}
-                  </h1>
-                  <p className={`text-lg font-semibold ${activeTheme.text} opacity-90`}>
-                    {professions[reel3Index]}
-                  </p>
-                  <p className={`text-sm mt-2 max-w-md ${activeTheme.subtext} ${activeTheme.align === 'text-left items-start' ? '' : 'mx-auto'}`}>
-                    Passionate {professions[reel3Index].toLowerCase()} creating amazing experiences
-                  </p>
-                </motion.div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white">{currentConvo.name}</h3>
+                    <p className="text-gray-400">{currentConvo.role}</p>
+                  </div>
+                </div>
 
-                {/* CTA Button */}
-                <motion.div
-                  className={`mb-8 w-full ${activeTheme.align === 'text-left items-start' ? 'text-left' : 'text-center'}`}
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  <button className={`px-8 py-3 font-bold transition-all shadow-md ${activeTheme.button}`}>
-                    Get In Touch
-                  </button>
-                </motion.div>
-
-                {/* Social Links */}
-                <motion.div
-                  className={`flex gap-4 mb-8 w-full ${activeTheme.align === 'text-left items-start' ? 'justify-start' : 'justify-center'}`}
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                >
-                  {['LinkedIn', 'Twitter', 'GitHub'].map((platform, i) => (
-                    <div
-                      key={i}
-                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors cursor-pointer ${activeTheme.text === 'text-white' ? 'bg-white/10 hover:bg-white/20 text-white' : 'bg-black/5 hover:bg-black/10 text-gray-900'}`}
-                    >
-                      <span className="text-xs font-bold">{platform[0]}</span>
+                {/* Chat Messages */}
+                <div className="flex-1 space-y-4 overflow-hidden">
+                  {/* User Message */}
+                  <motion.div
+                    className="flex justify-end"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <div className="bg-[#f46530] text-white px-4 py-3 rounded-2xl rounded-tr-md max-w-[80%]">
+                      <p className="text-sm">{currentConvo.question}</p>
                     </div>
-                  ))}
-                </motion.div>
+                  </motion.div>
 
-                {/* Sample Links */}
-                <motion.div
-                  className={`w-full grid gap-4 ${activeTheme.grid} ${activeTheme.align === 'text-left items-start' ? '' : 'max-w-md mx-auto'}`}
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                >
-                  {['Portfolio', 'Blog', 'Contact'].map((link, i) => (
-                    <div
-                      key={i}
-                      className={`p-4 transition-colors cursor-pointer ${activeTheme.card}`}
-                    >
-                      <div className={`font-bold ${activeTheme.text}`}>{link}</div>
-                      <div className={`text-xs mt-1 opacity-70 ${activeTheme.text}`}>
-                        Check out my {link.toLowerCase()}
+                  {/* Agent Response */}
+                  <motion.div
+                    className="flex justify-start"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <div className="bg-gray-700 text-white px-4 py-3 rounded-2xl rounded-tl-md max-w-[85%]">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Bot size={16} className="text-[#f46530]" />
+                        <span className="text-xs font-semibold text-[#f46530]">Q-Agent</span>
                       </div>
+                      <p className="text-sm leading-relaxed">
+                        {displayedResponse}
+                        {isTyping && <span className="inline-block w-1 h-4 bg-[#f46530] ml-1 animate-pulse"></span>}
+                      </p>
                     </div>
-                  ))}
-                </motion.div>
+                  </motion.div>
+                </div>
+
+                {/* Chat Input Mock */}
+                <div className="mt-4 flex items-center gap-2 bg-gray-700/50 rounded-xl p-2">
+                  <input
+                    type="text"
+                    placeholder="Ask me anything..."
+                    className="flex-1 bg-transparent text-white text-sm px-3 py-2 outline-none placeholder-gray-500"
+                    disabled
+                  />
+                  <button className="bg-[#f46530] text-white p-2 rounded-lg">
+                    <ArrowRight size={18} />
+                  </button>
+                </div>
               </div>
             </motion.div>
 
@@ -488,14 +324,12 @@ const SlotMachineHero = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
             >
-              This could be your page in 2 minutes ✨
+              This could be your AI agent in 5 minutes
             </motion.p>
           </motion.div>
         </div>
 
-
-
-        {/* Example Cards */}
+        {/* Use Case Cards */}
         <motion.div
           className="grid sm:grid-cols-3 gap-6 pt-8"
           initial={{ opacity: 0, y: 20 }}
@@ -506,27 +340,27 @@ const SlotMachineHero = () => {
             className="p-6 rounded-2xl border border-gray-700 bg-gray-800/50 hover:border-[#f46530] transition-all duration-300"
             whileHover={{ y: -5 }}
           >
-            <div className="text-3xl mb-3">🎨</div>
-            <div className="font-bold mb-2 text-white">Creative Portfolio</div>
-            <div className="text-sm text-gray-400">Perfect for designers & artists</div>
+            <div className="text-3xl mb-3"><Bot /></div>
+            <div className="font-bold mb-2 text-white">Freelancers</div>
+            <div className="text-sm text-gray-400">Let clients learn about your services 24/7</div>
           </motion.div>
 
           <motion.div
             className="p-6 rounded-2xl border border-gray-700 bg-gray-800/50 hover:border-[#f46530] transition-all duration-300"
             whileHover={{ y: -5 }}
           >
-            <div className="text-3xl mb-3">💼</div>
-            <div className="font-bold mb-2 text-white">Professional Resume</div>
-            <div className="text-sm text-gray-400">Ideal for job seekers</div>
+            <div className="text-3xl mb-3"><Users /></div>
+            <div className="font-bold mb-2 text-white">Founders</div>
+            <div className="text-sm text-gray-400">Answer investor and customer questions automatically</div>
           </motion.div>
 
           <motion.div
             className="p-6 rounded-2xl border border-gray-700 bg-gray-800/50 hover:border-[#f46530] transition-all duration-300"
             whileHover={{ y: -5 }}
           >
-            <div className="text-3xl mb-3">🚀</div>
-            <div className="font-bold mb-2 text-white">Startup Landing</div>
-            <div className="text-sm text-gray-400">Great for entrepreneurs</div>
+            <div className="text-3xl mb-3"><Sparkles /></div>
+            <div className="font-bold mb-2 text-white">Creators</div>
+            <div className="text-sm text-gray-400">Engage your audience with personalized AI interactions</div>
           </motion.div>
         </motion.div>
       </div>
@@ -537,9 +371,9 @@ const SlotMachineHero = () => {
 // ====== About Us Section ======
 const AboutUs = () => {
   const values = [
-    { icon: Users, title: "Our Community", desc: "Built for creators, by creators. We're a growing community of 15,000+ users." },
-    { icon: Heart, title: "Our Passion", desc: "We believe everyone deserves a beautiful online home without the complexity." },
-    { icon: Target, title: "Our Mission", desc: "To provide the simplest and fastest way to build your professional presence." }
+    { icon: Users, title: "Our Community", desc: "Built for creators, founders, and professionals who want to scale their personal presence." },
+    { icon: Heart, title: "Our Passion", desc: "We believe everyone deserves an AI that represents them authentically online." },
+    { icon: Target, title: "Our Mission", desc: "To give everyone the power of 24/7 personal representation through intelligent AI agents." }
   ];
 
   return (
@@ -558,23 +392,23 @@ const AboutUs = () => {
               WHO WE ARE
             </div>
             <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">
-              Empowering your digital <span className="text-orange">identity</span> since 2025.
+              Pioneering the future of <span className="text-orange">personal AI</span>
             </h2>
             <p className="text-xl text-gray-300 leading-relaxed">
-              Qlynk started with a simple idea: why is it so hard to make a personal page that looks professional and works perfectly on mobile? We removed the friction and kept the magic.
+              Qlynk started with a vision: what if you could clone your expertise into an AI that works for you around the clock? We made it real with Q-Agent - your intelligent digital ambassador.
             </p>
             <div className="grid sm:grid-cols-3 gap-6 pt-4">
               <div className="text-center p-4 rounded-2xl bg-gray-800/40 border border-gray-700">
-                <div className="text-3xl font-black text-orange mb-1">100%</div>
-                <div className="text-xs text-gray-400 font-bold uppercase tracking-wider">User Focused</div>
+                <div className="text-3xl font-black text-orange mb-1">AI</div>
+                <div className="text-xs text-gray-400 font-bold uppercase tracking-wider">Powered</div>
               </div>
               <div className="text-center p-4 rounded-2xl bg-gray-800/40 border border-gray-700">
                 <div className="text-3xl font-black text-orange mb-1">24/7</div>
-                <div className="text-xs text-gray-400 font-bold uppercase tracking-wider">Speed Optimized</div>
+                <div className="text-xs text-gray-400 font-bold uppercase tracking-wider">Available</div>
               </div>
               <div className="text-center p-4 rounded-2xl bg-gray-800/40 border border-gray-700">
-                <div className="text-3xl font-black text-orange mb-1">Free</div>
-                <div className="text-xs text-gray-400 font-bold uppercase tracking-wider">Forever Policy</div>
+                <div className="text-3xl font-black text-orange mb-1">You</div>
+                <div className="text-xs text-gray-400 font-bold uppercase tracking-wider">In Control</div>
               </div>
             </div>
           </motion.div>
@@ -656,7 +490,7 @@ export default function App() {
 
   // Typing effect
   useEffect(() => {
-    const words = ['Professionals', 'Creators', 'Freelancers', 'Products', 'Businesses', 'Everyone'];
+    const words = ['Freelancers', 'Founders', 'Creators', 'Consultants', 'Coaches', 'Everyone'];
     const TYPE_SPEED = 90;
     const DELETE_SPEED = 45;
     const PAUSE_BEFORE_DELETE = 700;
@@ -688,19 +522,17 @@ export default function App() {
     return () => clearTimeout(timer);
   }, [text, isDeleting, loopNum]);
 
-  // Stats & Content
-
   const features = [
-    { icon: Zap, title: "Your Hub, Your Rules", desc: "Connect all your content, social links, and products in one beautiful, shareable page." },
-    { icon: Palette, title: "Stunning Templates", desc: "Choose from 5 distinct themes—from minimal portfolios to vibrant launchpads." },
-    { icon: Shield, title: "Claim Your Handle", desc: "Secure your unique @username before someone else does. It's yours forever." },
-    { icon: BarChart3, title: "Grow Your Audience", desc: "Built-in analytics show you exactly who's visiting and what they're clicking." }
+    { icon: Brain, title: "Train Your Knowledge", desc: "Upload your bio, resume, projects, and expertise. Your Q-Agent learns everything about you instantly." },
+    { icon: MessageSquare, title: "Smart Conversations", desc: "Powered by advanced AI, your agent answers questions naturally and accurately about you." },
+    { icon: Shield, title: "Your Brand, Your Rules", desc: "Customize your agent's personality, responses, and appearance to match your personal brand." },
+    { icon: BarChart3, title: "Actionable Insights", desc: "See what visitors ask, track engagement, and understand what people want to know about you." }
   ];
 
   const steps = [
-    { num: "1", title: "Claim Your Handle", desc: "Pick your unique username (e.g., qlynk.page/alex). It takes 10 seconds." },
-    { num: "2", title: "Tell Your Story", desc: "Add your bio, links, and photos using our simple editor. No coding needed." },
-    { num: "3", title: "Share & Grow", desc: "Drop your link in your bio, email signature, or business card. Watch your reach expand." }
+    { num: "1", title: "Create Your Agent", desc: "Sign up and claim your unique qlynk.site/username URL in seconds." },
+    { num: "2", title: "Train Your Q-Agent", desc: "Add your bio, skills, projects, and upload documents. Your AI learns it all." },
+    { num: "3", title: "Share & Engage", desc: "Drop your link anywhere. Visitors chat with your AI while you sleep, work, or play." }
   ];
 
   return (
@@ -784,9 +616,9 @@ export default function App() {
         </AnimatePresence>
       </motion.nav>
 
-      {/* Hero Section - Slot Machine Version */}
+      {/* Hero Section - AI Agent Demo */}
       <section className="min-h-screen pt-24 pb-20 relative z-10 flex items-center">
-        <SlotMachineHero />
+        <AgentDemoHero />
       </section>
 
       {/* Features Section */}
@@ -798,8 +630,8 @@ export default function App() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Powerful. Simple. Free.</h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">Everything you need to build your digital home.</p>
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Your AI. Your Rules. Your Growth.</h2>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">Everything you need to create your intelligent digital presence.</p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -828,7 +660,7 @@ export default function App() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-black text-white mb-4">How It Works</h2>
-            <p className="text-xl text-gray-400">Three simple steps to your new online presence</p>
+            <p className="text-xl text-gray-400">Three simple steps to your personal AI agent</p>
           </div>
 
           <div className="relative">
@@ -869,7 +701,7 @@ export default function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            Ready to Stand Out?
+            Ready to Clone Yourself?
           </motion.h2>
           <motion.p
             className="text-xl text-[#ffecd9] mb-10 max-w-2xl mx-auto"
@@ -878,7 +710,7 @@ export default function App() {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            Join thousands of professionals, creators, and businesses who trust qlynk for their online presence.
+            Join professionals, creators, and founders who use Q-Agent to engage visitors 24/7 while focusing on what matters most.
           </motion.p>
 
           <motion.div
@@ -892,13 +724,13 @@ export default function App() {
               href="/auth/signup"
               className="inline-flex items-center justify-center gap-2 bg-white text-[#f46530] px-10 py-5 rounded-xl font-bold text-xl shadow-lg hover:bg-gray-100 transition-all"
             >
-              Create Your Page Now
+              Create Your Q-Agent
               <ArrowRight size={24} />
             </Link>
           </motion.div>
 
           <p className="text-[#ffecd9]/80 text-sm mt-8">
-            Free forever • No credit card • 2 minute setup
+            14-day free trial | No credit card | 5 minute setup
           </p>
         </div>
       </section>
@@ -919,7 +751,7 @@ export default function App() {
                 />
               </Link>
             </div>
-            <p className="mt-4 md:mt-0">© {new Date().getFullYear()} qlynk. Your presence, in a blink.</p>
+            <p className="mt-4 md:mt-0">&copy; {new Date().getFullYear()} qlynk. Your AI ambassador, always on.</p>
           </div>
         </div>
       </footer>

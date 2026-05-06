@@ -106,7 +106,7 @@ export default function LoginPage() {
         <div className="semi-translucent-card rounded-2xl p-8">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-black text-cream mb-2">Welcome Back</h1>
-            <p className="text-beige">Log in to manage your qlynk page</p>
+            <p className="text-beige">Log in to manage your Q-Agent</p>
           </div>
 
           {error && (
