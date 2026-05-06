@@ -571,6 +571,7 @@ export default function App() {
             </div>
 
             <div className="hidden md:flex items-center space-x-6">
+              <Link href="/pricing" className="text-gray-300 hover:text-[#f46530] font-medium transition-colors">Pricing</Link>
               <Link href="/auth/login" className="text-gray-300 hover:text-[#f46530] font-medium transition-colors">Log in</Link>
               <motion.a
                 href="/auth/signup"
@@ -603,6 +604,7 @@ export default function App() {
               transition={{ duration: 0.3 }}
             >
               <div className="px-4 py-3 space-y-2">
+                <Link href="/pricing" className="block px-3 py-2 text-gray-300">Pricing</Link>
                 <Link href="/auth/login" className="block px-3 py-2 text-gray-300">Log in</Link>
                 <Link
                   href="/auth/signup"

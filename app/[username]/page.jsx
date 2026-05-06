@@ -1,8 +1,9 @@
 import { createClient } from '@/utils/supabase/server';
 import { THEMES } from '@/lib/themeRegistry';
 import Link from 'next/link';
-import { Sparkles, ArrowRight } from 'lucide-react';
+import { Sparkles, ArrowRight, Lock } from 'lucide-react';
 import ChatWidget from '@/components/ChatWidget';
+import { isAgentLive } from '@/lib/subscriptionHelpers';
 
 // This tells Next.js to generate pages dynamically
 export const dynamic = 'force-dynamic';
@@ -107,6 +108,41 @@ export default async function PublicPage({ params }) {
     .eq('user_id', profile.id)
     .eq('is_enabled', true)
     .single();
+
+  // Check if agent is live (trial active or paid subscription)
+  const agentIsLive = await isAgentLive(profile.id);
+
+  // If agent is not live, show unavailable message
+  if (!agentIsLive) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950 flex flex-col items-center justify-center text-center px-4">
+        {/* Animated orbs */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl animate-pulse" />
+        </div>
+
+        <div className="relative z-10">
+          <div className="w-24 h-24 bg-orange-500/10 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse border-2 border-orange-500/30">
+            <Lock className="text-orange-500" size={48} />
+          </div>
+          <h1 className="text-4xl font-black text-white mb-4">
+            Q-Agent Temporarily Unavailable
+          </h1>
+          <p className="text-xl text-gray-300 mb-8 max-w-md">
+            This Q-Agent is currently offline. Upgrade to a paid plan or wait for the trial to start.
+          </p>
+          <Link 
+            href="/" 
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-lg font-bold hover:shadow-lg hover:shadow-orange-500/50 transition-all"
+          >
+            Back to Home
+            <ArrowRight size={20} />
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
