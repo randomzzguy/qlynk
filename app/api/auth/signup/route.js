@@ -37,6 +37,8 @@ export async function POST(request) {
 
     // Proceed with signup
     const supabase = await createClient();
+    console.log('[v0] Attempting signup for:', { email, username });
+    
     const { data: signUpData, error } = await supabase.auth.signUp({
       email,
       password,
@@ -47,6 +49,8 @@ export async function POST(request) {
         captchaToken: hcaptchaToken === 'local-bypass' ? undefined : hcaptchaToken,
       },
     });
+
+    console.log('[v0] Signup result:', { success: !error, error: error?.message, errorCode: error?.code, user: signUpData?.user?.id });
 
     if (error) {
       return NextResponse.json({ message: error.message }, { status: 400 });
