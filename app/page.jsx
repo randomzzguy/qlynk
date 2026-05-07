@@ -37,7 +37,7 @@ const GlowingOrb = ({ top, left, size = 300, color = 'orange', delay = 0 }) => (
 // ====== AI Agent Demo Hero Component ======
 const AgentDemoHero = () => {
   const [currentMessage, setCurrentMessage] = useState(0);
-  const [isTyping, setIsTyping] = useState(false);
+  const [phase, setPhase] = useState('typing'); // 'typing' | 'done'
   const [displayedResponse, setDisplayedResponse] = useState('');
 
   const conversations = [
@@ -61,51 +61,36 @@ const AgentDemoHero = () => {
     }
   ];
 
-  const currentConvo = conversations[currentMessage];
-
+  // Re-run the whole typing sequence every time currentMessage changes
   useEffect(() => {
-    const cycleMessages = setInterval(() => {
-      setIsTyping(true);
-      setDisplayedResponse('');
-      
-      // Simulate typing effect
-      let charIndex = 0;
-      const typingInterval = setInterval(() => {
-        if (charIndex < conversations[currentMessage].answer.length) {
-          setDisplayedResponse(conversations[currentMessage].answer.slice(0, charIndex + 1));
-          charIndex++;
-        } else {
-          clearInterval(typingInterval);
-          setIsTyping(false);
-          
-          // Wait before next message
-          setTimeout(() => {
-            setCurrentMessage((prev) => (prev + 1) % conversations.length);
-          }, 3000);
-        }
-      }, 20);
+    setDisplayedResponse('');
+    setPhase('typing');
 
-      return () => clearInterval(typingInterval);
-    }, 8000);
-
-    // Trigger initial typing
-    setIsTyping(true);
+    const answer = conversations[currentMessage].answer;
     let charIndex = 0;
-    const initialTyping = setInterval(() => {
-      if (charIndex < currentConvo.answer.length) {
-        setDisplayedResponse(currentConvo.answer.slice(0, charIndex + 1));
-        charIndex++;
-      } else {
-        clearInterval(initialTyping);
-        setIsTyping(false);
-      }
-    }, 20);
 
-    return () => {
-      clearInterval(cycleMessages);
-      clearInterval(initialTyping);
-    };
-  }, []);
+    const typingInterval = setInterval(() => {
+      charIndex++;
+      setDisplayedResponse(answer.slice(0, charIndex));
+      if (charIndex >= answer.length) {
+        clearInterval(typingInterval);
+        setPhase('done');
+      }
+    }, 22);
+
+    return () => clearInterval(typingInterval);
+  }, [currentMessage]);
+
+  // After the answer finishes, pause then advance to the next conversation
+  useEffect(() => {
+    if (phase !== 'done') return;
+    const pauseTimer = setTimeout(() => {
+      setCurrentMessage((prev) => (prev + 1) % conversations.length);
+    }, 3500);
+    return () => clearTimeout(pauseTimer);
+  }, [phase]);
+
+  const currentConvo = conversations[currentMessage];
 
   return (
     <div className="w-full py-16">
@@ -297,7 +282,7 @@ const AgentDemoHero = () => {
                       </div>
                       <p className="text-sm leading-relaxed">
                         {displayedResponse}
-                        {isTyping && <span className="inline-block w-1 h-4 bg-[#f46530] ml-1 animate-pulse"></span>}
+                        {phase === 'typing' && <span className="inline-block w-1 h-4 bg-[#f46530] ml-1 animate-pulse"></span>}
                       </p>
                     </div>
                   </motion.div>
