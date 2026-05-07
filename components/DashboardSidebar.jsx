@@ -3,13 +3,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Edit, BarChart3, Palette, Settings, LogOut, Bot } from 'lucide-react';
+import { LayoutDashboard, BarChart3, MessageSquare, Settings, LogOut, Bot, FileText } from 'lucide-react';
 
 const navItems = [
-  { href: '/dashboard', icon: Edit, label: 'My Page' },
-  { href: '/dashboard/agent', icon: Bot, label: 'Q-Agent' },
+  { href: '/dashboard', icon: LayoutDashboard, label: 'Overview' },
+  { href: '/dashboard/agent', icon: Bot, label: 'Configure Agent' },
+  { href: '/dashboard/conversations', icon: MessageSquare, label: 'Conversations' },
   { href: '/dashboard/analytics', icon: BarChart3, label: 'Analytics' },
-  { href: '/dashboard/themes', icon: Palette, label: 'Themes' },
+  { href: '/dashboard/agent/documents', icon: FileText, label: 'Knowledge Base' },
   { href: '/dashboard/settings', icon: Settings, label: 'Settings' },
 ];
 
