@@ -46,9 +46,10 @@ export default function LoginPage() {
     const isLocalhost = typeof window !== 'undefined' &&
       (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
-    console.log('[Login] Attempting login. isLocalhost:', isLocalhost, 'hcaptchaToken:', hcaptchaToken);
+    // Only require captcha if the site key is configured AND we're not on localhost
+    const captchaRequired = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY && !isLocalhost;
 
-    if (!hcaptchaToken && !isLocalhost) {
+    if (captchaRequired && !hcaptchaToken) {
       setError('Please verify you are human.');
       return;
     }
@@ -74,7 +75,8 @@ export default function LoginPage() {
         throw new Error(data.message || 'Login failed');
       }
 
-      router.push('/dashboard');
+      // Redirect based on onboarding status
+      router.push(data.redirectTo || '/dashboard');
     } catch (error) {
       setError(error.message);
       if (captchaRef.current) {
@@ -106,7 +108,7 @@ export default function LoginPage() {
         <div className="semi-translucent-card rounded-2xl p-8">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-black text-cream mb-2">Welcome Back</h1>
-            <p className="text-beige">Log in to manage your qlynk page</p>
+            <p className="text-beige">Log in to manage your Q-Agent</p>
           </div>
 
           {error && (

@@ -37,6 +37,8 @@ export async function POST(request) {
 
     // Proceed with signup
     const supabase = await createClient();
+    console.log('[v0] Attempting signup for:', { email, username });
+    
     const { data: signUpData, error } = await supabase.auth.signUp({
       email,
       password,
@@ -48,28 +50,14 @@ export async function POST(request) {
       },
     });
 
+    console.log('[v0] Signup result:', { success: !error, error: error?.message, errorCode: error?.code, user: signUpData?.user?.id });
+
     if (error) {
       return NextResponse.json({ message: error.message }, { status: 400 });
     }
 
-    // Explicitly create a profile record if signup was successful
-    if (signUpData?.user) {
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .insert([
-          {
-            id: signUpData.user.id,
-            username: username,
-            email: email
-          }
-        ]);
-
-      if (profileError) {
-        console.error('Error creating profile:', profileError);
-        // We don't necessarily fail the whole request here as the user is already signed up,
-        // but it's a critical error for site availability.
-      }
-    }
+    // Profile is automatically created via database trigger (handle_new_user_profile)
+    // No manual insert needed - the trigger runs with SECURITY DEFINER to bypass RLS
 
     return NextResponse.json({ message: 'Signup successful! Please check your email to verify your account.' });
   } catch (error) {

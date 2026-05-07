@@ -74,7 +74,10 @@ function SignupForm() {
     const isLocalhost = typeof window !== 'undefined' &&
       (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
-    if (!hcaptchaToken && !isLocalhost) {
+    // Only require captcha if the site key is configured AND we're not on localhost
+    const captchaRequired = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY && !isLocalhost;
+
+    if (captchaRequired && !hcaptchaToken) {
       setError('Please verify you are human.');
       return false;
     }
@@ -141,8 +144,8 @@ function SignupForm() {
         {/* Card */}
         <div className="semi-translucent-card rounded-2xl p-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-black text-cream mb-2">Create Your Account</h1>
-            <p className="text-beige">Start building your presence in minutes</p>
+            <h1 className="text-3xl font-black text-cream mb-2">Create Your Q-Agent</h1>
+            <p className="text-beige">Your AI ambassador starts here</p>
           </div>
 
           {error && (
@@ -169,7 +172,7 @@ function SignupForm() {
                   disabled={loading}
                 />
                 <p className="text-xs text-white mt-1.5 ml-1">
-                  Your page will be at: qlynk.link/{formData.username || 'username'}
+                  Your Q-Agent will be at: qlynk.site/{formData.username || 'username'}
                 </p>
               </div>
 

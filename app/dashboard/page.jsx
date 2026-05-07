@@ -8,6 +8,7 @@ import { getCurrentProfile, getUserPage, signOut, getCurrentUser } from '@/lib/s
 import { Edit, Eye, BarChart3, Plus } from 'lucide-react';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import DashboardSearch from '@/components/DashboardSearch';
+import UpgradePrompt from '@/components/UpgradePrompt';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -29,6 +30,12 @@ export default function DashboardPage() {
         const userProfile = await getCurrentProfile();
         if (!userProfile) {
           router.push('/create');
+          return;
+        }
+
+        // Check if onboarding is complete
+        if (!userProfile.onboarding_completed) {
+          router.push('/onboarding');
           return;
         }
 
@@ -69,6 +76,9 @@ export default function DashboardPage() {
       <DashboardSidebar onSignOut={handleSignOut} />
       <main className="flex-1">
         <div className="max-w-7xl mx-auto px-6 py-12">
+          {/* Upgrade Prompt */}
+          <UpgradePrompt />
+
           {/* Header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
             <div>

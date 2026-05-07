@@ -29,7 +29,7 @@ export default function LaunchPad({ data }) {
             { quote: "Finally, a solution that makes sense.", name: "Emma Thompson", role: "Founder" }
         ],
         faq: data?.faq || [
-            { q: "When will it launch?", a: "We're launching in Q1 2025. Join the waitlist for early access!" },
+            { q: "When will it launch?", a: "We're launching in Q1 2026. Join the waitlist for early access!" },
             { q: "What's the pricing?", a: "Early adopters get 50% off for life. Regular pricing starts at $29/month." },
             { q: "Is there a free trial?", a: "Yes! All waitlist members get a 30-day free trial." }
         ],
