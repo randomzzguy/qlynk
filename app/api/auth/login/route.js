@@ -51,7 +51,23 @@ export async function POST(request) {
             return NextResponse.json({ message: error.message }, { status: 401 });
         }
 
-        return NextResponse.json({ message: 'Login successful' });
+        // Check onboarding status
+        const { data: { user } } = await supabase.auth.getUser();
+        let redirectTo = '/dashboard';
+        
+        if (user) {
+            const { data: profile } = await supabase
+                .from('profiles')
+                .select('onboarding_completed')
+                .eq('id', user.id)
+                .single();
+            
+            if (!profile?.onboarding_completed) {
+                redirectTo = '/onboarding';
+            }
+        }
+
+        return NextResponse.json({ message: 'Login successful', redirectTo });
     } catch (error) {
         console.error('Login error:', error);
         return NextResponse.json({ message: 'Something went wrong' }, { status: 500 });

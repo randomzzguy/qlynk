@@ -74,7 +74,8 @@ export default function LoginPage() {
         throw new Error(data.message || 'Login failed');
       }
 
-      router.push('/dashboard');
+      // Redirect based on onboarding status
+      router.push(data.redirectTo || '/dashboard');
     } catch (error) {
       setError(error.message);
       if (captchaRef.current) {

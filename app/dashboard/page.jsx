@@ -33,6 +33,12 @@ export default function DashboardPage() {
           return;
         }
 
+        // Check if onboarding is complete
+        if (!userProfile.onboarding_completed) {
+          router.push('/onboarding');
+          return;
+        }
+
         setProfile(userProfile);
 
         // Try to load user's page
