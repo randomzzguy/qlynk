@@ -46,7 +46,6 @@ export default function LoginPage() {
     const isLocalhost = typeof window !== 'undefined' &&
       (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
-    // Only require captcha if the site key is configured AND we're not on localhost
     const captchaRequired = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY && !isLocalhost;
 
     if (captchaRequired && !hcaptchaToken) {
@@ -58,25 +57,30 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          hcaptchaToken: hcaptchaToken || (isLocalhost ? 'local-bypass' : null),
-        }),
+      const { createClient } = await import('@/utils/supabase/client');
+      const supabase = createClient();
+
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
+      if (signInError) {
+        throw new Error(signInError.message);
       }
 
-      // Redirect based on onboarding status
-      router.push(data.redirectTo || '/dashboard');
+      // Check onboarding status
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('onboarding_completed')
+        .eq('id', data.user.id)
+        .single();
+
+      if (!profile?.onboarding_completed) {
+        router.push('/onboarding');
+      } else {
+        router.push('/dashboard');
+      }
     } catch (error) {
       setError(error.message);
       if (captchaRef.current) {
