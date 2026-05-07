@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { getCurrentProfile, signOut, getCurrentUser } from '@/lib/supabase';
 import DashboardSidebar from '@/components/DashboardSidebar';
+import QlynkBackground from '@/components/QlynkBackground';
 
 export default function DashboardLayout({ children }) {
   const router = useRouter();
@@ -60,8 +61,9 @@ export default function DashboardLayout({ children }) {
 
   return (
     <div className="min-h-screen flex bg-[#0f0f14]">
-      {/* Background gradient effects - matching homepage */}
-      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+      {/* Background - neon lines, particles and gradient orbs matching homepage */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <QlynkBackground />
         <div 
           className="absolute rounded-full opacity-20 blur-3xl"
           style={{
