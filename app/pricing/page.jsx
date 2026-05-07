@@ -365,7 +365,7 @@ export default function PricingPage() {
         {/* Footer */}
         <footer className="border-t border-gray-700 bg-gray-900/80 backdrop-blur-md">
           <div className="max-w-7xl mx-auto px-4 py-8 text-center">
-            <p className="text-gray-400">© 2025 qlynk. Your AI ambassador, always on.</p>
+            <p className="text-gray-400">© 2026 qlynk. Your AI clone, in a blink.</p>
           </div>
         </footer>
       </div>

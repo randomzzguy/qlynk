@@ -753,7 +753,7 @@ export default function App() {
                 />
               </Link>
             </div>
-            <p className="mt-4 md:mt-0">&copy; {new Date().getFullYear()} qlynk. Your AI ambassador, always on.</p>
+            <p className="mt-4 md:mt-0">&copy; {new Date().getFullYear()} qlynk. Your AI clone, in a blink.</p>
           </div>
         </div>
       </footer>
