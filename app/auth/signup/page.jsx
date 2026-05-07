@@ -74,7 +74,10 @@ function SignupForm() {
     const isLocalhost = typeof window !== 'undefined' &&
       (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
-    if (!hcaptchaToken && !isLocalhost) {
+    // Only require captcha if the site key is configured AND we're not on localhost
+    const captchaRequired = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY && !isLocalhost;
+
+    if (captchaRequired && !hcaptchaToken) {
       setError('Please verify you are human.');
       return false;
     }
