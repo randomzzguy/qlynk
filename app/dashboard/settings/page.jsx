@@ -1,14 +1,11 @@
 'use client';
 
-import DashboardSidebar from '@/components/DashboardSidebar';
 import { Save, User, Mail, Shield } from 'lucide-react';
 
 export default function SettingsPage() {
     return (
-        <div className="min-h-screen flex bg-background">
-            <DashboardSidebar />
-            <main className="flex-1 p-8">
-                <div className="max-w-3xl mx-auto">
+        <div className="p-8">
+            <div className="max-w-3xl mx-auto">
                     <h1 className="text-3xl font-black text-white mb-8">Settings</h1>
 
                     <div className="space-y-6">
@@ -78,7 +75,6 @@ export default function SettingsPage() {
                         </div>
                     </div>
                 </div>
-            </main>
-        </div>
+            </div>
     );
 }

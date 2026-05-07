@@ -4,8 +4,6 @@ import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 import { getCurrentUser } from '@/lib/supabase';
-import DashboardSidebar from '@/components/DashboardSidebar';
-import DashboardSearch from '@/components/DashboardSearch';
 import { 
   Bot, 
   Save, 
@@ -225,10 +223,8 @@ export default function AgentConfigPage() {
   }
 
   return (
-    <div className="min-h-screen flex bg-background">
-      <DashboardSidebar onSignOut={handleSignOut} />
-      <main className="flex-1 overflow-y-auto">
-        <div className="max-w-4xl mx-auto px-6 py-12">
+    <div className="flex-1 overflow-y-auto">
+      <div className="max-w-4xl mx-auto px-6 py-12">
           {/* Header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
             <div>
@@ -694,7 +690,6 @@ export default function AgentConfigPage() {
             </a>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
   );
 }

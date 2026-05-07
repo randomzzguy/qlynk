@@ -4,7 +4,6 @@ import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 import { getCurrentUser } from '@/lib/supabase';
-import DashboardSidebar from '@/components/DashboardSidebar';
 import { 
   Upload, 
   FileText, 
@@ -206,10 +205,8 @@ export default function DocumentsPage() {
   }
 
   return (
-    <div className="min-h-screen flex bg-background">
-      <DashboardSidebar onSignOut={handleSignOut} />
-      <main className="flex-1 overflow-y-auto">
-        <div className="max-w-4xl mx-auto px-6 py-12">
+    <div className="flex-1 overflow-y-auto">
+      <div className="max-w-4xl mx-auto px-6 py-12">
           {/* Header */}
           <div className="mb-10">
             <Link 
@@ -342,7 +339,6 @@ export default function DocumentsPage() {
             </ul>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
   );
 }

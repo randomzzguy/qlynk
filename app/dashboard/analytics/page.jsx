@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 import { getCurrentUser } from '@/lib/supabase';
-import DashboardSidebar from '@/components/DashboardSidebar';
 import { 
   BarChart3, 
   TrendingUp, 
@@ -130,10 +129,8 @@ export default function AnalyticsPage() {
   }
 
   return (
-    <div className="min-h-screen flex bg-background">
-      <DashboardSidebar onSignOut={handleSignOut} />
-      <main className="flex-1 p-8 overflow-y-auto">
-        <div className="max-w-7xl mx-auto">
+    <div className="flex-1 p-8 overflow-y-auto">
+      <div className="max-w-7xl mx-auto">
           <h1 className="text-3xl font-black text-white mb-8">Analytics Overview</h1>
 
           {/* Page Stats Grid */}
@@ -350,7 +347,6 @@ export default function AnalyticsPage() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
   );
 }
