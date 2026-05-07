@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Check, X, Zap, Crown, ArrowRight } from 'lucide-react';
+import { Check, X, Zap, Crown, ArrowRight, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import QlynkBackground from '@/components/QlynkBackground';
@@ -32,6 +32,120 @@ const GlowingOrb = ({ top, left, size = 300, color = 'orange', delay = 0 }) => (
     }}
   />
 );
+
+const faqs = [
+  {
+    category: 'About Q-Agent',
+    items: [
+      {
+        q: 'What exactly is a Q-Agent?',
+        a: 'A Q-Agent is an AI-powered version of you that lives on your personal page at qlynk.site/yourname. It answers questions about you, your work, your skills, and your projects — 24/7, without you lifting a finger. Think of it as a digital clone that represents you online.',
+      },
+      {
+        q: 'How does the AI know things about me?',
+        a: 'You train your Q-Agent through your dashboard. You fill in structured forms covering your bio, skills, projects, social links, and contact info. You can also upload documents like a resume, portfolio PDF, or any text file, and the agent learns from those too.',
+      },
+      {
+        q: 'What kind of questions can visitors ask my Q-Agent?',
+        a: 'Visitors can ask anything about you — your background, what services you offer, how to contact you, what projects you\'ve worked on, your pricing, your availability, and much more. The agent answers conversationally based on the knowledge you\'ve provided.',
+      },
+      {
+        q: 'Can I customize how my Q-Agent looks and sounds?',
+        a: 'Yes. You can set your agent\'s name, profile avatar, welcome message, and primary brand color. On the Agency tier you can fully white-label the agent, removing all Qlynk branding entirely.',
+      },
+      {
+        q: 'What does my public page look like?',
+        a: 'Your public page at qlynk.site/username displays your profile using a theme you choose from the dashboard. The Q-Agent chat widget sits as a floating bubble in the corner, ready for visitors to interact with at any time.',
+      },
+      {
+        q: 'Is my Q-Agent available all the time?',
+        a: 'During your trial and on any paid plan, yes — your agent runs 24/7. If your trial expires and you have not upgraded, your agent goes offline and visitors will see a "temporarily unavailable" message until you resubscribe.',
+      },
+    ],
+  },
+  {
+    category: 'Billing & Plans',
+    items: [
+      {
+        q: 'Do I need a credit card for the free trial?',
+        a: "Yes, a valid credit card is required to start the trial. We won't charge you anything during the 14-day period. After the trial ends your card is charged for the Creator plan unless you cancel first.",
+      },
+      {
+        q: 'What happens when my trial expires?',
+        a: 'Your agent goes offline and visitors see a "temporarily unavailable" message. Your dashboard stays fully accessible so you can keep editing. Upgrade at any time to bring your agent back online instantly.',
+      },
+      {
+        q: 'Can I cancel anytime?',
+        a: 'Yes. Cancel from your account settings at any time with no questions asked and no hidden fees. Your agent stays live until the end of your current billing period.',
+      },
+      {
+        q: 'What if I exceed my monthly message limit?',
+        a: "You will receive an in-dashboard notification when you reach 80% of your limit. Once the limit is hit, the chat widget stays visible but shows a polite message that the agent is temporarily at capacity. Upgrading your plan restores full access immediately.",
+      },
+    ],
+  },
+];
+
+function FAQAccordion() {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const allItems = faqs.flatMap((section, si) =>
+    section.items.map((item, ii) => ({ ...item, key: `${si}-${ii}`, category: section.category }))
+  );
+
+  return (
+    <div className="space-y-3">
+      {faqs.map((section, si) => (
+        <div key={si}>
+          <p className="text-xs font-bold uppercase tracking-widest text-[#f46530] mb-3 pl-1">
+            {section.category}
+          </p>
+          <div className="space-y-3 mb-8">
+            {section.items.map((faq, ii) => {
+              const key = `${si}-${ii}`;
+              const isOpen = openIndex === key;
+              return (
+                <motion.div
+                  key={key}
+                  className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: si * 0.05 + ii * 0.04 }}
+                >
+                  <button
+                    onClick={() => setOpenIndex(isOpen ? null : key)}
+                    className="w-full flex items-center justify-between p-5 text-left group"
+                  >
+                    <span className="text-base font-semibold text-white group-hover:text-[#f46530] transition-colors pr-4">
+                      {faq.q}
+                    </span>
+                    <ChevronDown
+                      className={`w-5 h-5 flex-shrink-0 text-gray-400 transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#f46530]' : ''}`}
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                      >
+                        <p className="px-5 pb-5 text-gray-400 leading-relaxed border-t border-gray-700/50 pt-4">
+                          {faq.a}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function PricingPage() {
   const [billingCycle, setBillingCycle] = useState('monthly');
@@ -307,40 +421,11 @@ export default function PricingPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          <h2 className="text-3xl font-black text-white mb-12 text-center">
+          <h2 className="text-3xl font-black text-white mb-4 text-center">
             Frequently Asked <span className="text-[#f46530]">Questions</span>
           </h2>
-          <div className="space-y-6">
-            {[
-              {
-                q: 'Do I need a credit card for the free trial?',
-                a: "Yes, a valid credit card is required. We won't charge you during the trial period. Your trial automatically upgrades to Creator plan after 14 days.",
-              },
-              {
-                q: 'What happens when my trial expires?',
-                a: 'Your agent goes offline and visitors see "temporarily unavailable." Your dashboard remains accessible so you can edit your agent. Upgrade anytime to go live.',
-              },
-              {
-                q: 'Can I cancel anytime?',
-                a: 'Yes, you can cancel your subscription anytime. No questions asked, no hidden fees.',
-              },
-              {
-                q: 'What if I exceed my message limit?',
-                a: "We'll notify you when you're approaching your limit. You can upgrade anytime to get more messages.",
-              },
-            ].map((faq, i) => (
-              <motion.div 
-                key={i} 
-                className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.7 + i * 0.1 }}
-              >
-                <h3 className="text-lg font-bold text-white mb-2">{faq.q}</h3>
-                <p className="text-gray-400">{faq.a}</p>
-              </motion.div>
-            ))}
-          </div>
+          <p className="text-gray-400 text-center mb-12">Everything you need to know about Q-Agent</p>
+          <FAQAccordion />
         </motion.div>
 
         {/* Footer CTA */}
