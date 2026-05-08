@@ -1,12 +1,12 @@
 import { streamText, convertToModelMessages } from 'ai';
-import { createGroq } from '@ai-sdk/groq';
+import { createOpenAI } from '@ai-sdk/openai';
 import { createClient } from '@/utils/supabase/server';
 import { buildAgentSystemPrompt, getAgentDocuments } from '@/lib/agent';
 
 export const maxDuration = 30;
 
-const groq = createGroq({
-  apiKey: process.env.GROQ_API_KEY,
+const openai = createOpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 export async function POST(req) {
@@ -101,7 +101,7 @@ export async function POST(req) {
 
     // Stream the response
     const result = streamText({
-      model: groq('llama-3.3-70b-versatile'),
+      model: openai('gpt-4o-mini'),
       system: systemPrompt,
       messages: await convertToModelMessages(messages),
       abortSignal: req.signal,
